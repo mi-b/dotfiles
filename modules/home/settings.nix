@@ -8,26 +8,14 @@ with lib;
     settings = {
       user.name = mkOption {
         description = "The default user name.";
-        default = "Gabriel Nützi";
+        default = "Michael Baumann";
         type = types.str;
       };
 
       user.email = mkOption {
         description = "The default email of the user.";
-        default = "gnuetzi" + "@" + "gmail.com";
+        default = "mikebaumann@bluewin.ch";
         type = types.str;
-      };
-
-      user.emailWork = mkOption {
-        description = "The default work email of the user.";
-        default = "nuetzig" + "@" + "ethz.ch";
-        type = types.str;
-      };
-
-      user.emailWorkEnable = mkOption {
-        description = "If we setup the work email also.";
-        default = true;
-        type = types.bool;
       };
     };
   };

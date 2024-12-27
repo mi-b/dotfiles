@@ -3,7 +3,6 @@
 {
   # List your module files here
   display = import ./display.nix;
-  display-resolution = import ./display-resolution.nix;
   environment = import ./environment.nix;
   fonts = import ./fonts.nix;
   home-manager = import ./home-manager.nix;

@@ -5,18 +5,7 @@
 }:
 {
   ### Calendar Syncing ========================================================
-  home.packages = with pkgs; [
-    vdirsyncer
-    davmail
-  ];
-
   services = {
-    vdirsyncer = {
-      enable = true;
-      frequency = "*:0/2"; # Sync every 2 minutes.
-    };
-    # ===========================================================================
-
     ### Audio Effects ===========================================================
     easyeffects = {
       enable = true;

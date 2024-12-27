@@ -10,6 +10,4 @@
 
   # Batman Timezone Converter
   batz = pkgs.callPackage ./batz { };
-
-  i3-back = pkgs.callPackage ./i3-back { };
 }

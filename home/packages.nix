@@ -194,17 +194,4 @@ in
     pkgs.hunspell
     pkgs.hunspellDicts.en-us
   ];
-
-  # # Install Neovim nightly if needed. Careful with Astrovim Setup.
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  #   }))
-  #   (self: super: {
-  #    neovim = super.neovim.override {
-  #      viAlias = true;
-  #      vimAlias = true;
-  #    };
-  #  })
-  # ];
 }

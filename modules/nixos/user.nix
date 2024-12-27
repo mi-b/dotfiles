@@ -42,8 +42,6 @@
           count = 65539;
         }
       ];
-
-      openssh.authorizedKeys.keyFiles = [ ../../config/private_dot_ssh/gabyx_ed25519.pub ];
     };
   };
   # ===========================================================================

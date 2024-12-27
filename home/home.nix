@@ -19,26 +19,20 @@
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-
     inputs.nix-index-database.hmModules.nix-index
-    inputs.agenix.homeManagerModules.default
 
     ./environment.nix
     ./packages.nix
-    ./tmux.nix
     ./programs.nix
     ./services.nix
     ./display.nix
-    ./xdg.nix
-    ./virtualization.nix
-    ./mail.nix
+    # ./xdg.nix
     ./secrets.nix
 
     outputs.homeManagerModules.settings
-    outputs.homeManagerModules.chezmoi
-    outputs.homeManagerModules.astronvim
+
+    # outputs.homeManagerModules.chezmoi
+    # outputs.homeManagerModules.astronvim
   ];
 
   home = rec {
@@ -55,19 +49,19 @@
   systemd.user.startServices = "sd-switch";
 
   # Enable chezmoi and its config files.
-  chezmoi = {
-    enable = true;
-    url = "https://github.com/gabyx/dotfiles.git";
-    ref = "main";
-    workspace = "private";
-  };
+  # chezmoi = {
+  #   enable = true;
+  #   url = "https://github.com/mi-b/dotfiles.git";
+  #   ref = "main";
+  #   workspace = "private";
+  # };
 
   # Enable astronmvim setup.
-  astronvim = {
-    enable = true;
-    url = "https://github.com/gabyx/astrovim.git";
-    ref = "main";
-  };
+  # astronvim = {
+  #   enable = true;
+  #   url = "https://github.com/mi-b/astrovim.git";
+  #   ref = "main";
+  # };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";

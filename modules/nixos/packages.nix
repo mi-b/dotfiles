@@ -58,11 +58,6 @@
     zsh
     bash
 
-    # Virtualisation
-    kubectl
-    kind # Simple kubernetes for local development.
-    k9s # Kubernetes management CLI tool
-
     # Other virtualisation stuff.
     # libguestfs # Needed to virt-sparsify qcow2 files
     # libvirt

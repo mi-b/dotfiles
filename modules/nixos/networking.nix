@@ -26,17 +26,12 @@
     # Open ports in the firewall.
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        50022
-        433
-      ];
+      allowedTCPPorts =
+        [
+        ];
       # allowedUDPPorts = [ ... ];
     };
     # ===========================================================================
   };
 
-  environment.systemPackages = with pkgs; [
-    wirelesstools
-    networkmanagerapplet
-  ];
 }

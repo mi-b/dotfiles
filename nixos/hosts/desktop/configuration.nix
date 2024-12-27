@@ -23,13 +23,13 @@ in
     # outputs.nixosModules.example
 
     # Or modules from other flakes (such as nixos-hardware):
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-cpu-intel
+    inputs.hardware.nixosModules.common-gpu-nvidia
     inputs.hardware.nixosModules.common-pc-ssd
 
     # Load the NixOS age encryption module to encrypt/decrypt
     # secrets with this NixOS configuration
-    inputs.agenix.nixosModules.default
+    # inputs.agenix.nixosModules.default
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
@@ -37,11 +37,9 @@ in
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     ./boot.nix
-    ./hardware.nix
 
     # Include all other specifications.
-    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
-    outputs.nixosModules.display
+    # (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
     outputs.nixosModules.time
@@ -105,6 +103,6 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.11";
   # ===========================================================================
 }

@@ -25,8 +25,8 @@
 
   services.xserver = {
     xkb = {
-      layout = "English US";
-      variant = "";
+      layout = "German";
+      variant = "de_ch";
       options = "ctrl:nocaps";
     };
   };

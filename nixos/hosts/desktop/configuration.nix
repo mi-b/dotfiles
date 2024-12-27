@@ -37,9 +37,10 @@ in
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     ./boot.nix
+    ./hardware.nix
 
     # Include all other specifications.
-    # (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
+    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
     outputs.nixosModules.time

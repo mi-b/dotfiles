@@ -13,6 +13,27 @@
     # Holding down Alt and SysRq (which is the Print Screen key) while slowly typing REISUB
     kernel.sysctl."kernel.sysrq" = 1; # NixOS default: 16 (only the sync command)
 
+    loader = {
+      grub = {
+        enable = true;
+        device = "nodev"; # The special value nodev means that a GRUB boot menu will be generated, but GRUB itself will not actually be installed. We use UEFI.
+        useOSProber = false; # Do not detect other operating systems.
+        efiSupport = true;
+        enableCryptodisk = false;
+        extraEntries = ''
+          menuentry "Reboot" {
+            reboot
+          }
+          menuentry "Poweroff" {
+            halt
+          }
+        '';
+      };
+      efi = {
+        canTouchEfiVariables = true;
+      };
+    };
+
     initrd.availableKernelModules = [
       "xhci_pci"
       "ahci"

@@ -1,0 +1,12 @@
+README.md
+
+{{- if ne .chezmoi.os "darwin" }}
+# Ignore if not on darwin
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+# Ignore if not on linux
+.config/dconf
+.config/kitty
+.config/yazi
+{{- end }}

@@ -1,8 +1,13 @@
-#!/usr/bin/env sh
+{{ if eq .chezmoi.os "darwin" }}
+# macOS-specific code
+{{ else if eq .chezmoi.os "linux" }}
 
+#!/usr/bin/env bash
 set -e
+set -u
 
-sudo apt update && sudo apt install -y \
+echo "Install packages with apt-get."
+sudo apt-get update && sudo apt-get install -y \
     batcat \
     curl \
     ffmpeg \
@@ -20,7 +25,10 @@ sudo apt update && sudo apt install -y \
     tmux \
     vlc \
     woff2 \
-    zoxide
+    zoxide || {
+    echo "Could not install packages with 'apt-get'. "
+    exit 1
+}
 
 git lfs install
 
@@ -86,7 +94,8 @@ fi
 # signal-desktop
 # steam:i386
 
-# link bat to batcat
+echo "Linking bat to batcat"
+
 SYMLINK="$HOME/.local/bin/bat"
 TARGET="$(command -v batcat || true)"
 
@@ -96,7 +105,7 @@ if [ -n "$TARGET" ] && [ ! -e "$SYMLINK" ]; then
     mkdir -p "$HOME/.local/bin"
     ln -s "$TARGET" "$SYMLINK"
 else
-    echo "✅ bat symlink already exists or batcat not found"
+    echo "bat symlink already exists or batcat not found"
 fi
 
 # 2. Ensure ~/.local/bin is in PATH (idempotent)
@@ -107,5 +116,7 @@ if [ -f "$ZSHRC" ] && ! grep -qxF "$LINE" "$ZSHRC"; then
     echo "🔧 Adding ~/.local/bin to PATH in .zshrc"
     echo "$LINE" >>"$ZSHRC"
 else
-    echo "✅ PATH already includes ~/.local/bin in .zshrc"
+    echo "PATH already includes ~/.local/bin in .zshrc"
 fi
+
+{{ end }}

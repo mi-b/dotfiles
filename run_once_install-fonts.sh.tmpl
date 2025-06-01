@@ -1,4 +1,8 @@
-#!/bin/env bash
+{{ if eq .chezmoi.os "darwin" }}
+# macOS-specific code
+{{ else if eq .chezmoi.os "linux" }}
+
+#!/usr/bin/env bash
 
 set -e
 
@@ -25,3 +29,5 @@ rm -rf "$TMP_DIR"
 fc-cache -fv "$FONT_DIR"
 
 echo "✅ Fira Code fonts installed to $FONT_DIR"
+
+{{ end }}

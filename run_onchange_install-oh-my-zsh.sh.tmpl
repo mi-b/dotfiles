@@ -1,4 +1,8 @@
-#!/usr/bin/env sh
+{{ if eq .chezmoi.os "darwin" }}
+# macOS-specific code
+{{ else if eq .chezmoi.os "linux" }}
+
+#!/usr/bin/env bash
 
 set -e
 
@@ -36,3 +40,5 @@ else
 fi
 
 echo "🎉 Oh My Zsh and zsh-vi-mode installed successfully!"
+
+{{ end }}

@@ -8,7 +8,12 @@ return {
       table.insert(sources, null_ls.builtins.formatting.stylua)
       table.insert(sources, null_ls.builtins.formatting.prettier)
       -- table.insert(sources, null_ls.builtins.formatting.ruff)
-      table.insert(sources, null_ls.builtins.formatting.shfmt.with({ args = { "-i", "4" } }))
+      table.insert(sources, null_ls.builtins.formatting.shfmt.with({
+        condition = function()
+          return not vim.api.nvim_buf_get_name(0):match("%.tmpl$")
+        end,
+        args = { "-i", "4" }
+      }))
       -- table.insert(sources, null_ls.builtins.formatting.rubocop)
       -- table.insert(sources, null_ls.builtins.diagnostics.rubocop)
       -- table.insert(sources, null_ls.builtins.diagnostics.eslint_d)

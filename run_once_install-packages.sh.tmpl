@@ -1,8 +1,5 @@
+{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
-
-{{ if eq .chezmoi.os "darwin" }}
-# macOS-specific code
-{{ else if eq .chezmoi.os "linux" }}
 
 set -e
 set -u

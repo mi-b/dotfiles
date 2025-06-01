@@ -1,8 +1,0 @@
-README.md
-.oh-my-zsh/cache/
-
-{{- if eq .chezmoi.os "Windows" }}
-* # ignore everything by default
-!dot_gitconfig # Don't ignore .gitconfig
-!dot_config/nvim # Don't ignore nvim
-{{- end }}

@@ -1,0 +1,16 @@
+{{- $choices := list "private" "work" -}}
+{{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
+
+data:
+  # Any of `private`, `work`
+  workspace: {{ $workspace }}
+
+  # Git Setup.
+  git:
+    {{- if contains $workspace "work" }}
+    userEmail: michael.baumann@helbling.ch
+    userName: Michael Baumann
+    {{- else }}
+    userEmail: mikebaumann@bluewin.ch
+    userName: Michael Baumann
+    {{- end }}

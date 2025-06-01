@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" }}
+# macOS-specific code
+{{ else if eq .chezmoi.os "linux" }}
+
+# Set Zsh as default shell if not already
+if [ "$SHELL" != "$(command -v zsh)" ]; then
+    echo "Setting Zsh as default shell..."
+    chsh -s "$(command -v zsh)"
+else
+    echo "Zsh is already the default shell."
+fi
+
+{{ end }}

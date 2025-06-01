@@ -1,8 +1,8 @@
+#!/usr/bin/env bash
+
 {{ if eq .chezmoi.os "darwin" }}
 # macOS-specific code
 {{ else if eq .chezmoi.os "linux" }}
-
-#!/usr/bin/env bash
 
 # dconf.ini hash: {{ include "dot_config/dconf/dconf.ini" | sha256sum }}
 dconf load / < {{ joinPath .chezmoi.sourceDir "dot_config" "dconf" "dconf.ini" | quote }}

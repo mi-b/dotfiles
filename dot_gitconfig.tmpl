@@ -1,6 +1,6 @@
 [user]
-	name = {{ .name | quote }}
-	email = {{ .email | quote }}
+	name = {{ .git.userName | quote }}
+	email = {{ .git.userEmail | quote }}
 [init]
 	defaultBranch = main
 [filter "lfs"]

@@ -1,14 +1,43 @@
+#!/usr/bin/env bash
+
 {{ if eq .chezmoi.os "darwin" }}
 # macOS-specific code
 {{ else if eq .chezmoi.os "linux" }}
 
-#!/usr/bin/env bash
 set -e
 set -u
 
+TMP_FILE=""
+
+function cleanup() {
+    if [[ -f "$TMP_FILE" ]]; then
+        rm -f "$TMP_FILE"
+    fi
+}
+
+trap cleanup EXIT
+
+function die() {
+    echo -e "$@" >&2
+    exit 1
+}
+
+# currently unused
+# ================
+# build-essential
+# fd-find
+# golang-go
+# gparted
+# imagemagick
+# signal-desktop
+# steam:i386
+
+echo "Updating package lists for apt"
+sudo apt-get update
+
 echo "Install packages with apt-get."
-sudo apt-get update && sudo apt-get install -y \
-    batcat \
+sudo apt-get install -y \
+    bat \
     curl \
     ffmpeg \
     firefox \
@@ -30,10 +59,19 @@ sudo apt-get update && sudo apt-get install -y \
     exit 1
 }
 
+# git lfs needs to be installed like this
 git lfs install
 
-# === Visual Studio Code ===
-if ! command -v code >/dev/null 2>&1; then
+# Install Homebrew (Linuxbrew)
+if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew already installed."
+fi
+
+# Install VS Code
+if ! command -v code &>/dev/null; then
     echo "Installing VS Code..."
     sudo apt-get -y install wget gpg apt-transport-https
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
@@ -42,81 +80,52 @@ if ! command -v code >/dev/null 2>&1; then
     rm -f packages.microsoft.gpg
 
     sudo apt update
-    sudo apt install -y code
+    sudo apt install -y code || die "Could not install VS Code."
+
 else
     echo "VS Code already installed."
 fi
 
-# === Google Chrome ===
-if ! command -v google-chrome >/dev/null 2>&1; then
+# Install Google Chrome
+if ! command -v google-chrome &>/dev/null; then
     echo "Installing Google Chrome..."
-    curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install -y ./google-chrome-stable_current_amd64.deb
-    rm -f google-chrome-stable_current_amd64.deb
+    TMP_FILE=$(mktemp)
+    curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o "$TMP_FILE"
+    sudo apt install -y "$TMP_FILE" || die "Could not install Google Chrome."
+    rm -f "$TMP_FILE"
 else
     echo "Google Chrome already installed."
 fi
 
-# === Kitty Terminal ===
-if ! command -v kitty >/dev/null 2>&1; then
+# Install Kitty terminal
+if ! command -v kitty &>/dev/null; then
     echo "Installing Kitty..."
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin || die "Could not install kitty."
     mkdir -p ~/.local/bin
     ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
 else
     echo "Kitty already installed."
 fi
 
-# === uv (Rust Python package manager) ===
-if ! command -v uv >/dev/null 2>&1; then
+# Install uv (Rust Python package manager)
+# Note: Could be installed using brew install uv
+if ! command -v uv &>/dev/null; then
     echo "Installing uv..."
-    curl -Ls https://astral.sh/uv/install.sh | sh
+    curl -Ls https://astral.sh/uv/install.sh | sh || die "Could not install uv."
+
 else
     echo "uv already installed."
 fi
 
-# === Node.js & npm via NodeSource (for latest version) ===
-if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+# Install Node.js & npm via NodeSource
+# Note: Could be installed using brew install node (also installs npm)
+if ! command -v node &>/dev/null || ! command -v npm &>/dev/null; then
     echo "Installing Node.js & npm from NodeSource..."
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt install -y nodejs
+    sudo apt install -y nodejs || die "Could not install node.js and npm."
+
 else
     echo "Node.js and npm already installed."
-fi
-
-# currently unused
-# ================
-# build-essential
-# fd-find
-# golang-go
-# gparted
-# imagemagick
-# signal-desktop
-# steam:i386
-
-echo "Linking bat to batcat"
-
-SYMLINK="$HOME/.local/bin/bat"
-TARGET="$(command -v batcat || true)"
-
-# 1. Symlink bat → batcat if needed
-if [ -n "$TARGET" ] && [ ! -e "$SYMLINK" ]; then
-    echo "🔗 Linking batcat → bat at $SYMLINK"
-    mkdir -p "$HOME/.local/bin"
-    ln -s "$TARGET" "$SYMLINK"
-else
-    echo "bat symlink already exists or batcat not found"
-fi
-
-# 2. Ensure ~/.local/bin is in PATH (idempotent)
-LINE='export PATH="$HOME/.local/bin:$PATH"'
-ZSHRC="$HOME/.zshrc"
-
-if [ -f "$ZSHRC" ] && ! grep -qxF "$LINE" "$ZSHRC"; then
-    echo "🔧 Adding ~/.local/bin to PATH in .zshrc"
-    echo "$LINE" >>"$ZSHRC"
-else
-    echo "PATH already includes ~/.local/bin in .zshrc"
 fi
 
 {{ end }}

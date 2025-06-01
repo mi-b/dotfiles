@@ -107,12 +107,16 @@ source $ZSH/oh-my-zsh.sh
 #
 alias astronvim='NVIM_APPNAME=nvim-astro nvim'
 alias nvim-typecraft='NVIM_APPNAME=nvim-typecraft nvim'
-alias nvs='cd ~/.config/nvim/ & nvim'
+alias nvs='cd ~/.config/nvim/ && nvim'
+alias bat='batcat'
 
 # Set up fzf key bindings and fuzzy completion
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 source <(fzf --zsh)
+
+# Source brew
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"

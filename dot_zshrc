@@ -24,17 +24,20 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
+export PATH="$PATH:/usr/share/java"
+
 alias astronvim='NVIM_APPNAME=nvim-astro nvim'
 alias nvim-typecraft='NVIM_APPNAME=nvim-typecraft nvim'
 alias nvs='cd ~/.config/nvim/ && nvim'
 alias bat='batcat'
 
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
 
 # Source brew
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -52,6 +55,9 @@ ffn() { find -type f | fzf --bind 'enter:become(nvim {})'; }
 fdn() { find -type d | fzf --preview='batcat --color=always {}' --bind 'enter:become(nvim {})'; }
 
 # Use gnome-tweaks to switch ctrl and caps
-# setxkbmap -option ctrl:nocaps
+setxkbmap -option ctrl:nocaps
 #
 eval "$(zoxide init zsh)"
+
+export CLASSPATH=/usr/share/java/lcm.jar:$HOME/jchart2d-3.2.2/jchart2d-3.2.2.jar:$HOME/projects/TRI/robot_hardware/lcm/message_bindings.jar
+export CLASSPATH=$CLASSPATH:/usr/share/java/commons-io.jar

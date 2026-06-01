@@ -46,52 +46,24 @@ sudo apt-get install -y \
     htop \
     fonts-powerline \
     grep \
+    imagemagick \
     inkscape \
+    jq \
+    poppler-utils \
     python3-pip \
     python3-venv \
     ripgrep \
     tmux \
     vlc \
     woff2 \
-    zoxide || {
+    zoxide \
+    7zip || {
     echo "Could not install packages with 'apt-get'. "
     exit 1
 }
 
 # git lfs needs to be installed like this
 git lfs install
-
-# Install Homebrew (Linuxbrew)
-if ! command -v brew &>/dev/null; then
-    echo "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-    echo "Homebrew already installed."
-fi
-
-# Install yazi and dependencies
-packages=(
-    yazi
-    # ffmpeg # (for video thumbnails)
-    sevenzip # (for archive extraction and preview)
-    jq       # (for JSON preview)
-    poppler  # (for PDF preview) [!huge amount of dependencies!]
-    fd       # (for file searching)
-    # ripgrep # (for file content searching)
-    # fzf # (for quick file subtree navigation)
-    # zoxide # (for historical directories navigation, requires fzf)
-    resvg       # (for SVG preview)
-    imagemagick # (for Font, HEIC, and JPEG XL preview)
-)
-
-for pkg in "${packages[@]}"; do
-    if ! brew list --formula --versions "$pkg" &>/dev/null; then
-        echo "Installing $pkg..."
-        brew install "$pkg" || die "Could not install $pkg."
-    else
-        echo "$pkg already installed."
-    fi
-done
 
 # Install VS Code
 if ! command -v code &>/dev/null; then

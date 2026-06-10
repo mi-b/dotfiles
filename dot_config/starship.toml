@@ -1,0 +1,48 @@
+add_newline = false
+command_timeout = 1000
+
+format = "$directory$git_branch$git_status$python$nodejs$golang$cmd_duration$line_break$character"
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[directory]
+style = "bold lavender"
+truncation_length = 4
+truncate_to_repo = false
+
+[git_branch]
+symbol = "git "
+style = "bold mauve"
+
+[git_status]
+style = "bold peach"
+
+[cmd_duration]
+min_time = 500
+style = "bold yellow"
+
+[python]
+symbol = "py "
+style = "bold blue"
+
+[nodejs]
+symbol = "node "
+style = "bold green"
+
+[golang]
+symbol = "go "
+style = "bold sapphire"
+
+[palettes.catppuccin]
+lavender = "#b4befe"
+mauve = "#cba6f7"
+peach = "#fab387"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+green = "#a6e3a1"
+sapphire = "#74c7ec"
+
+[palette]
+palette = "catppuccin"

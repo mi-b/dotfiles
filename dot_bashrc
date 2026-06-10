@@ -1,0 +1,158 @@
+# ~/.bashrc: managed by chezmoi
+
+have_cmd() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+need_cmd() {
+    if ! have_cmd "$1"; then
+        printf '%s\n' "$1 is not installed." >&2
+        return 1
+    fi
+}
+
+path_prepend() {
+    [ -d "$1" ] || return 0
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+path_append() {
+    [ -d "$1" ] || return 0
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$PATH:$1" ;;
+    esac
+}
+
+if have_cmd nvim; then
+    export EDITOR="$(command -v nvim)"
+elif have_cmd vim; then
+    export EDITOR="$(command -v vim)"
+else
+    export EDITOR="/usr/bin/vi"
+fi
+
+export LANG="en_GB.UTF-8"
+path_prepend "$HOME/.local/bin"
+path_prepend "$HOME/bin"
+path_prepend "$HOME/.opencode/bin"
+path_prepend "$HOME/go/bin"
+path_append "/usr/share/java"
+export PATH
+
+if [ -f "$HOME/.local/bin/env" ]; then
+    . "$HOME/.local/bin/env"
+fi
+
+# If not running interactively, do nothing.
+case $- in
+    *i*) ;;
+    *) return ;;
+esac
+
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=10000
+HISTFILESIZE=20000
+shopt -s histappend checkwinsize
+
+if [ -x /usr/bin/lesspipe ]; then
+    eval "$(SHELL=/bin/sh lesspipe)"
+fi
+
+if have_cmd nvim; then
+    alias astronvim='NVIM_APPNAME=nvim-astro nvim'
+    alias nvim-typecraft='NVIM_APPNAME=nvim-typecraft nvim'
+    alias nvs='cd ~/.config/nvim/ && nvim'
+fi
+
+if have_cmd batcat; then
+    alias bat='batcat'
+fi
+
+# Load distro completions when present.
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# Prefer the packaged fzf integration, but avoid exploding if it is absent.
+if [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
+if [ -f /usr/share/doc/fzf/examples/completion.bash ]; then
+    . /usr/share/doc/fzf/examples/completion.bash
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init bash)"
+fi
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init bash)"
+fi
+
+case ";${PROMPT_COMMAND:-};" in
+    *";history -a; history -n;"*) ;;
+    *)
+        if [ -n "${PROMPT_COMMAND:-}" ]; then
+            PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+        else
+            PROMPT_COMMAND="history -a; history -n"
+        fi
+        ;;
+esac
+export PROMPT_COMMAND
+
+y() {
+    local tmp cwd
+    if ! need_cmd yazi; then
+        return 1
+    fi
+    tmp="$(mktemp -t "yazi-cwd.XXXXXX")" || return 1
+    yazi "$@" --cwd-file="$tmp"
+    cwd="$(tr -d '\0' < "$tmp")"
+    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd" || return
+    fi
+    rm -f -- "$tmp"
+}
+
+fzf_preview_cmd() {
+    if have_cmd batcat; then
+        printf '%s' 'batcat --color=always {}'
+    else
+        printf '%s' 'cat {}'
+    fi
+}
+
+ff() {
+    need_cmd fzf || return 1
+    find -type f | fzf -m --preview="$(fzf_preview_cmd)"
+}
+
+fd() {
+    need_cmd fzf || return 1
+    find -type d | fzf
+}
+
+fn() {
+    need_cmd fzf || return 1
+    need_cmd nvim || return 1
+    fzf -m --preview="$(fzf_preview_cmd)" --bind 'enter:become(nvim {+})'
+}
+
+ffn() {
+    need_cmd fzf || return 1
+    need_cmd nvim || return 1
+    find -type f | fzf --bind 'enter:become(nvim {})'
+}
+
+fdn() {
+    need_cmd fzf || return 1
+    need_cmd nvim || return 1
+    find -type d | fzf --preview="$(fzf_preview_cmd)" --bind 'enter:become(nvim {})'
+}

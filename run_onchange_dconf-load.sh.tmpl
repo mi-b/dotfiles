@@ -1,9 +1,11 @@
-{{- if false -}}
-{{- if eq .chezmoi.os "linux" -}}
+{{- if and (eq .chezmoi.os "linux") .desktop.enabled -}}
 #!/usr/bin/env bash
+
+if ! command -v dconf >/dev/null 2>&1; then
+    exit 0
+fi
 
 # dconf.ini hash: {{ include "dot_config/dconf/dconf.ini" | sha256sum }}
 dconf load / <{{ joinPath .chezmoi.sourceDir "dot_config" "dconf" "dconf.ini"  | quote }}
 
-{{ end }}
 {{ end }}

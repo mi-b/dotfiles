@@ -7,8 +7,8 @@ The setting is created by following the explanations of typecraft [Video Series]
 
 ### Terminal and so
 
-Get Wezterm, zsh and oh-my-zsh:
-[check this link](https://medium.com/@satriajanaka09/setup-zsh-oh-my-zsh-powerlevel10k-on-ubuntu-20-04-c4a4052508fd)
+Use a normal terminal, bash, and starship if you want a prompt that looks
+less like the shell has developed opinions.
 
 ### Fonts
 
@@ -21,27 +21,7 @@ rc-cache -fv
 
 ### Keyboard
 
-put ctrl on capslock:
-
-```sh
-setxkbmap -option ctrl:nocaps
-```
-
-or make it permanent:
-
-```sh
-sudo nvim /etc/default/keyboard
-```
-
-change option to
-
-```
-XKBOPTIONS="ctrl:nocaps"
-```
-
-```sh
-sudo dpkg-reconfigure keyboard-configuration
-```
+Use GNOME keyboard settings or managed `dconf` to map Caps Lock to Ctrl.
 
 ## Notes on neovim setup
 
@@ -49,19 +29,15 @@ sudo dpkg-reconfigure keyboard-configuration
 
 path to config: `~/.config/nvim/init.lua`
 
-various configs? then use add the following to `.zshrc`:
+Various configs? then add the following to `.bashrc`:
 
 ```sh
 alias astronvim='NVIM_APPNAME=nvim-astro nvim'
 alias nvim-typecraft='NVIM_APPNAME=nvim-typecraft nvim'
 ```
 
-install homebrew:
-sudo apt update
-sudo apt install build-essential procps curl file git
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-and add to ~/.zshrc
+Do not install Homebrew here. Use Ubuntu packages or `uv` unless you have a
+concrete reason to make package management more interesting than necessary.
 
 ### Telescope : live grep
 
@@ -97,7 +73,7 @@ node.js permission error
 mkdir -p ~/.npm-global
 npm config set prefix '~/.npm-global'
 export PATH="$HOME/.npm-global/bin:$PATH"
-source ~/.zshrc
+source ~/.bashrc
 ```
 
 ### Others
@@ -125,4 +101,3 @@ Use yazi
 https://yazi-rs.github.io/
 
 Use tmux
-

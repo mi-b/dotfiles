@@ -15,7 +15,6 @@ return {
     vim.g.mkdp_auto_close = 1
     vim.g.mkdp_open_to_the_world = 0
     vim.g.mkdp_theme = "dark"
-    vim.g.mkdp_browser = "/usr/bin/firefox"
 
     vim.keymap.set("n", "<leader>mp", ":MarkdownPreview<CR>", { desc = "Markdown preview" })
     vim.keymap.set("n", "<leader>ms", ":MarkdownPreviewStop<CR>", { desc = "Markdown preview stop" })

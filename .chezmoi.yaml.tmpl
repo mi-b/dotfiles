@@ -1,9 +1,24 @@
 {{- $choices := list "private" "work" -}}
 {{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
+{{- $desktopChoices := list "yes" "no" -}}
+{{- $desktop := promptChoiceOnce . "desktop_enabled" "Desktop machine?" $desktopChoices "yes" -}}
+{{- $installDevtools := promptChoiceOnce . "install_devtools" "Install dev tools?" $desktopChoices "yes" -}}
+{{- $installDesktopApps := promptChoiceOnce . "install_desktop_apps" "Install desktop apps?" $desktopChoices "yes" -}}
+{{- $installFirefox := promptChoiceOnce . "install_firefox" "Install Firefox?" $desktopChoices "yes" -}}
+{{- $installChrome := promptChoiceOnce . "install_chrome" "Install Google Chrome?" $desktopChoices "no" -}}
 
 data:
   # Any of `private`, `work`
   workspace: {{ $workspace }}
+
+  desktop:
+    enabled: {{ eq $desktop "yes" }}
+
+  install:
+    devtools: {{ eq $installDevtools "yes" }}
+    desktopApps: {{ eq $installDesktopApps "yes" }}
+    firefox: {{ eq $installFirefox "yes" }}
+    chrome: {{ eq $installChrome "yes" }}
 
   # Git Setup.
   git:

@@ -1,0 +1,45 @@
+{{- if and (eq .chezmoi.os "linux") .desktop.enabled (or .install.firefox .install.chrome) -}}
+#!/usr/bin/env bash
+
+set -eu
+
+TMP_FILE=""
+needs_apt_update=0
+
+cleanup() {
+    if [ -n "$TMP_FILE" ] && [ -f "$TMP_FILE" ]; then
+        rm -f "$TMP_FILE"
+    fi
+}
+
+trap cleanup EXIT
+
+if {{ .install.firefox }} && ! command -v firefox >/dev/null 2>&1; then
+    needs_apt_update=1
+fi
+
+if {{ .install.chrome }} && ! command -v google-chrome >/dev/null 2>&1; then
+    needs_apt_update=1
+fi
+
+if [ "$needs_apt_update" -eq 0 ]; then
+    echo "Requested browsers already installed."
+    exit 0
+fi
+
+echo "Updating package lists for apt"
+sudo apt-get update
+
+if {{ .install.firefox }} && ! command -v firefox >/dev/null 2>&1; then
+    echo "Installing Firefox..."
+    sudo apt-get install -y firefox
+fi
+
+if {{ .install.chrome }} && ! command -v google-chrome >/dev/null 2>&1; then
+    echo "Installing Google Chrome..."
+    TMP_FILE="$(mktemp)"
+    curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o "$TMP_FILE"
+    sudo dpkg -i "$TMP_FILE" || true
+    sudo apt-get -f install -y
+fi
+{{ end }}

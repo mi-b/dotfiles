@@ -1,0 +1,47 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Default model
+  "model": "anthropic/claude-sonnet-4-6",
+
+  // Global instructions — loaded into every session
+  "instructions": ["AGENTS.md"],
+
+  // Permissions
+  "permission": {
+    // File operations: allow by default
+    "read": "allow",
+    "edit": "allow",
+    "glob": "allow",
+    "grep": "allow",
+
+    // Bash: allow git and common dev tools, ask for the rest
+    "bash": {
+      "git *": "allow",
+      "uv *": "allow",
+      "uvx *": "allow",
+      "docker *": "allow",
+      "docker compose *": "allow",
+      "ruff *": "allow",
+      "prettier *": "allow",
+      "markdownlint-cli2 *": "allow",
+      "shfmt *": "allow",
+      "bash scripts/*": "allow",
+      "pytest *": "allow",
+      "ls *": "allow",
+      "wc *": "allow",
+      "mkdir *": "allow",
+      "rm *": "ask",
+      "*": "ask"
+    },
+
+    // Never touch secrets directories
+    "external_directory": {
+      "~/.ssh/**": "deny",
+      "~/.gnupg/**": "deny",
+      "~/.config/opencode/**": "allow",
+      "/tmp/opencode/**": "allow",
+      "*": "ask"
+    }
+  }
+}

@@ -3,18 +3,36 @@
 
 set -eu
 
-missing=0
-for cmd in batcat curl ffmpeg fzf git git-lfs htop jq latexmk nvim node rg tmux tree-sitter unzip zoxide; do
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        missing=1
-        break
-    fi
-done
+install_tree_sitter() {
+    local version arch asset url tmpdir
 
-if [ "$missing" -eq 0 ] && command -v starship >/dev/null 2>&1; then
-    echo "Development tools already installed."
-    exit 0
-fi
+    version="v0.26.9"
+    case "$(uname -m)" in
+        x86_64)
+            arch="x64"
+            ;;
+        aarch64|arm64)
+            arch="arm64"
+            ;;
+        armv7l|armv6l)
+            arch="arm"
+            ;;
+        *)
+            printf '%s\n' "Unsupported architecture for tree-sitter: $(uname -m)" >&2
+            return 1
+            ;;
+    esac
+
+    asset="tree-sitter-linux-${arch}.gz"
+    url="https://github.com/tree-sitter/tree-sitter/releases/download/${version}/${asset}"
+    tmpdir="$(mktemp -d)"
+    trap 'rm -rf "$tmpdir"' RETURN
+
+    mkdir -p "$HOME/.local/bin"
+    curl -fsSL "$url" -o "$tmpdir/tree-sitter.gz"
+    gunzip -c "$tmpdir/tree-sitter.gz" > "$HOME/.local/bin/tree-sitter"
+    chmod +x "$HOME/.local/bin/tree-sitter"
+}
 
 echo "Updating package lists for apt"
 sudo apt-get update
@@ -37,13 +55,15 @@ sudo apt-get install -y \
     python3-venv \
     ripgrep \
     tmux \
-    tree-sitter-cli \
     unzip \
     woff2 \
     zoxide \
     7zip
 
 git lfs install
+
+echo "Installing tree-sitter CLI..."
+install_tree_sitter
 
 if ! command -v starship >/dev/null 2>&1; then
     echo "Installing starship..."

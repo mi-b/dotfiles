@@ -4,7 +4,7 @@
 set -eu
 
 missing=0
-for cmd in batcat curl ffmpeg fzf git git-lfs htop jq nvim node npm rg tmux unzip zoxide; do
+for cmd in batcat curl ffmpeg fzf git git-lfs htop jq latexmk nvim node rg tmux unzip zoxide; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         missing=1
         break
@@ -30,8 +30,8 @@ sudo apt-get install -y \
     grep \
     htop \
     jq \
+    latexmk \
     nodejs \
-    npm \
     poppler-utils \
     python3-pip \
     python3-venv \

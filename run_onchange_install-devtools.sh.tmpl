@@ -4,7 +4,7 @@
 set -eu
 
 missing=0
-for cmd in batcat curl ffmpeg fzf git git-lfs htop jq latexmk nvim node rg tmux unzip zoxide; do
+for cmd in batcat curl ffmpeg fzf git git-lfs htop jq latexmk nvim node rg tmux tree-sitter unzip zoxide; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         missing=1
         break
@@ -37,6 +37,7 @@ sudo apt-get install -y \
     python3-venv \
     ripgrep \
     tmux \
+    tree-sitter-cli \
     unzip \
     woff2 \
     zoxide \

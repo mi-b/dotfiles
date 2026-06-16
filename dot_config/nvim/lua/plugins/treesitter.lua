@@ -8,6 +8,7 @@ return {
     local is_windows = require("utils").is_windows()
     local treesitter = require("nvim-treesitter")
     local installed = treesitter.get_installed("parsers")
+    local has_tree_sitter_cli = vim.fn.executable("tree-sitter") == 1
 
     treesitter.setup({
       install_dir = vim.fn.stdpath("data") .. "/site",
@@ -18,7 +19,7 @@ return {
       callback = function(args)
         local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
         if not lang or not vim.list_contains(installed, lang) then
-          if not is_windows and lang then
+          if not is_windows and has_tree_sitter_cli and lang then
             treesitter.install(lang)
           end
           return

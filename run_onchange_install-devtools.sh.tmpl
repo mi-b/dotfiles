@@ -3,51 +3,56 @@
 
 set -eu
 
-install_tree_sitter() {
-    local version arch asset url tmpdir
+# ---------------------------------------------------------------------------
+# Helper: install a binary from a GitHub release archive.
+# Usage: install_github_binary <cmd> <version> <url> <extract_cmd>
+# ---------------------------------------------------------------------------
 
-    version="v0.26.9"
-    case "$(uname -m)" in
-        x86_64)
-            arch="x64"
-            ;;
-        aarch64|arm64)
-            arch="arm64"
-            ;;
-        armv7l|armv6l)
-            arch="arm"
-            ;;
-        *)
-            printf '%s\n' "Unsupported architecture for tree-sitter: $(uname -m)" >&2
-            return 1
-            ;;
-    esac
+install_github_binary() {
+    local cmd="$1" version="$2" url="$3" extract_cmd="$4"
 
-    asset="tree-sitter-linux-${arch}.gz"
-    url="https://github.com/tree-sitter/tree-sitter/releases/download/${version}/${asset}"
+    if command -v "$cmd" >/dev/null 2>&1; then
+        echo "$cmd already installed."
+        return 0
+    fi
+
+    echo "Installing $cmd $version..."
+    local tmpdir
     tmpdir="$(mktemp -d)"
     trap 'rm -rf "$tmpdir"' RETURN
 
-    mkdir -p "$HOME/.local/bin"
-    curl -fsSL "$url" -o "$tmpdir/tree-sitter.gz"
-    gunzip -c "$tmpdir/tree-sitter.gz" > "$HOME/.local/bin/tree-sitter"
-    chmod +x "$HOME/.local/bin/tree-sitter"
+    curl -fsSL "$url" -o "$tmpdir/archive"
+    eval "$extract_cmd"
 }
+
+# ---------------------------------------------------------------------------
+# Architecture detection (run once, reuse everywhere).
+# ---------------------------------------------------------------------------
+
+ARCH="$(uname -m)"
+
+# ---------------------------------------------------------------------------
+# APT packages.
+# ---------------------------------------------------------------------------
 
 echo "Updating package lists for apt"
 sudo apt-get update
 
 echo "Installing development tools"
 sudo apt-get install -y \
+    7zip \
     bat \
     curl \
     direnv \
+    fd-find \
     ffmpeg \
+    file \
     fzf \
     git \
     git-lfs \
     grep \
     htop \
+    imagemagick \
     jq \
     latexmk \
     nodejs \
@@ -58,20 +63,53 @@ sudo apt-get install -y \
     tmux \
     unzip \
     woff2 \
-    zoxide \
-    7zip
+    xclip \
+    zoxide
 
 git lfs install
 
-echo "Installing tree-sitter CLI..."
-install_tree_sitter
+# ---------------------------------------------------------------------------
+# tree-sitter CLI (GitHub release, gzipped binary).
+# ---------------------------------------------------------------------------
+
+ts_version="v0.26.9"
+case "$ARCH" in
+    x86_64)         ts_arch="x64"  ;;
+    aarch64|arm64)  ts_arch="arm64" ;;
+    armv7l|armv6l)  ts_arch="arm"  ;;
+    *)              ts_arch="" ;;
+esac
+if [ -n "$ts_arch" ]; then
+    ts_url="https://github.com/tree-sitter/tree-sitter/releases/download/${ts_version}/tree-sitter-linux-${ts_arch}.gz"
+    install_github_binary tree-sitter "$ts_version" "$ts_url" \
+        'gunzip -c "$tmpdir/archive" > "$HOME/.local/bin/tree-sitter" && chmod +x "$HOME/.local/bin/tree-sitter"'
+fi
+
+# ---------------------------------------------------------------------------
+# resvg (GitHub release, tarball) — SVG rendering, optional dep for yazi.
+# ---------------------------------------------------------------------------
+
+resvg_version="v0.47.0"
+if [ "$ARCH" = "x86_64" ]; then
+    resvg_url="https://github.com/linebender/resvg/releases/download/${resvg_version}/resvg-linux-x86_64.tar.gz"
+    install_github_binary resvg "$resvg_version" "$resvg_url" \
+        'tar -xzf "$tmpdir/archive" -C "$tmpdir" && sudo install -m 755 "$tmpdir/resvg" /usr/local/bin/resvg'
+fi
+
+# ---------------------------------------------------------------------------
+# starship prompt (official installer).
+# ---------------------------------------------------------------------------
 
 if ! command -v starship >/dev/null 2>&1; then
     echo "Installing starship..."
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes -b "$HOME/.local/bin"
 else
-    echo "Starship already installed."
+    echo "starship already installed."
 fi
+
+# ---------------------------------------------------------------------------
+# uv — Python package manager (official installer).
+# ---------------------------------------------------------------------------
 
 if ! command -v uv >/dev/null 2>&1; then
     echo "Installing uv..."
@@ -80,47 +118,35 @@ else
     echo "uv already installed."
 fi
 
-if ! command -v yazi >/dev/null 2>&1; then
-    echo "Installing yazi..."
-    yazi_version="v26.5.6"
-    case "$(uname -m)" in
-        x86_64)   yazi_arch="x86_64" ;;
-        aarch64)  yazi_arch="aarch64" ;;
-        *)
-            printf '%s\n' "Unsupported architecture for yazi: $(uname -m)" >&2
-            exit 1
-            ;;
-    esac
-    yazi_asset="yazi-${yazi_arch}-unknown-linux-gnu.zip"
-    yazi_url="https://github.com/sxyazi/yazi/releases/download/${yazi_version}/${yazi_asset}"
-    yazi_tmpdir="$(mktemp -d)"
-    curl -fsSL "$yazi_url" -o "$yazi_tmpdir/yazi.zip"
-    unzip -q "$yazi_tmpdir/yazi.zip" -d "$yazi_tmpdir"
-    sudo install -m 755 "$yazi_tmpdir/yazi-${yazi_arch}-unknown-linux-gnu/yazi" /usr/local/bin/yazi
-    rm -rf "$yazi_tmpdir"
-else
-    echo "yazi already installed."
+# ---------------------------------------------------------------------------
+# yazi — terminal file manager (GitHub release).
+# ---------------------------------------------------------------------------
+
+yazi_version="v26.5.6"
+case "$ARCH" in
+    x86_64)   yazi_arch="x86_64"  ;;
+    aarch64)  yazi_arch="aarch64" ;;
+    *)        yazi_arch="" ;;
+esac
+if [ -n "$yazi_arch" ]; then
+    yazi_url="https://github.com/sxyazi/yazi/releases/download/${yazi_version}/yazi-${yazi_arch}-unknown-linux-gnu.zip"
+    install_github_binary yazi "$yazi_version" "$yazi_url" \
+        'unzip -q "$tmpdir/archive" -d "$tmpdir" && sudo install -m 755 "$tmpdir/yazi-'"${yazi_arch}"'-unknown-linux-gnu/yazi" /usr/local/bin/yazi'
 fi
 
-if ! command -v lazygit >/dev/null 2>&1; then
-    echo "Installing lazygit..."
-    lazygit_version="0.62.2"
-    case "$(uname -m)" in
-        x86_64)   lazygit_arch="x86_64" ;;
-        aarch64)  lazygit_arch="arm64" ;;
-        *)
-            printf '%s\n' "Unsupported architecture for lazygit: $(uname -m)" >&2
-            exit 1
-            ;;
-    esac
-    lazygit_asset="lazygit_${lazygit_version}_Linux_${lazygit_arch}.tar.gz"
-    lazygit_url="https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/${lazygit_asset}"
-    lazygit_tmpdir="$(mktemp -d)"
-    curl -fsSL "$lazygit_url" -o "$lazygit_tmpdir/lazygit.tar.gz"
-    tar -xzf "$lazygit_tmpdir/lazygit.tar.gz" -C "$lazygit_tmpdir"
-    sudo install -m 755 "$lazygit_tmpdir/lazygit" /usr/local/bin/lazygit
-    rm -rf "$lazygit_tmpdir"
-else
-    echo "lazygit already installed."
+# ---------------------------------------------------------------------------
+# lazygit — terminal UI for git (GitHub release).
+# ---------------------------------------------------------------------------
+
+lazygit_version="0.62.2"
+case "$ARCH" in
+    x86_64)   lazygit_arch="x86_64" ;;
+    aarch64)  lazygit_arch="arm64"   ;;
+    *)        lazygit_arch="" ;;
+esac
+if [ -n "$lazygit_arch" ]; then
+    lazygit_url="https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_Linux_${lazygit_arch}.tar.gz"
+    install_github_binary lazygit "$lazygit_version" "$lazygit_url" \
+        'tar -xzf "$tmpdir/archive" -C "$tmpdir" && sudo install -m 755 "$tmpdir/lazygit" /usr/local/bin/lazygit'
 fi
 {{ end }}

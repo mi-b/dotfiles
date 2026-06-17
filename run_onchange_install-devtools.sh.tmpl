@@ -41,6 +41,7 @@ echo "Installing development tools"
 sudo apt-get install -y \
     bat \
     curl \
+    direnv \
     ffmpeg \
     fzf \
     git \
@@ -70,5 +71,34 @@ if ! command -v starship >/dev/null 2>&1; then
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes -b "$HOME/.local/bin"
 else
     echo "Starship already installed."
+fi
+
+if ! command -v uv >/dev/null 2>&1; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+else
+    echo "uv already installed."
+fi
+
+if ! command -v yazi >/dev/null 2>&1; then
+    echo "Installing yazi..."
+    yazi_version="v26.5.6"
+    case "$(uname -m)" in
+        x86_64)   yazi_arch="x86_64" ;;
+        aarch64)  yazi_arch="aarch64" ;;
+        *)
+            printf '%s\n' "Unsupported architecture for yazi: $(uname -m)" >&2
+            exit 1
+            ;;
+    esac
+    yazi_asset="yazi-${yazi_arch}-unknown-linux-gnu.zip"
+    yazi_url="https://github.com/sxyazi/yazi/releases/download/${yazi_version}/${yazi_asset}"
+    yazi_tmpdir="$(mktemp -d)"
+    curl -fsSL "$yazi_url" -o "$yazi_tmpdir/yazi.zip"
+    unzip -q "$yazi_tmpdir/yazi.zip" -d "$yazi_tmpdir"
+    sudo install -m 755 "$yazi_tmpdir/yazi-${yazi_arch}-unknown-linux-gnu/yazi" /usr/local/bin/yazi
+    rm -rf "$yazi_tmpdir"
+else
+    echo "yazi already installed."
 fi
 {{ end }}

@@ -101,4 +101,26 @@ if ! command -v yazi >/dev/null 2>&1; then
 else
     echo "yazi already installed."
 fi
+
+if ! command -v lazygit >/dev/null 2>&1; then
+    echo "Installing lazygit..."
+    lazygit_version="0.62.2"
+    case "$(uname -m)" in
+        x86_64)   lazygit_arch="x86_64" ;;
+        aarch64)  lazygit_arch="arm64" ;;
+        *)
+            printf '%s\n' "Unsupported architecture for lazygit: $(uname -m)" >&2
+            exit 1
+            ;;
+    esac
+    lazygit_asset="lazygit_${lazygit_version}_Linux_${lazygit_arch}.tar.gz"
+    lazygit_url="https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/${lazygit_asset}"
+    lazygit_tmpdir="$(mktemp -d)"
+    curl -fsSL "$lazygit_url" -o "$lazygit_tmpdir/lazygit.tar.gz"
+    tar -xzf "$lazygit_tmpdir/lazygit.tar.gz" -C "$lazygit_tmpdir"
+    sudo install -m 755 "$lazygit_tmpdir/lazygit" /usr/local/bin/lazygit
+    rm -rf "$lazygit_tmpdir"
+else
+    echo "lazygit already installed."
+fi
 {{ end }}

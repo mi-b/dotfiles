@@ -1,5 +1,6 @@
 add_newline = false
 command_timeout = 1000
+palette = "catppuccin"
 
 format = "$directory$git_branch$git_status$python$nodejs$golang$cmd_duration$line_break$character"
 
@@ -43,5 +44,3 @@ yellow = "#f9e2af"
 blue = "#89b4fa"
 green = "#a6e3a1"
 sapphire = "#74c7ec"
-
-palette = "catppuccin"

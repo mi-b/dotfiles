@@ -1,5 +1,7 @@
 # ~/.bashrc: managed by chezmoi
 
+# setxkbmap -option ctrl:nocaps
+
 have_cmd() {
     command -v "$1" >/dev/null 2>&1
 }
@@ -72,6 +74,8 @@ if have_cmd batcat; then
     alias bat='batcat'
 fi
 
+
+
 # Load distro completions when present.
 if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -89,6 +93,10 @@ fi
 
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init bash)"
+fi
+
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
 fi
 
 if command -v starship >/dev/null 2>&1; then

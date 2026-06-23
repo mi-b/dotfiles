@@ -2,7 +2,7 @@
 
 return {
   "nvim-treesitter/nvim-treesitter",
-  branch = "main",
+  commit = "4916d6",
   lazy = false,
   build = ":TSUpdate",
   config = function()
@@ -13,6 +13,8 @@ return {
 
     treesitter.setup({
       install_dir = vim.fn.stdpath("data") .. "/site",
+      ensure_installed = { "lua", "python", "c", "cpp", "bash", "toml", "markdown", "cmake"
+      },
     })
 
     -- Filetypes from UI plugins that have no treesitter parser.

@@ -29,6 +29,11 @@ return {
       })
       vim.lsp.enable("ts_ls")
 
+      vim.lsp.config("ruff", {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable("ruff")
+
       vim.lsp.config("ty", {
         capabilities = capabilities,
       })

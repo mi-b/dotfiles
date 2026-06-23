@@ -7,19 +7,17 @@ return {
     if not require("utils").is_windows() then
       table.insert(sources, null_ls.builtins.formatting.stylua)
       table.insert(sources, null_ls.builtins.formatting.prettier)
-      -- table.insert(sources, null_ls.builtins.formatting.ruff)
+      table.insert(sources, null_ls.builtins.formatting.ruff)
       table.insert(sources, null_ls.builtins.formatting.shfmt.with({
         condition = function()
           return not vim.api.nvim_buf_get_name(0):match("%.tmpl$")
         end,
         args = { "-i", "4" }
       }))
-      -- table.insert(sources, null_ls.builtins.formatting.rubocop)
-      -- table.insert(sources, null_ls.builtins.diagnostics.rubocop)
-      -- table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+      table.insert(sources, null_ls.builtins.formatting.clang_format)
     else
       table.insert(sources, null_ls.builtins.formatting.stylua)
-    end
+    ene
 
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     null_ls.setup({

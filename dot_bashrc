@@ -1,6 +1,6 @@
 # ~/.bashrc: managed by chezmoi
 
-# setxkbmap -option ctrl:nocaps
+setxkbmap -option ctrl:nocaps
 
 have_cmd() {
     command -v "$1" >/dev/null 2>&1

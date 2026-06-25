@@ -34,13 +34,13 @@ return {
 
       vim.lsp.config("ruff", {
         capabilities = capabilities,
-        root_dir = vim.fs.root(0, { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
+        root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
       })
       vim.lsp.enable("ruff")
 
       vim.lsp.config("ty", {
         capabilities = capabilities,
-        root_dir = vim.fs.root(0, { "pyproject.toml", ".git" }),
+        root_markers = { "pyproject.toml", ".git" },
         on_attach = function(client, bufnr)
           -- ty sends unused bindings as hint-severity (4) diagnostics.
           -- These don't appear in `ty check` CLI output and are noise in the editor.
@@ -65,14 +65,14 @@ return {
       })
       vim.lsp.enable("ty")
 
-      vim.lsp.config("clangd",{
+      vim.lsp.config("clangd", {
         capabilities = capabilities,
         cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
         },
       })
       vim.lsp.enable("clangd")

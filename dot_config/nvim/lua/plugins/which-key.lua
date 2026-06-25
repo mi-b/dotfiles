@@ -4,15 +4,15 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {},
-    -- keys = {
-    -- 	{
-    -- 		"<leader>?",
-    -- 		function()
-    -- 			require("which-key").show({ global = false })
-    -- 		end,
-    -- 		desc = "Buffer Local Keymaps (which-key)",
-    -- 	},
-    -- },
+    keys = {
+    	{
+    		"<leader>?",
+    		function()
+    			require("which-key").show({ global = false })
+    		end,
+    		desc = "Buffer Local Keymaps (which-key)",
+    	},
+    },
     config = function()
       local wk = require("which-key")
       wk.add({
@@ -49,6 +49,11 @@ return {
           { "<leader>bb", "<C-^><cr>",            desc = "Last used buffer" },
           { "<leader>bc", "<cmd>:%bd|e#|bd#<cr>", desc = "Close all other buffers" },
           { "<leader>bC", "<cmd>:bufdo bd<cr>",   desc = "Close all buffers" },
+          -- Terminal window navigation
+          { "<C-h>", "<C-w>h",   desc = "Terminal left window navigation" },
+          { "<C-j>", "<C-w>j",   desc = "Terminal down window navigation" },
+          { "<C-k>", "<C-w>k",   desc = "Terminal up window navigation" },
+          { "<C-l>", "<C-w>l",   desc = "Terminal right window navigation" },
         },
         {
           mode = { "n", "v" },
@@ -200,7 +205,3 @@ return {
 --     end
 --   end
 -- end
--- maps.t["<C-H>"] = { term_nav "h", desc = "Terminal left window navigation" }
--- maps.t["<C-J>"] = { term_nav "j", desc = "Terminal down window navigation" }
--- maps.t["<C-K>"] = { term_nav "k", desc = "Terminal up window navigation" }
--- maps.t["<C-L>"] = { term_nav "l", desc = "Terminal right window navigation" }

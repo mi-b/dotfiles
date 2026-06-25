@@ -1,5 +1,6 @@
 return {
   "ThePrimeagen/harpoon",
+  commit = "1bc17e3",
   config = function()
     require("harpoon").setup({})
     vim.keymap.set(

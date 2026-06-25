@@ -1,6 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
+    version = "^2.0.0",
     lazy = false,
     config = function()
       require("mason").setup()
@@ -8,6 +9,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "^2.0.0",
     lazy = false,
     opts = {
       auto_install = false,
@@ -15,6 +17,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    version = "^2.0.0",
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()

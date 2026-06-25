@@ -1,6 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	commit = "4916d6",
+	version = "^0.9.0",
 	lazy = false,
 	build = ":TSUpdate",
 	dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },

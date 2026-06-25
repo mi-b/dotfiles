@@ -1,7 +1,8 @@
 return {
-  { "nvim-tree/nvim-web-devicons", opts = {} },
+  { "nvim-tree/nvim-web-devicons", version = "^0.100", opts = {} },
   {
     "folke/which-key.nvim",
+    version = "^3.0.0",
     event = "VeryLazy",
     opts = {},
     keys = {

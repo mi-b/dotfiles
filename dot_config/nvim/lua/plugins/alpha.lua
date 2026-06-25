@@ -1,6 +1,7 @@
 return {
   "goolord/alpha-nvim",
-  dependencies = { "rubiin/fortune.nvim" },
+  commit = "6c6a89d",
+  dependencies = { { "rubiin/fortune.nvim", version = "^1.0.0" } },
   config = function()
     local alpha = require("alpha")
     local dashboard = require("alpha.themes.dashboard")

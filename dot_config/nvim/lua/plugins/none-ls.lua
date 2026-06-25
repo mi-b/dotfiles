@@ -1,6 +1,6 @@
 -- none-ls.nvim: Inject formatters and linters as LSP sources
 -- https://github.com/nvimtools/none-ls.nvim
--- Keys: <leader>gf = format current buffer
+-- Keys: <leader>lf = format current buffer
 return {
   "nvimtools/none-ls.nvim",
   commit = "01f8e62",
@@ -40,7 +40,7 @@ return {
       -- end,
     })
 
-    vim.keymap.set("n", "<leader>gf", function()
+    vim.keymap.set("n", "<leader>lf", function()
       vim.lsp.buf.format({
         async = false,
         filter = function(c)

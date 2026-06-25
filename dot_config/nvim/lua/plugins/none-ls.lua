@@ -39,7 +39,7 @@ return {
 
     vim.keymap.set("n", "<leader>gf", function()
       vim.lsp.buf.format({
-        async = false;
+        async = false,
         filter = function(c)
           if vim.bo.filetype == "python" then
             return c.name == "ruff"

@@ -1,3 +1,5 @@
+-- undotree: Visualise and navigate the undo history tree
+-- https://github.com/mbbill/undotree
 return {
 "mbbill/undotree",
   commit = "6fa6b57",

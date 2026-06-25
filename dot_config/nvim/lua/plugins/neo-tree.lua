@@ -1,3 +1,5 @@
+-- neo-tree.nvim: File explorer sidebar with git status and diagnostics
+-- https://github.com/nvim-neo-tree/neo-tree.nvim
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	commit = "ebd6676",

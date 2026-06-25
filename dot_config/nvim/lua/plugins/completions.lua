@@ -1,3 +1,5 @@
+-- blink.cmp: Fast completion engine with built-in LSP, snippet, and fuzzy support
+-- https://github.com/saghen/blink.cmp
 return {
   "saghen/blink.cmp",
   version = "^1.0.0",

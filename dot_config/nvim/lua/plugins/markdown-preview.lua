@@ -1,3 +1,5 @@
+-- markdown-preview.nvim: Live markdown preview in the browser
+-- https://github.com/iamcco/markdown-preview.nvim
 if require("utils").skip_if_windows("markdown-preview") then
   return {}
 end

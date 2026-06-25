@@ -1,3 +1,5 @@
+-- bufferline.nvim: Tab-style buffer bar with LSP diagnostics indicators
+-- https://github.com/akinsho/bufferline.nvim
 return {
   "akinsho/bufferline.nvim",
   version = "^4.0.0",

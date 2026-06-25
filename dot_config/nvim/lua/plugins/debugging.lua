@@ -1,3 +1,6 @@
+-- nvim-dap + dap-ui: Debug Adapter Protocol client with a graphical UI
+-- https://github.com/mfussenegger/nvim-dap
+-- https://github.com/rcarriga/nvim-dap-ui
 return {
   "mfussenegger/nvim-dap",
   version = "^0.10.0",

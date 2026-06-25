@@ -1,3 +1,5 @@
+-- flash.nvim: Navigate anywhere with search labels and treesitter integration
+-- https://github.com/folke/flash.nvim
 return {
   "folke/flash.nvim",
   version = "^2.0.0",

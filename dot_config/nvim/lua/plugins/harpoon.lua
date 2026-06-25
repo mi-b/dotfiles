@@ -1,3 +1,5 @@
+-- harpoon: Quick-switch between a small set of pinned files
+-- https://github.com/ThePrimeagen/harpoon
 return {
   "ThePrimeagen/harpoon",
   commit = "87b1a35",

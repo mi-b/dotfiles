@@ -1,3 +1,6 @@
+-- Git integration: fugitive (commands) and gitsigns (inline blame, hunk preview)
+-- https://github.com/tpope/vim-fugitive
+-- https://github.com/lewis6991/gitsigns.nvim
 return {
   { "tpope/vim-fugitive", version = "^3.0.0" },
   {

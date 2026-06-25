@@ -1,3 +1,5 @@
+-- nvim-treesitter: Syntax-aware highlighting, indentation, and code parsing
+-- https://github.com/nvim-treesitter/nvim-treesitter
 return {
 	"nvim-treesitter/nvim-treesitter",
 	version = "^0.9.0",

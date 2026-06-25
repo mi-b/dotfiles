@@ -1,3 +1,5 @@
+-- telescope.nvim: Fuzzy finder for files, text, diagnostics, and more
+-- https://github.com/nvim-telescope/telescope.nvim
 return {
 	{
 		"nvim-telescope/telescope.nvim",

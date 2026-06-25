@@ -1,3 +1,7 @@
+-- LSP configuration: Mason (installer), mason-lspconfig (auto-install), nvim-lspconfig (server configs)
+-- https://github.com/williamboman/mason.nvim
+-- https://github.com/williamboman/mason-lspconfig.nvim
+-- https://github.com/neovim/nvim-lspconfig
 return {
   {
     "williamboman/mason.nvim",

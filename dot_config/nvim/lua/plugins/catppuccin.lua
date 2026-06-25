@@ -1,3 +1,5 @@
+-- catppuccin: Warm pastel colour scheme with treesitter and LSP support
+-- https://github.com/catppuccin/nvim
 return {
   "catppuccin/nvim",
   name = "catppuccin",

@@ -1,3 +1,5 @@
+-- aerial.nvim: Code outline sidebar and symbol navigation
+-- https://github.com/stevearc/aerial.nvim
 return {
 	"stevearc/aerial.nvim",
 	version = "^4.0.0",

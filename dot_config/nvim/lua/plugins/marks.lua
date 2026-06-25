@@ -1,3 +1,5 @@
+-- marks.nvim: Enhanced mark management with signs and keymaps
+-- https://github.com/chentoast/marks.nvim
 return {
   "chentoast/marks.nvim",
   commit = "f353e8c",

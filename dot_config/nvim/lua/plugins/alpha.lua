@@ -1,3 +1,5 @@
+-- alpha-nvim: Customisable start screen with quick-access buttons
+-- https://github.com/goolord/alpha-nvim
 return {
   "goolord/alpha-nvim",
   commit = "6c6a89d",

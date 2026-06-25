@@ -7,7 +7,6 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	lazy = false,
-	opts = {},
 	config = function()
 		require("neo-tree").setup({
 			event_handlers = {

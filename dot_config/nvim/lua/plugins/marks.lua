@@ -2,7 +2,6 @@ return {
   "chentoast/marks.nvim",
   commit = "f353e8c",
   event = "VeryLazy",
-  opts = {},
   config = function()
     require 'marks'.setup {
       mappings = {

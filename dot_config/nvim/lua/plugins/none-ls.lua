@@ -47,6 +47,6 @@ return {
           return c.name == "null-ls"
         end,
       })
-    end, { desc = "format" })
+    end, { desc = "Format current buffer" })
   end,
 }

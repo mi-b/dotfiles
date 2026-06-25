@@ -7,7 +7,7 @@ return {
       keys = "etovxqpdygfblzhckisuran",
     }
     require("hop").setup(opts)
-    vim.keymap.set({ "n", "v" }, "<leader>jk", ":HopWord<CR>", { desc = "Hop Word" })
-    vim.keymap.set({ "n", "v" }, "<leader>jh", ":HopLine<CR>", { desc = "Hop Line" })
+    vim.keymap.set({ "n", "v" }, "<leader>jk", ":HopWord<CR>", { desc = "Jump to any word on screen" })
+    vim.keymap.set({ "n", "v" }, "<leader>jh", ":HopLine<CR>", { desc = "Jump to any line on screen" })
   end,
 }

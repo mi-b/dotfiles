@@ -26,9 +26,9 @@ return {
     dap.listeners.before.event_exited.dapui_config = function()
       dapui.close()
     end
-    vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, { desc = "debug toggle breakpoint" })
-    vim.keymap.set("n", "<Leader>dc", dap.continue, { desc = "debug continue" })
-    vim.keymap.set("n", "<Leader>dC", dap.continue, { desc = "debug run to cursor" })
-    vim.keymap.set("n", "<Leader>dT", dap.terminate, { desc = "debug terminate" })
+    vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, { desc = "Toggle breakpoint on current line" })
+    vim.keymap.set("n", "<Leader>dc", dap.continue, { desc = "Start or continue debugging" })
+    vim.keymap.set("n", "<Leader>dC", dap.run_to_cursor, { desc = "Run to cursor position" })
+    vim.keymap.set("n", "<Leader>dT", dap.terminate, { desc = "Terminate debug session" })
   end,
 }

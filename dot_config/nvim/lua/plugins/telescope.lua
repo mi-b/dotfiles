@@ -6,10 +6,10 @@ return {
 		config = function()
 			local builtin = require("telescope.builtin")
 
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
-			vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Find Resent Files" })
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
-			vim.keymap.set("n", "<leader>lD", ":Telescope diagnostics<CR>", { desc = "Telescope Diagnostics" })
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files by name" })
+			vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Find recently opened files" })
+			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find text in project (grep)" })
+			vim.keymap.set("n", "<leader>lD", builtin.diagnostics, { desc = "List all diagnostics" })
 		end,
 	},
 	{

@@ -8,18 +8,18 @@ return {
 
     vim.keymap.set("n", "<leader>jj", function()
       harpoon:list():add()
-    end, { desc = "Add to harpoon list" })
+    end, { desc = "Add file to harpoon list" })
 
     vim.keymap.set("n", "<leader>jf", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = "Harpoon list" })
+    end, { desc = "Toggle harpoon quick menu" })
 
     vim.keymap.set("n", "<S-h>", function()
       harpoon:list():prev()
-    end, { desc = "Previous harpoon file" })
+    end, { desc = "Go to previous harpoon file" })
 
     vim.keymap.set("n", "<S-l>", function()
       harpoon:list():next()
-    end, { desc = "Next harpoon file" })
+    end, { desc = "Go to next harpoon file" })
   end,
 }

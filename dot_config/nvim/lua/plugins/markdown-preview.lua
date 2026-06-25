@@ -19,8 +19,8 @@ return {
     vim.g.mkdp_open_to_the_world = 0
     vim.g.mkdp_theme = "dark"
 
-    vim.keymap.set("n", "<leader>Mp", ":MarkdownPreview<CR>", { desc = "Markdown preview" })
-    vim.keymap.set("n", "<leader>Ms", ":MarkdownPreviewStop<CR>", { desc = "Markdown preview stop" })
-    vim.keymap.set("n", "<leader>Mt", ":MarkdownPreviewToggle<CR>", { desc = "Markdown preview toggle" })
+    vim.keymap.set("n", "<leader>Mp", ":MarkdownPreview<CR>", { desc = "Start markdown preview in browser" })
+    vim.keymap.set("n", "<leader>Ms", ":MarkdownPreviewStop<CR>", { desc = "Stop markdown preview" })
+    vim.keymap.set("n", "<leader>Mt", ":MarkdownPreviewToggle<CR>", { desc = "Toggle markdown preview" })
   end,
 }

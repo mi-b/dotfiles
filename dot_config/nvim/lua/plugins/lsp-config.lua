@@ -77,8 +77,8 @@ return {
       })
       vim.lsp.enable("clangd")
 
-      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "lsp code action" })
-      vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename, { desc = "lsp rename" })
+      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Show code actions" })
+      vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename, { desc = "Rename symbol under cursor" })
     end,
   },
 }

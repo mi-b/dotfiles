@@ -20,6 +20,6 @@ return {
 				},
 			},
 		})
-		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle neo-tree" })
+		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle file explorer" })
 	end,
 }

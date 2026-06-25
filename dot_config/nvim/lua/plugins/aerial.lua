@@ -1,7 +1,6 @@
 return {
 	"stevearc/aerial.nvim",
 	version = "^4.0.0",
-	opts = {},
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
@@ -10,11 +9,11 @@ return {
 		local aerial = require("aerial")
 		aerial.setup({
 			on_attach = function(bufnr)
-				vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-				vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+				vim.keymap.set("n", "[s", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Jump to previous symbol" })
+				vim.keymap.set("n", "]s", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Jump to next symbol" })
 			end,
 		})
 
-		vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+		vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>", { desc = "Toggle symbol outline" })
 	end,
 }

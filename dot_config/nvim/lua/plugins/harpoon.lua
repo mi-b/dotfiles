@@ -1,31 +1,25 @@
 return {
   "ThePrimeagen/harpoon",
-  commit = "1bc17e3",
+  branch = "harpoon2",
+  dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
-    require("harpoon").setup({})
-    vim.keymap.set(
-      { "n", "v" },
-      "<leader>jf",
-      ':lua require("harpoon.ui").toggle_quick_menu()<CR>',
-      { desc = "Harpoon List" }
-    )
-    vim.keymap.set(
-      { "n", "v" },
-      "<leader>jj",
-      ':lua require("harpoon.mark").add_file()<CR>',
-      { desc = "Add to harpoon List" }
-    )
-    vim.keymap.set(
-      { "n", "v" },
-      "<S-h>",
-      ':lua require("harpoon.ui").nav_next()<CR>',
-      { desc = "Next harpoon file." }
-    )
-    vim.keymap.set(
-      { "n", "v" },
-      "<S-l>",
-      ':lua require("harpoon.ui").nav_prev()<CR>',
-      { desc = "Pevious harpoon file." }
-    )
+    local harpoon = require("harpoon")
+    harpoon:setup()
+
+    vim.keymap.set("n", "<leader>jj", function()
+      harpoon:list():add()
+    end, { desc = "Add to harpoon list" })
+
+    vim.keymap.set("n", "<leader>jf", function()
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end, { desc = "Harpoon list" })
+
+    vim.keymap.set("n", "<S-h>", function()
+      harpoon:list():prev()
+    end, { desc = "Previous harpoon file" })
+
+    vim.keymap.set("n", "<S-l>", function()
+      harpoon:list():next()
+    end, { desc = "Next harpoon file" })
   end,
 }

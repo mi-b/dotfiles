@@ -14,6 +14,7 @@ return {
 				severity_sort = false, -- Sort diagnostics by severity
 			})
 			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
+			vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Find Resent Files" })
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
 			vim.keymap.set("n", "<leader>lD", ":Telescope diagnostics<CR>", { desc = "Telescope Diagnostics" })
 		end,

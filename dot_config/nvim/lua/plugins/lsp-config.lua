@@ -51,10 +51,6 @@ return {
       })
       vim.lsp.enable("clangd")
 
-
-
-
-
       vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "lsp hover" })
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "lsp definition" })
       vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "lsp references" })

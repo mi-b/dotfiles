@@ -9,9 +9,15 @@ return {
 			install_dir = vim.fn.stdpath("data") .. "/site",
 			ensure_installed = { "lua", "python", "c", "cpp", "bash", "toml", "markdown", "cmake" },
 			auto_install = true,
-			indent = {
-				enable = true,
-			},
+		})
+
+		-- Enable treesitter-based indentation for all filetypes with a parser
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function()
+				if vim.treesitter.get_parser(0, vim.bo.filetype, { error = false }) then
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
+			end,
 		})
 	end,
 }

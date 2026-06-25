@@ -4,6 +4,8 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.undofile = true
+vim.opt.signcolumn = "yes"
 vim.g.mapleader = " "
 
 vim.diagnostic.config({

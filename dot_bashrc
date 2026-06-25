@@ -74,6 +74,9 @@ if have_cmd batcat; then
     alias bat='batcat'
 fi
 
+if have_cmd lazygit; then
+    alias lg='lazygit'
+fi
 
 
 # Load distro completions when present.

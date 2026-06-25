@@ -12,7 +12,7 @@ return {
     version = "^2.0.0",
     lazy = false,
     opts = {
-      auto_install = false,
+      auto_install = true,
     },
   },
   {

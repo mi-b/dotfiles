@@ -44,7 +44,8 @@ return {
           { "<leader>bn", "<cmd>bnext<cr>",       desc = "Go to next buffer" },
           { "<leader>bl", "<cmd>buffers<cr>",     desc = "List all buffers" },
           { "<leader>bb", "<C-^>",               desc = "Switch to last used buffer" },
-          { "<leader>bc", "<cmd>:%bd|e#|bd#<cr>", desc = "Close all other buffers" },
+          { "<leader>bc", "<cmd>bd<cr>",          desc = "Close current buffer" },
+          { "<leader>bo", "<cmd>:%bd|e#|bd#<cr>", desc = "Close all other buffers" },
           { "<leader>bC", "<cmd>:bufdo bd<cr>",   desc = "Close all buffers" },
         },
 
@@ -100,7 +101,6 @@ return {
           { "<leader>w", "<cmd>w<cr>",    desc = "Save file" },
           { "<leader>W", "<cmd>wall<cr>", desc = "Save all files" },
           { "<leader>i", "gg=G",          desc = "Re-indent entire file" },
-          { "<leader>c", "<cmd>bd<cr>",   desc = "Close current buffer" },
         },
       })
     end,

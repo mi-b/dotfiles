@@ -2,6 +2,8 @@
 -- https://github.com/williamboman/mason.nvim
 -- https://github.com/williamboman/mason-lspconfig.nvim
 -- https://github.com/neovim/nvim-lspconfig
+-- Keys (built-in): K = hover, gd = definition, grr = references,
+--                   gra = code action, grn = rename, gri = implementation
 return {
   {
     "williamboman/mason.nvim",

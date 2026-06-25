@@ -1,5 +1,6 @@
 -- nvim-treesitter-textobjects: Select, move, and operate on functions/classes as text objects
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+-- Keys: if/af = inner/outer function, ic/ac = inner/outer class (visual + operator)
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	commit = "851e865",

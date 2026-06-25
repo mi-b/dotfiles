@@ -1,5 +1,7 @@
 -- flash.nvim: Navigate anywhere with search labels and treesitter integration
 -- https://github.com/folke/flash.nvim
+-- Keys: s = jump to match, S = select treesitter node, r = remote flash (operator),
+--        R = search treesitter node, <C-s> = toggle flash in / search
 return {
   "folke/flash.nvim",
   version = "^2.0.0",

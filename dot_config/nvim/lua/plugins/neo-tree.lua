@@ -1,5 +1,6 @@
 -- neo-tree.nvim: File explorer sidebar with git status and diagnostics
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
+-- Keys: <leader>e = toggle file explorer
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	commit = "ebd6676",

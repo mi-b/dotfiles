@@ -1,5 +1,6 @@
 -- which-key.nvim: Popup showing available keybindings as you type
 -- https://github.com/folke/which-key.nvim
+-- Keys: <leader>? = show buffer-local keymaps (see config below for all bindings)
 return {
   { "nvim-tree/nvim-web-devicons", version = "^0.100", opts = {} },
   {

@@ -1,5 +1,6 @@
 -- none-ls.nvim: Inject formatters and linters as LSP sources
 -- https://github.com/nvimtools/none-ls.nvim
+-- Keys: <leader>gf = format current buffer
 return {
   "nvimtools/none-ls.nvim",
   commit = "01f8e62",

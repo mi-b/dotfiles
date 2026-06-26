@@ -1,5 +1,5 @@
 # ~/.bashrc: managed by chezmoi
-
+{{ if eq .chezmoi.os "linux" }}
 setxkbmap -option ctrl:nocaps
 
 have_cmd() {
@@ -48,17 +48,36 @@ export PATH
 if [ -f "$HOME/.local/bin/env" ]; then
     . "$HOME/.local/bin/env"
 fi
-
+{{ end }}
 # If not running interactively, do nothing.
 case $- in
     *i*) ;;
     *) return ;;
 esac
 
+# --- Cross-platform ------------------------------------------------
+
 HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=10000
 HISTFILESIZE=20000
 shopt -s histappend checkwinsize
+
+alias ..='cd ..'
+alias lg='lazygit'
+
+case ";${PROMPT_COMMAND:-};" in
+    *";history -a; history -n;"*) ;;
+    *)
+        if [ -n "${PROMPT_COMMAND:-}" ]; then
+            PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+        else
+            PROMPT_COMMAND="history -a; history -n"
+        fi
+        ;;
+esac
+export PROMPT_COMMAND
+{{ if eq .chezmoi.os "linux" }}
+# --- Linux only ----------------------------------------------------
 
 if [ -x /usr/bin/lesspipe ]; then
     eval "$(SHELL=/bin/sh lesspipe)"
@@ -73,11 +92,6 @@ fi
 if have_cmd batcat; then
     alias bat='batcat'
 fi
-
-if have_cmd lazygit; then
-    alias lg='lazygit'
-fi
-
 
 # Load distro completions when present.
 if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -105,18 +119,6 @@ fi
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init bash)"
 fi
-
-case ";${PROMPT_COMMAND:-};" in
-    *";history -a; history -n;"*) ;;
-    *)
-        if [ -n "${PROMPT_COMMAND:-}" ]; then
-            PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
-        else
-            PROMPT_COMMAND="history -a; history -n"
-        fi
-        ;;
-esac
-export PROMPT_COMMAND
 
 y() {
     local tmp cwd
@@ -167,3 +169,12 @@ fdn() {
     need_cmd nvim || return 1
     find -type d | fzf --preview="$(fzf_preview_cmd)" --bind 'enter:become(nvim {})'
 }
+{{ end }}
+{{- if eq .chezmoi.os "windows" }}
+# --- Windows only --------------------------------------------------
+{{ if eq .workspace "work" -}}
+alias nvn='nvim "/c/Users/mib/OneDrive - Helbling Holding AG/documents/Notes"'
+{{ end -}}
+eval "$('/c/excprog/starship/starship.exe' init bash)"
+eval "$('/c/excprog/zoxide/zoxide.exe' init bash)"
+{{ end -}}

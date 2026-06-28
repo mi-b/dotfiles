@@ -23,6 +23,8 @@
 * **[dropbar.nvim](https://github.com/Bekaboo/dropbar.nvim)** — breadcrumb navigation
 * **[noice.nvim](https://github.com/folke/noice.nvim)** — commandline/messages overhaul
 * Markdown → **[render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim)**
+oder markview? Yes!
+
 * Typst → **[typst-preview.nvim](https://github.com/chomosuke/typst-preview.nvim)**
 
 
@@ -34,6 +36,10 @@ Check behaviour of <C-Space>
 
 # Formatting
 How can i format all files? How to run something like uv run ty check ? or uv run ruff check?
+
+# Ai/Copletions
+Snippets
+Agent integration
 
 # General question
 How to actually run files (like python files? e.g. uv run python or uv run sim?)

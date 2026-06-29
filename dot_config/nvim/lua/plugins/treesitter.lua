@@ -5,7 +5,6 @@ return {
 	version = "^0.9.0",
 	lazy = false,
 	build = ":TSUpdate",
-	dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 	config = function()
 		require("nvim-treesitter").setup({
 			install_dir = vim.fn.stdpath("data") .. "/site",

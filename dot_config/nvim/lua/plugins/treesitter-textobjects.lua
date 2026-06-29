@@ -1,9 +1,11 @@
--- nvim-treesitter-textobjects: Select, move, and operate on functions/classes as text objects
+-- nvim-treesitter-textobjects: DISABLED — causes crash on Neovim 0.12.3
+-- (attempt to call method 'range' on nil in languagetree.lua)
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 -- Keys: if/af = inner/outer function, ic/ac = inner/outer class (visual + operator)
+--[[
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
-	commit = "851e865",
+	version = false,
 	init = function()
 		vim.g.no_plugin_maps = true
 	end,
@@ -33,3 +35,5 @@ return {
 		end, { desc = "Select entire class (including definition)" })
 	end,
 }
+--]]
+return {}

@@ -1,6 +1,6 @@
-if require("utils").skip_if_windows("markview") then
-	return {}
-end
+-- if require("utils").skip_if_windows("markview") then
+-- 	return {}
+-- end
 
 return {
 	"OXY2DEV/markview.nvim",

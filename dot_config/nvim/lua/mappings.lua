@@ -41,3 +41,6 @@ map("n", "J", "mzJ`z", { desc = "Join lines (cursor stays)" })
 
 -- Search and replace word under cursor
 map("n", "<leader>R", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace word under cursor" })
+
+-- Search and replace word under cursor
+map("n", "<leader>A", "ggVG", { desc = "Select everything in buffer" })

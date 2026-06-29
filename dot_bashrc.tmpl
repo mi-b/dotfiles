@@ -175,6 +175,10 @@ fdn() {
 {{ if eq .workspace "work" -}}
 alias nvn='nvim "/c/Users/mib/OneDrive - Helbling Holding AG/documents/Notes"'
 {{ end -}}
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+
 eval "$('/c/excprog/starship/starship.exe' init bash)"
 eval "$('/c/excprog/zoxide/zoxide.exe' init bash)"
 {{ end -}}

@@ -2,20 +2,38 @@
 -- https://github.com/nvim-treesitter/nvim-treesitter
 return {
 	"nvim-treesitter/nvim-treesitter",
-	version = "^0.9.0",
+	branch = "main",
+	version = false,
 	lazy = false,
 	build = ":TSUpdate",
 	config = function()
 		require("nvim-treesitter").setup({
 			install_dir = vim.fn.stdpath("data") .. "/site",
-			ensure_installed = { "lua", "python", "c", "cpp", "bash", "toml", "markdown", "cmake" },
-			auto_install = true,
+		})
+
+		-- Install parsers (async, no-op if already installed)
+		require("nvim-treesitter").install({
+			"lua",
+			"python",
+			"c",
+			"cpp",
+			"bash",
+			"toml",
+			"markdown",
+			"markdown_inline",
+			"cmake",
+			"html",
+			"latex",
+			"typst",
+			"yaml",
+			"comment",
 		})
 
 		-- Enable treesitter-based indentation for all filetypes with a parser
 		vim.api.nvim_create_autocmd("FileType", {
 			callback = function()
-				if vim.treesitter.get_parser(0, vim.bo.filetype, { error = false }) then
+				local ok, parser = pcall(vim.treesitter.get_parser, 0, vim.bo.filetype, { error = false })
+				if ok and parser then
 					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 				end
 			end,

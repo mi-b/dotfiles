@@ -45,6 +45,8 @@ return {
           { "<leader>bl", "<cmd>buffers<cr>",     desc = "List all buffers" },
           { "<leader>bb", "<C-^>",               desc = "Switch to last used buffer" },
           { "<leader>bc", "<cmd>bd<cr>",          desc = "Close current buffer" },
+          { "<leader>br", "<cmd>e!<cr>",          desc = "Revert buffer to saved" },
+          { "<leader>bR", "<cmd>bufdo e!<cr>",    desc = "Revert all buffers to saved" },
           { "<leader>bo", "<cmd>:%bd|e#|bd#<cr>", desc = "Close all other buffers" },
           { "<leader>bC", "<cmd>:bufdo bd<cr>",   desc = "Close all buffers" },
         },

@@ -2,8 +2,9 @@
 -- https://github.com/williamboman/mason.nvim
 -- https://github.com/williamboman/mason-lspconfig.nvim
 -- https://github.com/neovim/nvim-lspconfig
--- Keys (built-in): K = hover, gd = definition, grr = references,
---                   gra = code action, grn = rename, gri = implementation
+-- Keys (built-in): K = hover, grr = references, gra = code action, grn = rename,
+--                   gri = implementation, grt = type definition
+-- Keys (explicit): gd = definition, gD = declaration, gl = diagnostic float
 return {
   {
     "williamboman/mason.nvim",
@@ -82,6 +83,16 @@ return {
         },
       })
       vim.lsp.enable("clangd")
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("my.lsp.keymaps", { clear = true }),
+        callback = function(ev)
+          local opts = { buffer = ev.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition,  vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+          vim.keymap.set("n", "gl", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Show diagnostic float" }))
+        end,
+      })
     end,
   },
 }

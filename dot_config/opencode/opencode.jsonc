@@ -15,9 +15,11 @@
     "glob": "allow",
     "grep": "allow",
 
-    // Bash: allow git and common dev tools, ask for the rest
+    // Bash: allow git read-only and common dev tools, ask for the rest
     "bash": {
       "git *": "allow",
+      "git commit *": "deny",
+      "git push *": "deny",
       "uv *": "allow",
       "uvx *": "allow",
       "docker *": "allow",
@@ -29,7 +31,34 @@
       "bash scripts/*": "allow",
       "pytest *": "allow",
       "ls *": "allow",
+      "ls": "allow",
+      "pwd": "allow",
+      "cat *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "find *": "allow",
+      "tree *": "allow",
+      "tree": "allow",
       "wc *": "allow",
+      "which *": "allow",
+      "env": "allow",
+      "env *": "allow",
+      "echo *": "allow",
+      "printf *": "allow",
+      "realpath *": "allow",
+      "dirname *": "allow",
+      "basename *": "allow",
+      "stat *": "allow",
+      "file *": "allow",
+      "diff *": "allow",
+      "sort *": "allow",
+      "uniq *": "allow",
+      "cut *": "allow",
+      "tr *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "jq *": "allow",
+      "yq *": "allow",
       "mkdir *": "allow",
       "rm *": "ask",
       "*": "ask"
@@ -39,9 +68,20 @@
     "external_directory": {
       "~/.ssh/**": "deny",
       "~/.gnupg/**": "deny",
-      "~/.config/opencode/**": "allow",
+      "~/.config/opencode/**": "ask",
       "/tmp/opencode/**": "allow",
       "*": "ask"
+    }
+  },
+
+  // Per-agent overrides
+  "agent": {
+    "build": {
+      "permission": {
+        "bash": {
+          "git commit *": "ask"
+        }
+      }
     }
   }
 }

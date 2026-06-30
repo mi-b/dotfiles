@@ -73,6 +73,8 @@ return {
 
         {
           mode = "n",
+          { "[d", function() vim.diagnostic.jump({ count = -1 }) end,                                           desc = "Jump to previous diagnostic" },
+          { "]d", function() vim.diagnostic.jump({ count = 1 }) end,                                            desc = "Jump to next diagnostic" },
           { "[e", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, desc = "Jump to previous error" },
           { "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end,  desc = "Jump to next error" },
           { "[w", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN }) end,  desc = "Jump to previous warning" },

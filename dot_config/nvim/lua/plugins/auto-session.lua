@@ -5,8 +5,9 @@ return {
   version = "^2.0.0",
   config = function()
     local opts = {
-      auto_restore = true,
+      auto_restore = false,
       auto_save = true,
+      bypass_save_filetypes = { "alpha", "neo-tree" },
     }
     require("auto-session").setup(opts)
   end,

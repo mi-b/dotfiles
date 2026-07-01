@@ -12,7 +12,6 @@
 
 # To consider using
 * **[tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim)** — diagnostics inline, not floating.
-* **[flash.nvim](https://github.com/folke/flash.nvim)** — modern easymotion replacement; insanely smooth.
 * **[treesj](https://github.com/Wansmer/treesj)** — split/join code blocks (`{ a, b } ↔ multiline`)
 * **[mini.ai](https://github.com/echasnovski/mini.nvim)** — smarter textobjects
 * **[dial.nvim](https://github.com/monaqa/dial.nvim)** — increment anything (dates, booleans, enums)
@@ -22,11 +21,10 @@
 * **[snacks.nvim](https://github.com/folke/snacks.nvim)** — huge sleeper hit; dashboard, picker, notifier, explorer
 * **[dropbar.nvim](https://github.com/Bekaboo/dropbar.nvim)** — breadcrumb navigation
 * **[noice.nvim](https://github.com/folke/noice.nvim)** — commandline/messages overhaul
-* Markdown → **[render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim)**
-oder markview? Yes!
-
 * Typst → **[typst-preview.nvim](https://github.com/chomosuke/typst-preview.nvim)**
 
+
+* [Kitty Scrollback](https://github.com/mikesmithgh/kitty-scrollback.nvim)
 
 # Maybe for later
 Replace none-ls with conform.nvim and nvim-lint

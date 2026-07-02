@@ -26,6 +26,15 @@
 
 * [Kitty Scrollback](https://github.com/mikesmithgh/kitty-scrollback.nvim)
 
+* [snacks](github.com/folke/snacks.nvim)
+    - scope
+    - words
+    - toggle
+    - statuscolums
+    - scroll
+    - notifier
+    - picker
+
 # Maybe for later
 Replace none-ls with conform.nvim and nvim-lint
 

@@ -1,6 +1,11 @@
 -- which-key.nvim: Popup showing available keybindings as you type
 -- https://github.com/folke/which-key.nvim
--- Keys: <leader>? = show buffer-local keymaps (see config below for all bindings)
+-- Keys: <leader>?  = show buffer-local keymaps
+--        <leader>/  = toggle comment        | <leader>q  = quit window
+--        <leader>w  = save file             | <leader>i  = re-indent file
+--        <leader>b* = buffer management     | <leader>x* = quickfix / location list
+--        C-h/j/k/l  = move focus between splits
+--        |/\         = create vertical/horizontal split
 return {
   { "nvim-tree/nvim-web-devicons", version = "^0.100", opts = {} },
   {

@@ -1,6 +1,6 @@
 -- markdown-preview.nvim: Live markdown preview in the browser
 -- https://github.com/iamcco/markdown-preview.nvim
--- Keys: <leader>Mp = start preview, <leader>Ms = stop, <leader>Mt = toggle
+-- Keys: <leader>Mp = start preview | <leader>Ms = stop | <leader>Mt = toggle
 if require("utils").skip_if_windows("markdown-preview") then
   return {}
 end

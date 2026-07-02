@@ -1,6 +1,6 @@
 -- aerial.nvim: Code outline sidebar and symbol navigation
 -- https://github.com/stevearc/aerial.nvim
--- Keys: <leader>a = toggle outline, [s/]s = prev/next symbol
+-- Keys: <leader>a = toggle outline | [s = prev symbol | ]s = next symbol
 return {
 	"stevearc/aerial.nvim",
 	version = "^4.0.0",

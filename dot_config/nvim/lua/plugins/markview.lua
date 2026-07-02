@@ -1,3 +1,7 @@
+-- markview.nvim: In-editor markdown rendering with preview and splitview
+-- https://github.com/OXY2DEV/markview.nvim
+-- Keys: <leader>MM = toggle preview | <leader>MS = toggle splitview
+
 -- if require("utils").skip_if_windows("markview") then
 -- 	return {}
 -- end

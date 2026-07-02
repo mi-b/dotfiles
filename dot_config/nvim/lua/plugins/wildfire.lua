@@ -1,5 +1,6 @@
 -- wildfire.nvim: Incremental treesitter node selection
 -- https://github.com/SUSTech-data/wildfire.nvim
+-- Keys: <CR> = start/expand selection | <BS> = shrink selection
 return {
 	"sustech-data/wildfire.nvim",
 	event = "VeryLazy",

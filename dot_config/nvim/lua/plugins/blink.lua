@@ -1,7 +1,8 @@
 -- blink.cmp: Fast completion engine with built-in LSP, snippet, and fuzzy support
 -- https://github.com/saghen/blink.cmp
--- Keys: <C-n>/<C-p> = next/prev item, <C-y> = accept, <C-e> = dismiss,
---        <C-b>/<C-f> = scroll docs, <Tab>/<S-Tab> = snippet jump, <C-k> = signature
+-- Keys: <C-n>/<C-p>     = next/prev item   | <C-y>       = accept
+--        <C-e>           = dismiss           | <C-b>/<C-f> = scroll docs
+--        <Tab>/<S-Tab>   = snippet jump      | <C-k>       = signature help
 return {
   "saghen/blink.cmp",
   version = "^1.0.0",

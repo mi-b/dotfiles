@@ -1,7 +1,8 @@
 -- telescope.nvim: Fuzzy finder for files, text, diagnostics, and more
 -- https://github.com/nvim-telescope/telescope.nvim
--- Keys: <leader>ff = find files, <leader>fr = recent (frecency),
---        <leader>fg = live grep, <leader>fd = find diagnostics
+-- Keys: <leader>ff = find files     | <leader>fr = recent (frecency)
+--        <leader>fg = live grep      | <leader>fd = find diagnostics
+--        <leader>fk = find keymaps
 return {
 	{
 		"nvim-telescope/telescope.nvim",

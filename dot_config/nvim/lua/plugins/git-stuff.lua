@@ -1,7 +1,7 @@
 -- Git integration: fugitive (commands) and gitsigns (inline blame, hunk preview)
 -- https://github.com/tpope/vim-fugitive
 -- https://github.com/lewis6991/gitsigns.nvim
--- Keys: <leader>gp = preview hunk, <leader>gt = toggle line blame
+-- Keys: <leader>gp = preview git hunk | <leader>gt = toggle line blame
 return {
   { "tpope/vim-fugitive", version = "^3.0.0" },
   {

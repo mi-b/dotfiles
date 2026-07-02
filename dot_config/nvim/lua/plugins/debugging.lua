@@ -1,8 +1,8 @@
 -- nvim-dap + dap-ui: Debug Adapter Protocol client with a graphical UI
 -- https://github.com/mfussenegger/nvim-dap
 -- https://github.com/rcarriga/nvim-dap-ui
--- Keys: <leader>dt = toggle breakpoint, <leader>dc = continue,
---        <leader>dC = run to cursor, <leader>dT = terminate
+-- Keys: <leader>dt = toggle breakpoint  | <leader>dc = continue
+--        <leader>dC = run to cursor      | <leader>dT = terminate
 return {
   "mfussenegger/nvim-dap",
   version = "^0.10.0",

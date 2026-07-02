@@ -1,3 +1,7 @@
+-- vim-floaterm: Floating terminal overlay
+-- https://github.com/voldikss/vim-floaterm
+-- Keys: <leader>tt = toggle terminal | <leader>tl = open lazygit
+--        <leader>tn = new terminal
 return {
   "voldikss/vim-floaterm",
   config = function()

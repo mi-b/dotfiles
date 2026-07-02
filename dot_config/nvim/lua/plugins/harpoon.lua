@@ -1,6 +1,7 @@
 -- harpoon: Quick-switch between a small set of pinned files
 -- https://github.com/ThePrimeagen/harpoon
--- Keys: <leader>jj = add file, <leader>jf = toggle menu, [h/]h = prev/next file
+-- Keys: <leader>jj = add file     | <leader>jf = toggle menu
+--        [h         = prev file    | ]h         = next file
 return {
   "ThePrimeagen/harpoon",
   commit = "87b1a35",

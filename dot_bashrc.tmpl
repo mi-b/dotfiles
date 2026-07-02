@@ -173,7 +173,7 @@ fdn() {
 {{- if eq .chezmoi.os "windows" }}
 # --- Windows only --------------------------------------------------
 {{ if eq .workspace "work" -}}
-alias nvn='nvim "/c/Users/mib/OneDrive - Helbling Holding AG/documents/Notes"'
+alias nvn='cd "/c/Users/mib/OneDrive - Helbling Holding AG/documents/Notes" && nvim'
 {{ end -}}
 
 export EDITOR="nvim"

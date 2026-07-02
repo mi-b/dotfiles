@@ -7,7 +7,6 @@ return {
     "folke/which-key.nvim",
     version = "^3.0.0",
     event = "VeryLazy",
-    opts = {},
     keys = {
       {
         "<leader>?",
@@ -19,16 +18,57 @@ return {
     },
     config = function()
       local wk = require("which-key")
+      wk.setup({
+        icons = {
+          rules = {
+            -- File / tree
+            { pattern = "file explorer",         cat = "filetype", name = "neo-tree" },
+            { pattern = "symbol outline",        icon = "󰊕", color = "cyan" },
+            -- Flash / jump
+            { pattern = "jump to any",           icon = "󰉁", color = "yellow" },
+            { pattern = "treesitter",            icon = "󱏒", color = "green" },
+            -- Edit actions
+            { pattern = "replace",               icon = "󰉈", color = "red" },
+            { pattern = "select every",          icon = "󰒆", color = "cyan" },
+            { pattern = "clipboard",             icon = "󰅇", color = "yellow" },
+            { pattern = "yank",                  icon = "󰅇", color = "yellow" },
+            { pattern = "undo",                  icon = "󰕌", color = "orange" },
+            { pattern = "indent entire",         icon = "󰉵", color = "cyan" },
+            { pattern = "comment",               icon = "󰆈", color = "grey" },
+            -- Help / meta
+            { pattern = "buffer%-local keymaps", icon = "󰌌", color = "purple" },
+            -- Git
+            { pattern = "hunk",                  icon = "󰈈", color = "green" },
+            { pattern = "blame",                 icon = "󰅈", color = "orange" },
+            { pattern = "lazygit",               cat = "filetype", name = "git" },
+            -- Terminal
+            { pattern = "new terminal",          icon = "󰐕", color = "green" },
+            -- Debug
+            { pattern = "breakpoint",            icon = "󰺕", color = "red" },
+            { pattern = "continue",              icon = "󰐊", color = "green" },
+            { pattern = "run to cursor",         icon = "󰳽", color = "azure" },
+            { pattern = "terminate",             icon = "󰓛", color = "red" },
+            -- Save / quit
+            { pattern = "save file",             icon = "󰆓", color = "green" },
+            { pattern = "save all",              icon = "󰆔", color = "green" },
+            { pattern = "quit",                  icon = "󰅖", color = "red" },
+          },
+        },
+      })
       wk.add({
-        { "<leader>b", group = "Buffers",        icon = "📑" },
-        { "<leader>d", group = "Debug",          icon = "🐞" },
-        { "<leader>f", group = "Find",           icon = "🔍" },
-        { "<leader>j", group = "Harpoon",        icon = "🪝" },
-        { "<leader>l", group = "Language Tools", icon = "🌐" },
-        { "<leader>m", group = "Marks",          icon = "📌" },
-        { "<leader>g", group = "Git",            icon = "🌱" },
-        { "<leader>M", group = "Markdown",       icon = "📝" },
-        { "<leader>x", group = "Lists",          icon = "📋" },
+        -- Groups using nvim-web-devicons (coloured automatically)
+        { "<leader>g", group = "Git",            icon = { cat = "filetype", name = "git" } },
+        { "<leader>t", group = "Terminal",       icon = { cat = "filetype", name = "terminal" } },
+        { "<leader>M", group = "Markdown",       icon = { cat = "filetype", name = "markdown" } },
+
+        -- Groups with coloured Nerd Font icons
+        { "<leader>b", group = "Buffers",        icon = { icon = "󰈢", color = "blue" } },
+        { "<leader>d", group = "Debug",          icon = { icon = "󰠭", color = "red" } },
+        { "<leader>f", group = "Find",           icon = { icon = "󰍉", color = "green" } },
+        { "<leader>j", group = "Harpoon",        icon = { icon = "󰛢", color = "azure" } },
+        { "<leader>l", group = "Language Tools", icon = { icon = "󰅴", color = "orange" } },
+        { "<leader>m", group = "Marks",          icon = { icon = "󰃀", color = "yellow" } },
+        { "<leader>x", group = "Lists",          icon = { icon = "󰉹", color = "purple" } },
 
         {
           "<leader>b",

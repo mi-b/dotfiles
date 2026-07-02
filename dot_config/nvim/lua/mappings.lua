@@ -1,12 +1,10 @@
 local map = vim.keymap.set
-local opts = { noremap = true }
 
 -- No clipboard override with x, s, c, Del and visual p
-map("n", "x", '"_x', opts)
-map("n", "X", '"_X', opts)
-map({ "n", "v" }, "s", '"_s', opts)
-map({ "n", "v" }, "S", '"_S', opts)
-
+map("n", "x", '"_x', { noremap = true, desc = "Delete char (no yank)" })
+map("n", "X", '"_X', { noremap = true, desc = "Delete char before (no yank)" })
+map({ "n", "v" }, "s", '"_s', { noremap = true, desc = "Substitute (no yank)" })
+map({ "n", "v" }, "S", '"_S', { noremap = true, desc = "Substitute line (no yank)" })
 
 -- Yank to / paste from system clipboard
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
@@ -14,10 +12,10 @@ map("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
 map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 map({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste from system clipboard (before)" })
 
-map({ "n", "v" }, "c", '"_c', opts)
-map({ "n", "v" }, "C", '"_C', opts)
-map({ "n", "v" }, "<Del>", '"_x', opts)
-map("v", "p", "pgvy", opts)
+map({ "n", "v" }, "c", '"_c', { noremap = true, desc = "Change (no yank)" })
+map({ "n", "v" }, "C", '"_C', { noremap = true, desc = "Change to end of line (no yank)" })
+map({ "n", "v" }, "<Del>", '"_x', { noremap = true, desc = "Delete char (no yank)" })
+map("v", "p", "pgvy", { noremap = true, desc = "Paste (keep register)" })
 
 -- Clear search highlighting on Esc
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlighting" })
@@ -42,5 +40,5 @@ map("n", "J", "mzJ`z", { desc = "Join lines (cursor stays)" })
 -- Search and replace word under cursor
 map("n", "<leader>R", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace word under cursor" })
 
--- Search and replace word under cursor
+-- Select everything in buffer
 map("n", "<leader>A", "ggVG", { desc = "Select everything in buffer" })

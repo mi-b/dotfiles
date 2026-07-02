@@ -27,9 +27,15 @@ return {
 			telescope.load_extension("frecency")
 
 			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files by name" })
-			vim.keymap.set("n", "<leader>fr", "<cmd>Telescope frecency<cr>", { desc = "Find recently opened files (frecency)" })
+			vim.keymap.set(
+				"n",
+				"<leader>fr",
+				"<cmd>Telescope frecency<cr>",
+				{ desc = "Find recently opened files (frecency)" }
+			)
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find text in project (grep)" })
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
+			vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Telescope keymaps" })
 		end,
 	},
 }

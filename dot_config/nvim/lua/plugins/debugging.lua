@@ -7,7 +7,7 @@ return {
   "mfussenegger/nvim-dap",
   version = "^0.10.0",
   dependencies = {
-    { "rcarriga/nvim-dap-ui", version = "^4.0.0" },
+    { "rcarriga/nvim-dap-ui" },
     { "nvim-neotest/nvim-nio", version = "^1.0.0" },
     { "leoluz/nvim-dap-go", commit = "b442115" },
     { "mfussenegger/nvim-dap-python", commit = "1808458" },

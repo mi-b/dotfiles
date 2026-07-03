@@ -4,6 +4,7 @@
 --        <leader>/  = toggle comment        | <leader>q  = quit window
 --        <leader>w  = save file             | <leader>i  = re-indent file
 --        <leader>b* = buffer management     | <leader>x* = quickfix / location list
+--        <leader>o* = option toggles (snacks.toggle)
 --        C-h/j/k/l  = move focus between splits
 --        |/\         = create vertical/horizontal split
 return {
@@ -73,6 +74,7 @@ return {
         { "<leader>j", group = "Harpoon",        icon = { icon = "󰛢", color = "azure" } },
         { "<leader>l", group = "Language Tools", icon = { icon = "󰅴", color = "orange" } },
         { "<leader>m", group = "Marks",          icon = { icon = "󰃀", color = "yellow" } },
+        { "<leader>o", group = "Options",        icon = { icon = "󰒓", color = "cyan" } },
         { "<leader>x", group = "Lists",          icon = { icon = "󰉹", color = "purple" } },
 
         {

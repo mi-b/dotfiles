@@ -3,6 +3,7 @@
 return {
 	"amansingh-afk/milli.nvim",
 	lazy = false,
+	cond = not vim.env.SSH_TTY,
 	config = function()
 		require("milli").alpha({ splash = "flyingdragon", loop = true })
 	end,

@@ -27,13 +27,8 @@
 * [Kitty Scrollback](https://github.com/mikesmithgh/kitty-scrollback.nvim)
 
 * [snacks](github.com/folke/snacks.nvim)
-    - scope
-    - words
-    - toggle
-    - statuscolums
-    - scroll
-    - notifier
-    - picker
+    - picker --> would replace telescope
+    - profiler --> profiling Neovim Lua?
 
 # Maybe for later
 Replace none-ls with conform.nvim and nvim-lint
@@ -44,7 +39,7 @@ Check behaviour of <C-Space>
 # Formatting
 How can i format all files? How to run something like uv run ty check ? or uv run ruff check?
 
-# Ai/Copletions
+# Ai/Completions
 Snippets
 Agent integration
 

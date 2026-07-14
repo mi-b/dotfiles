@@ -52,7 +52,7 @@ return {
 		-- ── Module configuration ────────────────────────────────────────
 		bigfile = { enabled = true },
 		quickfile = { enabled = true },
-		notifier = { enabled = false },
+		notifier = { enabled = true },
 		indent = { enabled = false },
 		words = { enabled = false },
 		input = { enabled = false },
@@ -82,6 +82,12 @@ return {
 
 	-- ── Toggles (set up after plugins load) ──────────────────────────
 	init = function()
+		-- Override vim.notify so all notifications route through snacks
+		---@diagnostic disable-next-line: duplicate-set-field
+		vim.notify = function(msg, level, opts)
+			Snacks.notifier.notify(msg, level, opts)
+		end
+
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()

@@ -53,7 +53,7 @@ return {
 		bigfile = { enabled = true },
 		quickfile = { enabled = true },
 		notifier = { enabled = true },
-		indent = { enabled = false },
+		indent = { enabled = true, only_scope = true, only_current = true },
 		words = { enabled = false },
 		input = { enabled = false },
 		scope = { enabled = false }, -- NOTE: could replace wildfire.nvim

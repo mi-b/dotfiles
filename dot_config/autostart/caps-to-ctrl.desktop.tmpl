@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "linux" }}
+[Desktop Entry]
+Type=Application
+Name=Caps Lock to Ctrl
+Exec=setxkbmap -option ctrl:nocaps
+X-GNOME-Autostart-enabled=true
+{{ end -}}

@@ -10,27 +10,17 @@ return {
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
+		local milli_utils = require("milli_utils")
 
-    -- Set header to first frame of milli animation (milli replaces it with
-    -- subsequent frames once the alpha buffer opens)
-    -- Crop the splash to remove blank padding rows (45 -> ~23 lines)
-    local ok, splash = pcall(require, "milli.splashes.flyingdragon")
-    if ok and splash.frames then
-      local top, bottom = 13, 36 -- keep rows 14-36 (content region)
-      for i, frame in ipairs(splash.frames) do
-        splash.frames[i] = vim.list_slice(frame, top + 1, bottom)
-      end
-      if splash.colors then
-        for i, cframe in ipairs(splash.colors) do
-          splash.colors[i] = vim.list_slice(cframe, top + 1, bottom)
-        end
-      end
-      for i, d in ipairs(splash.delays) do
-        splash.delays[i] = d * 1.1
-      end
-      splash.rows = bottom - top
-      dashboard.section.header.val = splash.frames[1]
-    else
+		-- Set header to first frame of milli animation (milli replaces it with
+		-- subsequent frames once the alpha buffer opens)
+		-- Crop the splash to remove blank padding rows (45 -> ~23 lines)
+		local ok, splash = pcall(function()
+			return milli_utils.load_splash("flyingdragon", 13, 36)
+		end)
+		if ok and splash.frames then
+			dashboard.section.header.val = splash.frames[1]
+		else
 			dashboard.section.header.val = {
 				[[                                                                       ]],
 				[[                                                                       ]],

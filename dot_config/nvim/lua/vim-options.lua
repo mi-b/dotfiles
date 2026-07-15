@@ -9,18 +9,17 @@ vim.opt.signcolumn = "yes"
 vim.g.mapleader = " "
 
 vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = false,
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = false,
 })
 
-
 vim.filetype.add({
-  pattern = {
-    [".*%.yaml%.tmpl"] = "yaml",
-    [".*%.toml%.tmpl"] = "toml",
-    [".*%.sh%.tmpl"] = "sh",
-  },
+	pattern = {
+		[".*%.yaml%.tmpl"] = "yaml",
+		[".*%.toml%.tmpl"] = "toml",
+		[".*%.sh%.tmpl"] = "sh",
+	},
 })

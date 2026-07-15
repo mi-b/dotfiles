@@ -65,19 +65,63 @@ return {
 		-- Zen
 
 		-- Buffer delete (replaces <leader>bc and <leader>bo in which-key.lua)
-		{ "<leader>bc", function() Snacks.bufdelete() end, desc = "Delete current buffer (layout-safe)" },
-		{ "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete all other buffers" },
+		{
+			"<leader>bc",
+			function()
+				Snacks.bufdelete()
+			end,
+			desc = "Delete current buffer (layout-safe)",
+		},
+		{
+			"<leader>bo",
+			function()
+				Snacks.bufdelete.other()
+			end,
+			desc = "Delete all other buffers",
+		},
 
 		-- Rename
-		{ "<leader>lr", function() Snacks.rename.rename_file() end, desc = "Rename file (LSP-aware)" },
+		{
+			"<leader>lr",
+			function()
+				Snacks.rename.rename_file()
+			end,
+			desc = "Rename file (LSP-aware)",
+		},
 
 		-- Notifier
-		{ "<leader>n", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
-		{ "<leader>N", function() Snacks.notifier.show_history() end, desc = "Show notification history" },
+		{
+			"<leader>n",
+			function()
+				Snacks.notifier.hide()
+			end,
+			desc = "Dismiss all notifications",
+		},
+		{
+			"<leader>N",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Show notification history",
+		},
 
 		-- Words (LSP references)
-		{ "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Jump to next LSP reference", mode = { "n", "t" } },
-		{ "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Jump to previous LSP reference", mode = { "n", "t" } },
+		{
+			"]]",
+			function()
+				Snacks.words.jump(vim.v.count1)
+			end,
+			desc = "Jump to next LSP reference",
+			mode = { "n", "t" },
+		},
+		{
+			"[[",
+			function()
+				Snacks.words.jump(-vim.v.count1)
+			end,
+			desc = "Jump to previous LSP reference",
+			mode = { "n", "t" },
+		},
 	},
 
 	-- ── Toggles (set up after plugins load) ──────────────────────────
@@ -100,11 +144,13 @@ return {
 				Snacks.toggle.inlay_hints():map("<leader>oi")
 				Snacks.toggle.indent():map("<leader>og")
 				Snacks.toggle.dim():map("<leader>oD")
-				Snacks.toggle.option("conceallevel", {
-					off = 0,
-					on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-					name = "Conceal level",
-				}):map("<leader>oc")
+				Snacks.toggle
+					.option("conceallevel", {
+						off = 0,
+						on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+						name = "Conceal level",
+					})
+					:map("<leader>oc")
 			end,
 		})
 	end,

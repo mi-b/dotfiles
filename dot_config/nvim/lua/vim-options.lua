@@ -6,6 +6,13 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.undofile = true
 vim.opt.signcolumn = "yes"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldcolumn = "1"
+vim.opt.foldtext = "v:lua.require'folds'.foldtext()"
 vim.g.mapleader = " "
 
 vim.diagnostic.config({

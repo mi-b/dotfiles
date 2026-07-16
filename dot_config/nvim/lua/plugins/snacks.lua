@@ -57,7 +57,7 @@ return {
 		words = { enabled = false },
 		input = { enabled = true },
 		scope = { enabled = false }, -- NOTE: could replace wildfire.nvim
-		statuscolumn = { enabled = false },
+		statuscolumn = { enabled = true },
 	},
 
 	-- ── Keymaps ──────────────────────────────────────────────────────

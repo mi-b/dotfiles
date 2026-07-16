@@ -10,13 +10,13 @@ return {
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
-		local milli_utils = require("milli_utils")
+		local ui = require("ui")
 
 		-- Set header to first frame of milli animation (milli replaces it with
 		-- subsequent frames once the alpha buffer opens)
 		-- Crop the splash to remove blank padding rows (45 -> ~23 lines)
 		local ok, splash = pcall(function()
-			return milli_utils.load_splash("flyingdragon", 13, 36)
+			return ui.load_splash("flyingdragon", 13, 36)
 		end)
 		if ok and splash.frames then
 			dashboard.section.header.val = splash.frames[1]

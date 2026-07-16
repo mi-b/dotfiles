@@ -5,7 +5,7 @@ return {
 	lazy = false,
 	cond = not (vim.env.SSH_TTY or vim.env.SSH_CLIENT),
 	config = function()
-		local splash = require("milli_utils").load_splash("flyingdragon", 13, 36)
+		local splash = require("ui").load_splash("flyingdragon", 13, 36)
 		require("milli").alpha({ data = splash, loop = true })
 	end,
 }

@@ -47,3 +47,14 @@ map(
 
 -- Select everything in buffer
 map("n", "<leader>A", "ggVG", { desc = "Select everything in buffer" })
+
+-- Treesitter structure navigation
+map("n", "<leader>la", function()
+	require("tsht").nodes()
+end, { desc = "Select AST node" })
+map("n", "<leader>lA", function()
+	local ok, err = pcall(require("tsht").move)
+	if not ok then
+		vim.notify("AST move requires an attached LSP with selectionRange support", vim.log.levels.WARN)
+	end
+end, { desc = "Move to AST node" })

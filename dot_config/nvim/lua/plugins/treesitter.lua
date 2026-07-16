@@ -53,4 +53,9 @@ return {
 			max_lines = 3,
 		},
 	},
+	{
+		"mfussenegger/nvim-treehopper",
+		dependencies = { "smoka7/hop.nvim" },
+		lazy = false,
+	},
 }

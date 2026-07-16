@@ -55,7 +55,7 @@ return {
 		notifier = { enabled = true },
 		indent = { enabled = true, only_scope = true, only_current = true },
 		words = { enabled = false },
-		input = { enabled = false },
+		input = { enabled = true },
 		scope = { enabled = false }, -- NOTE: could replace wildfire.nvim
 		statuscolumn = { enabled = false },
 	},

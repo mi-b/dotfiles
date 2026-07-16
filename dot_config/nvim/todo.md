@@ -47,3 +47,5 @@ Agent integration
 How to actually run files (like python files? e.g. uv run python or uv run sim?)
 
 
+* **[trouble.nvim](https://github.com/folke/trouble.nvim)** — diagnostics, references, and lists in a saner UI
+* **[smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim)** — smarter split navigation and resizing

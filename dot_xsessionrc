@@ -1,0 +1,3 @@
+#!/bin/sh
+# Apply keyboard options on session start
+setxkbmap -layout ch -option ctrl:nocaps

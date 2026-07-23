@@ -11,6 +11,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-frecency.nvim", version = "^1.0.0" },
 			{ "nvim-telescope/telescope-ui-select.nvim", commit = "6e51d7d" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -35,8 +36,11 @@ return {
 				{ desc = "Find recently opened files (frecency)" }
 			)
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find text in project (grep)" })
+			vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Grep word under cursor" })
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
 			vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find keymaps" })
+			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help tags" })
 		end,
 	},
 }

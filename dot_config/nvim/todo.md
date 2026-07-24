@@ -30,6 +30,9 @@
     - picker --> would replace telescope
     - profiler --> profiling Neovim Lua?
 
+https://github.com/nvim-mini/mini.nvim
+
+
 # Maybe for later
 Replace none-ls with conform.nvim and nvim-lint
 

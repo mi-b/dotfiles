@@ -1,5 +1,9 @@
 os:
   editPreset: "nvim"
+git:
+  pagers:
+    - pager: delta --paging=never --side-by-side --features catppuccin-mocha
+    - {}
 gui:
   sidePanelWidth: 0.2
   theme:

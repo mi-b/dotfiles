@@ -3,6 +3,8 @@
 	email = {{ .git.userEmail | quote }}
 [init]
 	defaultBranch = main
+[include]
+	path = ~/.config/delta/catppuccin.gitconfig
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

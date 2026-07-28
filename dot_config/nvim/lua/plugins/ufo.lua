@@ -4,7 +4,11 @@ return {
 		dependencies = { "kevinhwang91/promise-async" },
 		event = "VeryLazy",
 		opts = {
-			provider_selector = function(_, _, _)
+			provider_selector = function(bufnr, filetype, _)
+				local exclude = { ["neo-tree"] = true, ["alpha"] = true }
+				if exclude[filetype] then
+					return ""
+				end
 				return { "treesitter", "indent" }
 			end,
 		},

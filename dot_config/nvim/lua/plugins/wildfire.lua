@@ -12,6 +12,7 @@ return {
 				node_incremental = "<CR>",
 				node_decremental = "<BS>",
 			},
+			filetype_exclude = { "neo-tree", "alpha", "qf", "help" },
 		})
 	end,
 }

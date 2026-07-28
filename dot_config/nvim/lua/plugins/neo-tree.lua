@@ -3,7 +3,7 @@
 -- Keys: <leader>e = toggle file explorer
 return {
 	"nvim-neo-tree/neo-tree.nvim",
-	commit = "ebd6676",
+	branch = "v3.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
@@ -25,14 +25,23 @@ return {
 			},
 			event_handlers = {
 				{
-					event = "file_opened",
-					handler = function(file_path)
-						-- auto close Neo-tree
+						event = "file_opened",
+					handler = function()
 						require("neo-tree.command").execute({ action = "close" })
 					end,
 				},
 			},
 		})
 		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle file explorer" })
+
+		-- Disable treesitter folding in neo-tree buffers
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "neo-tree",
+			callback = function()
+				vim.opt_local.foldenable = false
+				vim.opt_local.foldmethod = "manual"
+				vim.opt_local.foldexpr = "0"
+			end,
+		})
 	end,
 }

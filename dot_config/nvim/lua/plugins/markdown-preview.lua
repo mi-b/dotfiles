@@ -9,9 +9,7 @@ return {
 	"iamcco/markdown-preview.nvim",
 	version = "^0.0.10",
 	cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-	build = function()
-		vim.fn["mkdp#util#install"]()
-	end,
+	build = "cd app && bash install.sh",
 	init = function()
 		vim.g.mkdp_filetypes = { "markdown" }
 	end,

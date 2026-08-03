@@ -203,6 +203,15 @@ return {
 						vim.diagnostic.open_float,
 						vim.tbl_extend("force", opts, { desc = "Show diagnostic float" })
 					)
+					vim.keymap.set("n", "<leader>li", function()
+						vim.lsp.buf.code_action({
+							apply = true,
+							context = {
+								only = { "source.organizeImports.ruff" },
+								diagnostics = {},
+							},
+						})
+					end, vim.tbl_extend("force", opts, { desc = "Organise Python imports" }))
 				end,
 			})
 		end,

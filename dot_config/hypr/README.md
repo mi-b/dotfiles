@@ -84,6 +84,15 @@ sudo apt install -y \
 chezmoi apply
 ```
 
+> [!NOTE]
+> **Coming from `feat/hyprland-minimal`?** The only extra packages are
+> `hyprlock`, `hypridle`, and `hyprpaper`. Install them and apply:
+>
+> ```bash
+> sudo apt install -y hyprlock hypridle hyprpaper
+> chezmoi apply
+> ```
+
 ### 5. Test
 
 1. Log out of your current session.

@@ -35,5 +35,9 @@ sudo apt-get install -y \
     brightnessctl playerctl pavucontrol \
     wl-clipboard grim slurp
 
+# brightnessctl needs setuid to adjust backlight without root
+echo "Setting brightnessctl permissions..."
+sudo chmod +s "$(which brightnessctl)"
+
 echo "Hyprland installation complete."
 {{ end }}

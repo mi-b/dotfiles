@@ -1,0 +1,39 @@
+{{- if and (eq .chezmoi.os "linux") .desktop.enabled -}}
+#!/usr/bin/env bash
+# Install Hyprland and ecosystem packages from the cppiber PPA.
+# hash: {{ include "dot_config/hypr/hyprland.lua" | sha256sum }}
+
+set -eu
+
+# Check if Hyprland is already installed
+if command -v hyprland >/dev/null 2>&1 && command -v swaybg >/dev/null 2>&1; then
+    echo "Hyprland packages already installed."
+    exit 0
+fi
+
+echo "Adding Hyprland PPA..."
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y ppa:cppiber/hyprland
+sudo apt-get update
+
+echo "Installing Hyprland and ecosystem..."
+sudo apt-get install -y \
+    hyprland \
+    xdg-desktop-portal-hyprland \
+    hyprlock \
+    hypridle \
+    swaybg
+
+echo "Installing runtime packages..."
+sudo apt-get install -y \
+    kitty waybar wofi dunst \
+    pipewire wireplumber \
+    xdg-desktop-portal \
+    qtwayland5 qt6-wayland \
+    network-manager-gnome \
+    fonts-noto fonts-firacode \
+    brightnessctl playerctl pavucontrol \
+    wl-clipboard grim slurp
+
+echo "Hyprland installation complete."
+{{ end }}

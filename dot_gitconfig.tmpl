@@ -1,14 +1,57 @@
+# ~/.gitconfig: managed by chezmoi
+
+# --- Identity ---
 [user]
 	name = {{ .git.userName | quote }}
 	email = {{ .git.userEmail | quote }}
+
+# --- Core ---
+[core]
+	autocrlf = input
 [init]
 	defaultBranch = main
+[column]
+	ui = auto
+
+# --- Branching & merging ---
+[branch]
+	sort = -committerdate
+[pull]
+	rebase = true
+[merge]
+	conflictStyle = zdiff3
+[rerere]
+	enabled = true
+
+# --- Diff ---
+[diff]
+	algorithm = histogram
+	colorMoved = default
 [include]
 	path = ~/.config/delta/catppuccin.gitconfig
+
+# --- Push & fetch ---
+[fetch]
+	prune = true
+[push]
+	recurseSubmodules = check
+	forceWithLease = true
+
+# --- Submodules ---
+[submodule]
+	recurse = true
+
+# --- Transfer & integrity ---
+[transfer]
+	fsckObjects = true
+
+# --- Tags ---
+[tag]
+	sort = version:refname
+
+# --- LFS ---
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[fetch]
-  prune=true

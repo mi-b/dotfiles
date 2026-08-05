@@ -15,8 +15,8 @@ hl.on("hyprland.start", function()
     -- Notification daemon
     hl.exec_cmd("dunst")
 
-    -- Wallpaper
-    hl.exec_cmd("hyprpaper")
+    -- Wallpaper (swaybg — hyprpaper 0.8.4 from PPA has broken config parsing)
+    hl.exec_cmd("swaybg -i /home/herbert/Pictures/catppuccin-wallpapers/landscapes/shaded_landscape.png -m fill")
 
     -- Idle timer and screen lock
     hl.exec_cmd("hypridle")

@@ -16,7 +16,7 @@ return {
 		-- subsequent frames once the alpha buffer opens)
 		-- Crop the splash to remove blank padding rows (45 -> ~23 lines)
 		local ok, splash = pcall(function()
-			return ui.load_splash("flyingdragon", 13, 36)
+			return ui.random_splash()
 		end)
 		if ok and splash.frames then
 			dashboard.section.header.val = splash.frames[1]

@@ -1,0 +1,60 @@
+// Waybar minimal configuration — Catppuccin Mocha
+{
+    "layer": "top",
+    "position": "top",
+    "spacing": 4,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "network",
+        "pulseaudio",
+        "battery",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate"
+    },
+
+    "clock": {
+        "format": "{:%a %d %b  %H:%M}",
+        "tooltip-format": "{:%Y-%m-%d %H:%M:%S}"
+    },
+
+    "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": "󰈀  {ipaddr}",
+        "format-disconnected": "󰖪  disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰖁  muted",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "battery": {
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": {
+            "warning": 20,
+            "critical": 10
+        }
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    }
+}

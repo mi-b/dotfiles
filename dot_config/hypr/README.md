@@ -10,6 +10,7 @@ Minimal Hyprland configuration for a first test on Ubuntu 24.04.
 - Wofi (application launcher)
 - Catppuccin Mocha theme throughout
 - FiraCode Nerd Font
+- Swiss German keyboard layout with Caps Lock remapped to Ctrl
 
 ## What this branch does not include
 
@@ -80,18 +81,20 @@ chezmoi apply
 
 ### 6. Quick test checklist
 
-| Action | Bind |
-|--------|------|
-| Open terminal | `Super+Enter` |
-| Open launcher | `Super+Space` |
-| Close window | `Super+Q` |
-| Focus left/down/up/right | `Super+H/J/K/L` |
-| Move window | `Super+Shift+H/J/K/L` |
-| Switch workspace | `Super+1..0` |
-| Move window to workspace | `Super+Shift+1..0` |
-| Toggle floating | `Super+V` |
-| Fullscreen | `Super+F` |
-| Exit Hyprland | `Super+Shift+E` |
+| Action                   | Bind                  |
+| ------------------------ | --------------------- |
+| Open terminal            | `Super+Enter`         |
+| Open launcher            | `Super+Space`         |
+| Close window             | `Super+Q`             |
+| Focus left/down/up/right | `Super+H/J/K/L`       |
+| Move window              | `Super+Shift+H/J/K/L` |
+| Switch workspace         | `Super+1..0`          |
+| Move window to workspace | `Super+Shift+1..0`    |
+| Toggle floating          | `Super+V`             |
+| Fullscreen               | `Super+F`             |
+| Toggle split             | `Super+S`             |
+| Pseudo-tile              | `Super+P`             |
+| Exit Hyprland            | `Super+Shift+E`       |
 
 Arrow keys also work for focus and move.
 
@@ -116,3 +119,5 @@ chezmoi apply
 - GDM has reported bugs with Hyprland. If login fails, try from a TTY:
   `Ctrl+Alt+F3`, log in, run `Hyprland`.
 - No wallpaper is set. You will see a plain dark background.
+- The `setxkbmap` call in `.bashrc` is guarded to only run under X11.
+  Under Wayland, Caps Lock remapping is handled by Hyprland's `kb_options = ctrl:nocaps`.

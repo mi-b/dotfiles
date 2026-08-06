@@ -83,6 +83,7 @@ Or switch to a free TTY (`Ctrl+Alt+F3`) and run `startx` from there.
 | `$mod+d`          | Toggle tiling/float focus |
 | `$mod+r`          | Enter resize mode       |
 | `$mod+Escape`     | Lock screen             |
+| `$mod+Shift+r`    | Reload i3 config        |
 | `$mod+Shift+e`    | Exit i3 (with prompt)   |
 
 ### Focus and Move (Vim Keys)
@@ -92,6 +93,12 @@ Or switch to a free TTY (`Ctrl+Alt+F3`) and run `startx` from there.
 | `$mod+h/j/k/l`   | Focus left/down/up/right |
 | `$mod+Shift+h/j/k/l` | Move window left/down/up/right |
 | Arrow key variants also work |                |
+
+> [!NOTE]
+> `$mod+l` and `$mod+Shift+l` do not work over RDP — Windows intercepts
+> `Win+L` at the protocol level and there is no workaround.
+> Use `$mod+ö` / `$mod+Shift+ö` as alternatives (same physical position,
+> one key to the right of `l` on Swiss German layout).
 
 ### Resize Mode
 
@@ -110,8 +117,8 @@ Enter with `$mod+r`, exit with `Escape` or `Return`.
 | ----------------- | ----------------------- |
 | `$mod+1-0`        | Switch to workspace 1–10 |
 | `$mod+Shift+1-0`  | Move window to workspace 1–10 |
-| `$mod+Tab`        | Show scratchpad         |
-| `$mod+Shift+Tab`  | Move to scratchpad      |
+| `$mod+§`          | Show scratchpad         |
+| `$mod+Shift+§`    | Move to scratchpad      |
 
 ### Media Keys
 

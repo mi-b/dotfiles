@@ -67,7 +67,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f floating toggle
 bindsym $mod+b split horizontal
 bindsym $mod+v split vertical
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes, exit' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "echo -e 'Yes\nNo' | rofi -dmenu -p 'Exit i3?' -theme-str 'listview { lines: 2; }' && i3-msg exit"
 
 # Lock screen
 # TODO: Consider upgrading to i3lock-color for Catppuccin-themed lock screen.

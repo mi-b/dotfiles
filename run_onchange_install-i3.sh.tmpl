@@ -1,0 +1,40 @@
+{{- if and (eq .chezmoi.os "linux") .desktop.enabled -}}
+#!/usr/bin/env bash
+# Install i3 and ecosystem packages.
+# hash: {{ include "dot_config/i3/config" | sha256sum }}
+
+set -eu
+
+# Check if i3 is already installed
+if command -v i3 >/dev/null 2>&1 && command -v polybar >/dev/null 2>&1; then
+    echo "i3 packages already installed."
+    exit 0
+fi
+
+echo "Installing i3 and ecosystem..."
+sudo apt-get update
+sudo apt-get install -y \
+    i3 \
+    rofi \
+    picom \
+    polybar \
+    i3lock \
+    i3status
+
+echo "Installing runtime packages..."
+sudo apt-get install -y \
+    kitty dunst \
+    xautolock feh \
+    pipewire wireplumber \
+    xdg-desktop-portal \
+    network-manager-gnome policykit-1-gnome \
+    fonts-noto fonts-firacode \
+    brightnessctl playerctl pavucontrol \
+    xclip maim
+
+# brightnessctl needs setuid to adjust backlight without root
+echo "Setting brightnessctl permissions..."
+sudo chmod +s "$(which brightnessctl)"
+
+echo "i3 installation complete."
+{{ end }}

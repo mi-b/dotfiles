@@ -24,6 +24,9 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit"))
 
+-- Bluetooth manager (TUI)
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("kitty --class bluetuith bluetuith"))
+
 -- Lock screen
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("hyprlock"))
 

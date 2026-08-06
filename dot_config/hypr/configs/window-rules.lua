@@ -25,7 +25,7 @@ hl.window_rule({
 
 -- Float settings applications
 hl.window_rule({
-    match = { class = "^(nm-applet|nm-connection-editor|blueman-manager)$" },
+    match = { class = "^(nm-applet|nm-connection-editor|bluetuith)$" },
     tag = "+settings"
 })
 

@@ -154,4 +154,20 @@ if [ -n "$lazygit_arch" ]; then
     install_github_binary lazygit "$lazygit_version" "$lazygit_url" \
         'tar -xzf "$tmpdir/archive" -C "$tmpdir" && sudo install -m 755 "$tmpdir/lazygit" /usr/local/bin/lazygit'
 fi
+
+# ---------------------------------------------------------------------------
+# bluetuith — TUI Bluetooth manager (installed via Go).
+# ---------------------------------------------------------------------------
+
+if ! command -v go >/dev/null 2>&1; then
+    echo "Installing Go..."
+    sudo apt-get install -y golang-go
+fi
+
+if ! command -v bluetuith >/dev/null 2>&1; then
+    echo "Installing bluetuith..."
+    go install github.com/darkhz/bluetuith@latest
+else
+    echo "bluetuith already installed."
+fi
 {{ end }}

@@ -67,6 +67,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f floating toggle
 bindsym $mod+b split horizontal
 bindsym $mod+v split vertical
+bindsym $mod+Shift+r reload
 bindsym $mod+Shift+e exec --no-startup-id "echo -e 'Yes\nNo' | rofi -dmenu -p 'Exit i3?' -theme-str 'listview { lines: 2; }' && i3-msg exit"
 
 # Lock screen
@@ -84,6 +85,8 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+# RDP fallback — Win+L is intercepted by Windows
+bindsym $mod+odiaeresis focus right
 
 # Focus — Arrow Keys
 bindsym $mod+Left focus left

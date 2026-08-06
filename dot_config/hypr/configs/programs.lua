@@ -4,7 +4,7 @@
 
 local programs = {
     terminal = "kitty",
-    menu     = "wofi --show drun",
+    menu     = "pkill wofi || wofi --show drun",
 }
 
 return programs

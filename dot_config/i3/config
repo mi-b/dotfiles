@@ -1,0 +1,240 @@
+# i3 Configuration — Catppuccin Mocha
+#
+# Full desktop setup with polybar, rofi, picom, and dunst.
+# Vim-style navigation (h/j/k/l), Swiss German keyboard layout.
+#
+# See: https://i3wm.org/docs/userguide.html
+
+# ==========================================================================
+# Modifier
+# ==========================================================================
+
+set $mod Mod4
+
+# ==========================================================================
+# Catppuccin Mocha Colour Palette
+# ==========================================================================
+
+set $base     #1e1e2e
+set $mantle   #181825
+set $crust    #11111b
+set $surface0 #313244
+set $surface1 #45475a
+set $surface2 #585b70
+set $overlay0 #6c7086
+set $text     #cdd6f4
+set $lavender #b4befe
+set $blue     #89b4fa
+set $red      #f38ba8
+set $peach    #fab387
+set $green    #a6e3a1
+set $yellow   #f9e2af
+
+# Window colours        border    background  text   indicator  child_border
+client.focused          $lavender $lavender   $base  $lavender  $lavender
+client.focused_inactive $overlay0 $overlay0   $text  $overlay0  $overlay0
+client.unfocused        $overlay0 $base       $text  $overlay0  $overlay0
+client.urgent           $red      $red        $base  $red       $red
+client.placeholder      $base     $base       $text  $base      $base
+client.background       $base
+
+# ==========================================================================
+# Appearance
+# ==========================================================================
+
+# Gaps and borders
+gaps inner 1
+gaps outer 1
+default_border pixel 2
+default_floating_border pixel 2
+
+# Font for window titles (not visible with pixel borders, but used by i3-nagbar)
+font pango:FiraCode Nerd Font 10
+
+# ==========================================================================
+# Applications
+# ==========================================================================
+
+bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+space exec --no-startup-id rofi -show drun
+
+# ==========================================================================
+# Window Management
+# ==========================================================================
+
+bindsym $mod+q kill
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f floating toggle
+bindsym $mod+b split horizontal
+bindsym $mod+v split vertical
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes, exit' 'i3-msg exit'"
+
+# Lock screen
+# TODO: Consider upgrading to i3lock-color for Catppuccin-themed lock screen.
+bindsym $mod+Escape exec --no-startup-id i3lock -c 1e1e2e
+
+# Toggle between tiling and floating focus
+bindsym $mod+d focus mode_toggle
+
+# ==========================================================================
+# Focus — Vim Keys
+# ==========================================================================
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Focus — Arrow Keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# ==========================================================================
+# Move Windows — Vim Keys
+# ==========================================================================
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Move Windows — Arrow Keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# ==========================================================================
+# Resize Mode
+# ==========================================================================
+
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# ==========================================================================
+# Workspaces
+# ==========================================================================
+
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# ==========================================================================
+# Scratchpad
+# ==========================================================================
+
+bindsym $mod+Tab scratchpad show
+bindsym $mod+Shift+Tab move scratchpad
+
+# ==========================================================================
+# Mouse
+# ==========================================================================
+
+floating_modifier $mod
+
+# ==========================================================================
+# Media Keys
+# ==========================================================================
+
+# Volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# Brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -e4 -n2 set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -e4 -n2 set 5%-
+
+# Playback
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# ==========================================================================
+# Window Rules
+# ==========================================================================
+
+# Float settings/utility applications
+for_window [class="^nm-applet$"] floating enable
+for_window [class="^nm-connection-editor$"] floating enable
+for_window [class="^Nm-connection-editor$"] floating enable
+for_window [class="^blueman-manager$"] floating enable
+for_window [class="^Blueman-manager$"] floating enable
+for_window [class="^pavucontrol$"] floating enable
+for_window [class="^Pavucontrol$"] floating enable
+
+# ==========================================================================
+# Autostart
+# ==========================================================================
+
+# Compositor
+exec --no-startup-id picom
+
+# Status bar
+exec --no-startup-id polybar
+
+# Notification daemon
+exec --no-startup-id dunst
+
+# Wallpaper
+exec --no-startup-id feh --bg-fill /home/mib/Pictures/catppuccin-wallpapers/shaded_landscape.png
+
+# Idle timer and screen lock
+exec --no-startup-id xautolock -time 5 -locker "i3lock -c 1e1e2e"
+
+# Network manager applet
+exec --no-startup-id nm-applet
+
+# Polkit authentication agent
+exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+
+# Keyboard layout — Swiss German, Caps Lock as Ctrl
+exec --no-startup-id setxkbmap ch de -option ctrl:nocaps

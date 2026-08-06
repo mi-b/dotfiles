@@ -85,8 +85,8 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-# RDP fallback — Win+L is intercepted by Windows
-bindsym $mod+odiaeresis focus right
+# RDP fallback — Win+L is intercepted by Windows (keycode 47 = ö)
+bindcode $mod+47 focus right
 
 # Focus — Arrow Keys
 bindsym $mod+Left focus left
@@ -102,6 +102,8 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
+# RDP fallback — Win+L is intercepted by Windows (keycode 47 = ö/é)
+bindcode $mod+Shift+47 move right
 
 # Move Windows — Arrow Keys
 bindsym $mod+Shift+Left move left

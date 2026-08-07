@@ -1,0 +1,41 @@
+{{- if and (eq .chezmoi.os "linux") .desktop.enabled (ne .wm "none") -}}
+#!/usr/bin/env bash
+# Install shared desktop runtime packages needed by any window manager.
+
+set -eu
+
+missing=0
+for cmd in dunst kitty brightnessctl playerctl pavucontrol; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        missing=1
+        break
+    fi
+done
+
+if [ "$missing" -eq 0 ]; then
+    echo "Desktop runtime packages already installed."
+    exit 0
+fi
+
+echo "Updating package lists for apt"
+sudo apt-get update
+
+echo "Installing shared desktop runtime packages..."
+sudo apt-get install -y \
+    dunst \
+    pipewire \
+    wireplumber \
+    brightnessctl \
+    playerctl \
+    pavucontrol \
+    network-manager-gnome \
+    policykit-1-gnome \
+    fonts-noto \
+    fonts-firacode
+
+# brightnessctl needs setuid to adjust backlight without root
+echo "Setting brightnessctl permissions..."
+sudo chmod +s "$(which brightnessctl)"
+
+echo "Desktop runtime installation complete."
+{{ end }}

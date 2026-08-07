@@ -10,7 +10,11 @@ font_size        12.0
 disable_ligatures never
 
 # --- Window ---
+{{- if eq .wm "hyprland" }}
+hide_window_decorations yes
+{{- else }}
 hide_window_decorations no
+{{- end }}
 window_padding_width    5
 confirm_os_window_close 0
 
@@ -29,9 +33,15 @@ allow_hyperlinks     yes
 
 # --- Theme ---
 include themes/mocha.conf
+{{- if eq .wm "hyprland" }}
+
+# --- Shell integration ---
+shell_integration no-cursor
+{{- end }}
 
 # --- Keybindings ---
 map kitty_mod+right next_window
 map kitty_mod+left  next_window
 map kitty_mod+up    next_tab
 map kitty_mod+down  previous_tab
+map ctrl+shift+b launch --type=os-window --cwd=current

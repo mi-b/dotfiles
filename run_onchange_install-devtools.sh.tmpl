@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") .install.devtools -}}
+{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -eu

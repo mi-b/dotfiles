@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") (ne .wm "none") .install.desktopApps -}}
+{{- if and (eq .chezmoi.os "linux") (ne .wm "none") -}}
 #!/usr/bin/env bash
 
 set -eu
@@ -14,19 +14,12 @@ trap cleanup EXIT
 # ---- Check if anything needs installing ----
 
 missing=0
-for cmd in gimp inkscape vlc code; do
+for cmd in gimp inkscape vlc code firefox google-chrome; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         missing=1
         break
     fi
 done
-
-{{ if .install.firefox -}}
-command -v firefox >/dev/null 2>&1 || missing=1
-{{ end -}}
-{{ if .install.chrome -}}
-command -v google-chrome >/dev/null 2>&1 || missing=1
-{{ end -}}
 
 if [ "$missing" -eq 0 ]; then
     echo "Desktop applications already installed."
@@ -62,16 +55,13 @@ fi
 
 # ---- Browsers ----
 
-{{ if .install.firefox -}}
 if ! command -v firefox >/dev/null 2>&1; then
     echo "Installing Firefox..."
     sudo apt-get install -y firefox
 else
     echo "Firefox already installed."
 fi
-{{ end -}}
 
-{{ if .install.chrome -}}
 if ! command -v google-chrome >/dev/null 2>&1; then
     echo "Installing Google Chrome..."
     TMP_FILE="$(mktemp)"
@@ -81,5 +71,4 @@ if ! command -v google-chrome >/dev/null 2>&1; then
 else
     echo "Google Chrome already installed."
 fi
-{{ end -}}
 {{ end }}

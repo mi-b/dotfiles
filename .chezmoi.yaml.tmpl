@@ -2,11 +2,6 @@
 {{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
 {{- $wmChoices := list "hyprland" "i3" "none" -}}
 {{- $wm := promptChoiceOnce . "wm" "Window manager?" $wmChoices "none" -}}
-{{- $desktopChoices := list "yes" "no" -}}
-{{- $installDevtools := promptChoiceOnce . "install_devtools" "Install dev tools?" $desktopChoices "yes" -}}
-{{- $installDesktopApps := promptChoiceOnce . "install_desktop_apps" "Install desktop apps?" $desktopChoices "yes" -}}
-{{- $installFirefox := promptChoiceOnce . "install_firefox" "Install Firefox?" $desktopChoices "yes" -}}
-{{- $installChrome := promptChoiceOnce . "install_chrome" "Install Google Chrome?" $desktopChoices "no" -}}
 
 data:
   # Any of `private`, `work`
@@ -14,12 +9,6 @@ data:
 
   # Any of `hyprland`, `i3`, `none`
   wm: {{ $wm }}
-
-  install:
-    devtools: {{ eq $installDevtools "yes" }}
-    desktopApps: {{ eq $installDesktopApps "yes" }}
-    firefox: {{ eq $installFirefox "yes" }}
-    chrome: {{ eq $installChrome "yes" }}
 
   # Git Setup.
   git:

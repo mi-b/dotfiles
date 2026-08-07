@@ -35,7 +35,10 @@
 	prune = true
 [push]
 	recurseSubmodules = check
-	forceWithLease = true
+
+# --- Aliases ---
+[alias]
+	pushf = push --force-with-lease
 
 # --- Submodules ---
 [submodule]

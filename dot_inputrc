@@ -1,0 +1,17 @@
+# ~/.inputrc: managed by chezmoi
+# Readline configuration — vi mode enhancements.
+
+# Reduce key sequence timeout for snappy mode switching (milliseconds)
+set keyseq-timeout 50
+
+# Case-insensitive completion
+set completion-ignore-case on
+
+# Show all completions on first Tab if ambiguous
+set show-all-if-ambiguous on
+
+# Ctrl-L clears screen in both modes
+set keymap vi-command
+"\C-l": clear-screen
+set keymap vi-insert
+"\C-l": clear-screen

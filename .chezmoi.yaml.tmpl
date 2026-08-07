@@ -1,5 +1,7 @@
 {{- $choices := list "private" "work" -}}
 {{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
+{{- $wmChoices := list "hyprland" "i3" "none" -}}
+{{- $wm := promptChoiceOnce . "wm" "Window manager?" $wmChoices "none" -}}
 {{- $desktopChoices := list "yes" "no" -}}
 {{- $desktop := promptChoiceOnce . "desktop_enabled" "Desktop machine?" $desktopChoices "yes" -}}
 {{- $installDevtools := promptChoiceOnce . "install_devtools" "Install dev tools?" $desktopChoices "yes" -}}
@@ -10,6 +12,9 @@
 data:
   # Any of `private`, `work`
   workspace: {{ $workspace }}
+
+  # Any of `hyprland`, `i3`, `none`
+  wm: {{ $wm }}
 
   desktop:
     enabled: {{ eq $desktop "yes" }}

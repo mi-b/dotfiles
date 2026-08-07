@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") .desktop.enabled .install.desktopApps -}}
+{{- if and (eq .chezmoi.os "linux") (ne .wm "none") .install.desktopApps -}}
 #!/usr/bin/env bash
 
 set -eu

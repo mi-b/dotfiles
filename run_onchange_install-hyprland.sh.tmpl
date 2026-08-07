@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") .desktop.enabled (eq .wm "hyprland") -}}
+{{- if and (eq .chezmoi.os "linux") (eq .wm "hyprland") -}}
 #!/usr/bin/env bash
 # Install Hyprland-specific packages from the cppiber PPA.
 # hash: {{ include "dot_config/hypr/hyprland.lua" | sha256sum }}

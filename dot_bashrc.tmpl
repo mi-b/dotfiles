@@ -3,6 +3,8 @@
 # Remap Caps Lock to Ctrl (X11 only; under Wayland this is handled by the compositor)
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
     setxkbmap -option ctrl:nocaps
+    # Clear stuck CapsLock toggle left over from before the remap
+    xset -q 2>/dev/null | grep -q "Caps Lock:   on" && xdotool key Caps_Lock
 fi
 
 have_cmd() {
@@ -41,6 +43,7 @@ else
 fi
 
 export LANG="en_GB.UTF-8"
+set -o vi
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 path_prepend "$HOME/.opencode/bin"
@@ -126,6 +129,14 @@ fi
 
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init bash)"
+fi
+
+# Vi-mode cursor shape: beam (insert), block (normal).
+# Must be set AFTER starship init to avoid being overridden.
+if [[ $- == *i* ]]; then
+    bind 'set show-mode-in-prompt on'
+    bind "set vi-ins-mode-string \1"$'\e'"[5 q\2"
+    bind "set vi-cmd-mode-string \1"$'\e'"[1 q\2"
 fi
 
 y() {

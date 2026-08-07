@@ -55,7 +55,24 @@ fi
 # ---- Browsers ----
 
 if ! command -v firefox >/dev/null 2>&1; then
-    echo "Installing Firefox..."
+    echo "Installing Firefox from Mozilla PPA..."
+
+    # Remove snap version if present
+    if snap list firefox >/dev/null 2>&1; then
+        sudo snap remove --purge firefox
+    fi
+
+    # Add Mozilla PPA
+    sudo add-apt-repository -y ppa:mozillateam/ppa
+
+    # Pin PPA packages above snap
+    sudo tee /etc/apt/preferences.d/mozilla-firefox >/dev/null <<'PIN'
+Package: *
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+PIN
+
+    sudo apt-get update
     sudo apt-get install -y firefox
 else
     echo "Firefox already installed."

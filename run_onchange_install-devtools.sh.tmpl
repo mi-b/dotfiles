@@ -66,8 +66,11 @@ sudo apt-get install -y \
     tmux \
     unzip \
     woff2 \
-    xclip \
     zoxide
+
+{{ if ne .wm "hyprland" -}}
+sudo apt-get install -y xclip
+{{ end -}}
 
 git lfs install
 

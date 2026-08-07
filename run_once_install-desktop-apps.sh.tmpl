@@ -14,7 +14,7 @@ trap cleanup EXIT
 # ---- Check if anything needs installing ----
 
 missing=0
-for cmd in gimp gnome-tweaks inkscape vlc code kitty; do
+for cmd in gimp inkscape vlc code; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         missing=1
         break
@@ -41,7 +41,6 @@ sudo apt-get update
 echo "Installing desktop applications"
 sudo apt-get install -y \
     gimp \
-    gnome-tweaks \
     inkscape \
     vlc
 
@@ -59,17 +58,6 @@ if ! command -v code >/dev/null 2>&1; then
     sudo apt-get install -y code
 else
     echo "VS Code already installed."
-fi
-
-# ---- Kitty terminal ----
-
-if ! command -v kitty >/dev/null 2>&1; then
-    echo "Installing Kitty..."
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    mkdir -p "$HOME/.local/bin"
-    ln -sf "$HOME/.local/kitty.app/bin/kitty" "$HOME/.local/bin/kitty"
-else
-    echo "Kitty already installed."
 fi
 
 # ---- Browsers ----

@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -e
@@ -43,5 +42,3 @@ cp "$TMP_DIR/"*.ttf "$FONT_DIR/"
 fc-cache -fv "$FONT_DIR"
 
 echo "FiraCode Nerd Font installed to $FONT_DIR"
-
-{{ end }}

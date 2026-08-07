@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -eu
@@ -71,4 +70,3 @@ if ! command -v google-chrome >/dev/null 2>&1; then
 else
     echo "Google Chrome already installed."
 fi
-{{ end }}

@@ -1,4 +1,3 @@
-{{- if and (eq .chezmoi.os "linux") (eq .wm "i3") -}}
 #!/usr/bin/env bash
 # Install i3-specific packages.
 # hash: {{ include "dot_config/i3/config.tmpl" | sha256sum }}
@@ -26,4 +25,3 @@ sudo apt-get install -y \
     maim
 
 echo "i3 installation complete."
-{{ end }}

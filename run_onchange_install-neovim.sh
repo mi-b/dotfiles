@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -eu
@@ -51,4 +50,3 @@ mv "$TMP_DIR/${archive%.tar.gz}" "$target_dir"
 ln -sfn "$target_bin" "$BIN_DIR/nvim"
 
 echo "Installed Neovim $NVIM_VERSION to $target_dir"
-{{ end }}

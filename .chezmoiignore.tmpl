@@ -15,6 +15,7 @@ README.md
 .config/waybar/**
 .config/wofi/
 .config/wofi/**
+run_onchange_install-hyprland.sh
 {{ end }}
 
 {{ if ne .wm "i3" }}
@@ -26,7 +27,9 @@ README.md
 .config/rofi/**
 .config/picom/
 .config/picom/**
+.config/autostart/caps-to-ctrl.desktop
 .xsession
+run_onchange_install-i3.sh
 {{ end }}
 
 {{ if eq .wm "none" }}
@@ -36,23 +39,6 @@ README.md
 .config/wallpaper/**
 .config/autostart/
 .config/autostart/**
-{{ end }}
-
-{{ if ne .wm "i3" }}
-.config/autostart/caps-to-ctrl.desktop
-{{ end }}
-
-# --- Install scripts gated by wm ---
-
-{{ if ne .wm "hyprland" }}
-run_onchange_install-hyprland.sh
-{{ end }}
-
-{{ if ne .wm "i3" }}
-run_onchange_install-i3.sh
-{{ end }}
-
-{{ if eq .wm "none" }}
 run_onchange_install-desktop-runtime.sh
 {{ end }}
 
@@ -63,32 +49,8 @@ run_onchange_install-desktop-runtime.sh
 .config/kitty/**
 .config/yazi/
 .config/yazi/**
-.config/dunst/
-.config/dunst/**
-.config/wallpaper/
-.config/wallpaper/**
-.config/autostart/
-.config/autostart/**
-.config/hypr/
-.config/hypr/**
-.config/waybar/
-.config/waybar/**
-.config/wofi/
-.config/wofi/**
-.config/i3/
-.config/i3/**
-.config/polybar/
-.config/polybar/**
-.config/rofi/
-.config/rofi/**
-.config/picom/
-.config/picom/**
 .inputrc
-.xsession
 .tmux.conf
-run_onchange_install-hyprland.sh
-run_onchange_install-i3.sh
-run_onchange_install-desktop-runtime.sh
 run_onchange_install-devtools.sh
 run_onchange_install-neovim.sh
 run_onchange_install-fonts.sh

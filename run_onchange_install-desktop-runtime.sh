@@ -1,4 +1,3 @@
-{{- if and (eq .chezmoi.os "linux") (ne .wm "none") -}}
 #!/usr/bin/env bash
 # Install shared desktop runtime packages needed by any window manager.
 
@@ -36,4 +35,3 @@ echo "Setting brightnessctl permissions..."
 sudo chmod +s "$(which brightnessctl)"
 
 echo "Desktop runtime installation complete."
-{{ end }}

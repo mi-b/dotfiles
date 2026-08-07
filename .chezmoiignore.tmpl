@@ -12,7 +12,7 @@ README.md
 .config/waybar/**
 .config/wofi/
 .config/wofi/**
-run_onchange_install-hyprland.sh
+install-hyprland.sh
 {{ end }}
 
 {{ if ne .wm "i3" }}
@@ -26,7 +26,7 @@ run_onchange_install-hyprland.sh
 .config/picom/**
 .config/autostart/caps-to-ctrl.desktop
 .xsession
-run_onchange_install-i3.sh
+install-i3.sh
 {{ end }}
 
 {{ if eq .wm "none" }}
@@ -36,7 +36,7 @@ run_onchange_install-i3.sh
 .config/wallpaper/**
 .config/autostart/
 .config/autostart/**
-run_onchange_install-desktop-runtime.sh
+install-desktop-runtime.sh
 {{ end }}
 
 # --- Windows ---
@@ -48,9 +48,12 @@ run_onchange_install-desktop-runtime.sh
 .config/yazi/**
 .inputrc
 .tmux.conf
-run_onchange_install-devtools.sh
-run_onchange_install-neovim.sh
-run_onchange_install-fonts.sh
-run_onchange_bat-build-cache.sh
-run_once_install-desktop-apps.sh
+install-devtools.sh
+install-neovim.sh
+install-fonts.sh
+bat-build-cache.sh
+install-desktop-apps.sh
+install-desktop-runtime.sh
+install-hyprland.sh
+install-i3.sh
 {{ end }}

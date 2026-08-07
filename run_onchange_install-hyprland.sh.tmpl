@@ -30,4 +30,12 @@ sudo apt-get install -y \
     grim \
     slurp
 
+# bluetuith — Bluetooth TUI (requires Go)
+if ! command -v bluetuith >/dev/null 2>&1; then
+    echo "Installing bluetuith..."
+    go install github.com/darkhz/bluetuith@latest
+else
+    echo "bluetuith already installed."
+fi
+
 echo "Hyprland installation complete."

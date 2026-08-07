@@ -3,6 +3,8 @@
 # Remap Caps Lock to Ctrl (X11 only; under Wayland this is handled by the compositor)
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
     setxkbmap -option ctrl:nocaps
+    # Clear stuck CapsLock toggle left over from before the remap
+    xset -q 2>/dev/null | grep -q "Caps Lock:   on" && xdotool key Caps_Lock
 fi
 
 have_cmd() {

@@ -87,10 +87,11 @@ elif [ -f /etc/bash_completion ]; then
 fi
 
 # Shell integrations — all tools are on PATH via Nix.
-eval "$(zoxide init bash)"
+# zoxide must be last to avoid _ZO_DOCTOR warnings.
 eval "$(direnv hook bash)"
 eval "$(fzf --bash)"
 eval "$(starship init bash)"
+eval "$(zoxide init bash)"
 
 # Vi-mode cursor shape: beam (insert), block (normal).
 # Must be set AFTER starship init to avoid being overridden.

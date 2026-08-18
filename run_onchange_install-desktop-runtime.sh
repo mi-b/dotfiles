@@ -30,8 +30,8 @@ sudo apt-get install -y \
     network-manager-gnome \
     policykit-1-gnome
 
-# brightnessctl needs setuid to adjust backlight without root
-echo "Setting brightnessctl permissions..."
-sudo chmod +s "$(which brightnessctl)"
+# NOTE: brightnessctl may need setuid (chmod +s) on laptops with physical
+# backlights. Skipped here to avoid machine-wide security changes on shared
+# systems. Run `sudo chmod +s "$(which brightnessctl)"` manually if needed.
 
 echo "Desktop runtime installation complete."

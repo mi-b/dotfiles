@@ -80,6 +80,10 @@ overridden by a project-level `.opencode/AGENTS.md`.
 - Use Markdown with GitLab-flavoured extensions (alerts, mermaid diagrams,
   collapsible sections)
 - Use `mkdocs` for web rendering when needed
+- **Equations in Markdown**: display equations (`$$`) are part of the
+  surrounding sentence. Do not use a colon before an equation. End the
+  equation with a period if it ends the sentence, or a comma if the sentence
+  continues (e.g. "where …")
 
 ## Security
 

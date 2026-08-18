@@ -268,8 +268,7 @@ Source the daemon script:
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
-Or restart your shell. The Determinate Systems installer adds this to
-`/etc/bash.bashrc` automatically.
+Or restart your shell. In this repo, `~/.bashrc` sources it per-user.
 
 ### Home Manager switch fails with "collision"
 

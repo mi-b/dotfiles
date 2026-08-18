@@ -19,3 +19,15 @@ data:
     userEmail: mikebaumann@bluewin.ch
     userName: mi-b
     {{- end }}
+{{- if eq .chezmoi.os "windows" }}
+
+cd:
+  # `chezmoi cd` launches a new shell, so make it match the usual Git Bash
+  # interactive startup behaviour instead of relying on platform detection.
+  command: bash
+  args:
+    - -i
+
+env:
+  CHERE_INVOKING: "1"
+{{- end }}

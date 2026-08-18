@@ -18,7 +18,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      homeConfigurations.herbert = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.{{ .chezmoi.username }} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           nix-flatpak.homeManagerModules.nix-flatpak

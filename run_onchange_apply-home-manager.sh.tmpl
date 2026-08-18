@@ -3,8 +3,8 @@
 set -eu
 
 # Trigger rebuild when any Home Manager config file changes.
-# flake.nix hash:    {{ include "dot_config/home-manager/flake.nix" | sha256sum }}
-# home.nix hash:     {{ include "dot_config/home-manager/home.nix" | sha256sum }}
+# flake.nix hash:    {{ include "dot_config/home-manager/flake.nix.tmpl" | sha256sum }}
+# home.nix hash:     {{ include "dot_config/home-manager/home.nix.tmpl" | sha256sum }}
 # packages.nix hash: {{ include "dot_config/home-manager/packages.nix" | sha256sum }}
 # programs.nix hash: {{ include "dot_config/home-manager/programs.nix" | sha256sum }}
 # flatpak.nix hash:  {{ include "dot_config/home-manager/flatpak.nix" | sha256sum }}

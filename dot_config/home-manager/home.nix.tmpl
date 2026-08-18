@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 {
-  home.username = "herbert";
-  home.homeDirectory = "/home/herbert";
+  home.username = "{{ .chezmoi.username }}";
+  home.homeDirectory = "{{ .chezmoi.homeDir }}";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";

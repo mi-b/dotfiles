@@ -85,7 +85,30 @@ return {
 					"<leader>b",
 					group = "Buffers",
 					expand = function()
-						return require("which-key.extras").expand.buf()
+						local ret = {}
+						local elements = require("bufferline").get_elements().elements
+						for i, el in ipairs(elements) do
+							if i <= 9 then
+								local num = i
+								table.insert(ret, {
+									tostring(i),
+									function()
+										require("bufferline").go_to(num, true)
+									end,
+									desc = el.name,
+								})
+							end
+						end
+						if #elements > 0 then
+							table.insert(ret, {
+								"$",
+								function()
+									require("bufferline").go_to(-1, true)
+								end,
+								desc = "Go to last buffer",
+							})
+						end
+						return ret
 					end,
 				},
 

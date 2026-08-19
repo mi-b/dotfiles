@@ -1,7 +1,7 @@
 -- vim-floaterm: Floating terminal overlay
 -- https://github.com/voldikss/vim-floaterm
--- Keys: <leader>tt = toggle terminal | <leader>tl = open lazygit
---        <leader>tn = new terminal
+-- Keys: <leader>Tt = toggle terminal | <leader>Tl = open lazygit
+--        <leader>Tn = new terminal
 return {
 	"voldikss/vim-floaterm",
 	config = function()
@@ -9,9 +9,9 @@ return {
 		vim.g.floaterm_height = 0.95
 		vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
 
-		vim.keymap.set("n", "<leader>tt", ":FloatermToggle<CR>", { desc = "Toggle terminal" })
-		vim.keymap.set("t", "<leader>tt", "<C-\\><C-n>:FloatermToggle<CR>", { desc = "Toggle terminal" })
-		vim.keymap.set("n", "<leader>tl", ":FloatermNew lazygit<CR>", { desc = "Open lazygit" })
-		vim.keymap.set("n", "<leader>tn", ":FloatermNew<CR>", { desc = "New terminal" })
+		vim.keymap.set("n", "<leader>Tt", ":FloatermToggle<CR>", { desc = "Toggle terminal" })
+		vim.keymap.set("t", "<leader>Tt", "<C-\\><C-n>:FloatermToggle<CR>", { desc = "Toggle terminal" })
+		vim.keymap.set("n", "<leader>Tl", ":FloatermNew lazygit<CR>", { desc = "Open lazygit" })
+		vim.keymap.set("n", "<leader>Tn", ":FloatermNew<CR>", { desc = "New terminal" })
 	end,
 }

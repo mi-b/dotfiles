@@ -4,9 +4,12 @@
 --        <leader>/  = toggle comment        | <leader>q  = quit window
 --        <leader>w  = save file             | <leader>i  = re-indent file
 --        <leader>b* = buffer management     | <leader>x* = quickfix / location list
+--        <leader>t* = tab management        | <leader>T* = terminal
 --        <leader>o* = option toggles (snacks.toggle)
 --        C-h/j/k/l  = move focus between splits
 --        |/\         = create vertical/horizontal split
+--        ]b/[b       = next/prev buffer     | >b/<b      = move buffer right/left
+--        ]t/[t       = next/prev tab
 return {
 	{ "nvim-tree/nvim-web-devicons", version = "^0.100", opts = {} },
 	{
@@ -64,7 +67,8 @@ return {
 			wk.add({
 				-- Groups using nvim-web-devicons (coloured automatically)
 				{ "<leader>g", group = "Git", icon = { cat = "filetype", name = "git" } },
-				{ "<leader>t", group = "Terminal", icon = { cat = "filetype", name = "terminal" } },
+				{ "<leader>t", group = "Tabs", icon = { icon = "󰓩", color = "cyan" } },
+				{ "<leader>T", group = "Terminal", icon = { cat = "filetype", name = "terminal" } },
 				{ "<leader>M", group = "Markdown", icon = { cat = "filetype", name = "markdown" } },
 
 				-- Groups with coloured Nerd Font icons
@@ -87,8 +91,12 @@ return {
 
 				{
 					mode = "n",
-					{ "<leader>bp", "<cmd>bprevious<cr>", desc = "Go to previous buffer" },
-					{ "<leader>bn", "<cmd>bnext<cr>", desc = "Go to next buffer" },
+					{ "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", desc = "Go to previous buffer" },
+					{ "<leader>bn", "<cmd>BufferLineCycleNext<cr>", desc = "Go to next buffer" },
+					{ "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+					{ "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer" },
+					{ ">b", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer right" },
+					{ "<b", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer left" },
 					{ "<leader>bl", "<cmd>buffers<cr>", desc = "List all buffers" },
 					{ "<leader>bb", "<C-^>", desc = "Switch to last used buffer" },
 					{ "<leader>bc", "<cmd>bd<cr>", desc = "Close current buffer" },
@@ -118,6 +126,15 @@ return {
 					mode = "n",
 					{ "|", "<cmd>vsplit<cr>", desc = "Create vertical split" },
 					{ "\\", "<cmd>split<cr>", desc = "Create horizontal split" },
+				},
+
+				{
+					mode = "n",
+					{ "<leader>tn", "<cmd>tabnew<cr>", desc = "New tab" },
+					{ "<leader>tc", "<cmd>tabclose<cr>", desc = "Close tab" },
+					{ "<leader>to", "<cmd>tabonly<cr>", desc = "Close other tabs" },
+					{ "]t", "<cmd>tabnext<cr>", desc = "Next tab" },
+					{ "[t", "<cmd>tabprev<cr>", desc = "Previous tab" },
 				},
 
 				{

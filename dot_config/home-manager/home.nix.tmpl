@@ -1,0 +1,18 @@
+{ pkgs, ... }:
+
+{
+  home.username = "{{ .chezmoi.username }}";
+  home.homeDirectory = "{{ .chezmoi.homeDir }}";
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "24.11";
+
+  # Let Home Manager manage itself.
+  programs.home-manager.enable = true;
+
+  # Allow unfree packages (e.g. google-chrome if ever needed via Nix).
+  nixpkgs.config.allowUnfree = true;
+
+  # Ensure font cache is rebuilt when fonts change.
+  fonts.fontconfig.enable = true;
+}

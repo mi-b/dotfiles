@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# Trigger rebuild when any Home Manager config file changes.
+# flake.nix hash:    {{ include "dot_config/home-manager/flake.nix.tmpl" | sha256sum }}
+# home.nix hash:     {{ include "dot_config/home-manager/home.nix.tmpl" | sha256sum }}
+# packages.nix hash: {{ include "dot_config/home-manager/packages.nix" | sha256sum }}
+# programs.nix hash: {{ include "dot_config/home-manager/programs.nix" | sha256sum }}
+# flatpak.nix hash:  {{ include "dot_config/home-manager/flatpak.nix" | sha256sum }}
+
+echo "Applying Home Manager configuration..."
+
+# Source Nix environment if not already available.
+if ! command -v nix >/dev/null 2>&1; then
+    if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    else
+        echo "ERROR: Nix not found. Run bootstrap first." >&2
+        exit 1
+    fi
+fi
+
+# Use home-manager if already installed (after first run), otherwise bootstrap.
+if command -v home-manager >/dev/null 2>&1; then
+    home-manager switch --flake ~/.config/home-manager
+else
+    nix run home-manager/master -- switch --flake ~/.config/home-manager
+fi
+
+# Ensure git-lfs hooks are registered (git-lfs comes from Nix).
+git lfs install
+
+echo "Home Manager applied successfully."

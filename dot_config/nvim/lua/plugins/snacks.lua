@@ -6,7 +6,7 @@
 -- Modules:
 --   bigfile       – disables heavy features (treesitter, LSP) for large files
 --   quickfile     – renders file before plugins load (`nvim somefile.txt`)
---   notifier      – pretty vim.notify with history
+--   notifier      – DISABLED (replaced by noice.nvim)
 --   indent        – indent guides and scope highlighting
 --   words         – highlight LSP references under cursor, jump between them
 --   input         – better vim.ui.input float
@@ -22,8 +22,6 @@
 --   <leader>bc  Delete current buffer (layout-safe)   (bufdelete)
 --   <leader>bo  Delete all other buffers               (bufdelete)
 --   <leader>lr  Rename file (LSP-aware)                (rename)
---   <leader>n   Dismiss all notifications              (notifier)
---   <leader>N   Show notification history              (notifier)
 --   ]]          Jump to next LSP reference             (words)
 --   [[          Jump to previous LSP reference         (words)
 --
@@ -52,7 +50,7 @@ return {
 		-- ── Module configuration ────────────────────────────────────────
 		bigfile = { enabled = true },
 		quickfile = { enabled = true },
-		notifier = { enabled = true },
+		notifier = { enabled = false },
 		indent = { enabled = true, only_scope = true, only_current = true },
 		words = { enabled = false },
 		input = { enabled = true },
@@ -89,22 +87,6 @@ return {
 			desc = "Rename file (LSP-aware)",
 		},
 
-		-- Notifier
-		{
-			"<leader>n",
-			function()
-				Snacks.notifier.hide()
-			end,
-			desc = "Dismiss all notifications",
-		},
-		{
-			"<leader>N",
-			function()
-				Snacks.notifier.show_history()
-			end,
-			desc = "Show notification history",
-		},
-
 		-- Words (LSP references)
 		{
 			"]]",
@@ -126,12 +108,6 @@ return {
 
 	-- ── Toggles (set up after plugins load) ──────────────────────────
 	init = function()
-		-- Override vim.notify so all notifications route through snacks
-		---@diagnostic disable-next-line: duplicate-set-field
-		vim.notify = function(msg, level, opts)
-			Snacks.notifier.notify(msg, level, opts)
-		end
-
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()

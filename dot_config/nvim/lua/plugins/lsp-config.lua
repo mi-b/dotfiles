@@ -1,7 +1,8 @@
--- LSP configuration: Mason (installer), mason-lspconfig (auto-install), nvim-lspconfig (server configs)
--- https://github.com/williamboman/mason.nvim
--- https://github.com/williamboman/mason-lspconfig.nvim
+-- LSP configuration: nvim-lspconfig (server configs)
 -- https://github.com/neovim/nvim-lspconfig
+--
+-- LSP servers and formatters are installed system-wide via Nix (Home Manager).
+-- No Mason required — servers are found on $PATH.
 --
 -- Keymaps set by Neovim's built-in LSP client (no config needed):
 --   K   = hover docs       | grr = references      | gra = code action
@@ -14,28 +15,6 @@
 -- (ruff, taplo, tinymist) provide native formatting and are routed to
 -- directly; everything else goes through none-ls.
 return {
-	-- Mason: portable package manager for LSP servers, formatters, linters, and DAP adapters.
-	-- Installs tools into a sandboxed directory (~/.local/share/nvim/mason/) so they
-	-- don't pollute the system PATH.
-	{
-		"williamboman/mason.nvim",
-		version = "^2.0.0",
-		lazy = false,
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	-- Mason-lspconfig: bridge between Mason and nvim-lspconfig.
-	-- With auto_install = true, any LSP server enabled via vim.lsp.enable()
-	-- that isn't already installed will be downloaded automatically by Mason.
-	{
-		"williamboman/mason-lspconfig.nvim",
-		version = "^2.0.0",
-		lazy = false,
-		opts = {
-			auto_install = true,
-		},
-	},
 	-- nvim-lspconfig: community-maintained default configurations for LSP servers.
 	-- Each server is configured with blink.cmp capabilities for enhanced completion.
 	{

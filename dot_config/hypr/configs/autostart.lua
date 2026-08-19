@@ -6,9 +6,10 @@
 local programs = require("configs.programs")
 
 hl.on("hyprland.start", function()
-    -- Propagate session environment to D-Bus and systemd so portals and
-    -- GTK apps (nm-applet, etc.) can find the compositor.
-    hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE")
+    -- Propagate session environment to D-Bus and systemd so portals,
+    -- GTK apps, and app launchers (wofi) can find Nix-installed programs.
+    hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE PATH XDG_DATA_DIRS")
+    hl.exec_cmd("systemctl --user import-environment PATH XDG_DATA_DIRS")
 
     -- Polkit authentication agent
     hl.exec_cmd("systemctl --user start hyprpolkitagent")

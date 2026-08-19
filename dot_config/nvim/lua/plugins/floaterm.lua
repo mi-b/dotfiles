@@ -9,9 +9,9 @@ return {
 		vim.g.floaterm_height = 0.95
 		vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
 
-		vim.keymap.set("n", "<leader>Tt", ":FloatermToggle<CR>", { desc = "Toggle terminal" })
-		vim.keymap.set("t", "<leader>Tt", "<C-\\><C-n>:FloatermToggle<CR>", { desc = "Toggle terminal" })
-		vim.keymap.set("n", "<leader>Tl", ":FloatermNew lazygit<CR>", { desc = "Open lazygit" })
-		vim.keymap.set("n", "<leader>Tn", ":FloatermNew<CR>", { desc = "New terminal" })
+		vim.keymap.set("n", "<leader>Tt", "<cmd>FloatermToggle<cr>", { desc = "Toggle terminal" })
+		vim.keymap.set("t", "<leader>Tt", "<C-\\><C-n><cmd>FloatermToggle<cr>", { desc = "Toggle terminal" })
+		vim.keymap.set("n", "<leader>Tl", "<cmd>FloatermNew lazygit<cr>", { desc = "Open lazygit" })
+		vim.keymap.set("n", "<leader>Tn", "<cmd>FloatermNew<cr>", { desc = "New terminal" })
 	end,
 }

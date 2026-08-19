@@ -32,7 +32,7 @@ return {
 				},
 			},
 		})
-		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle file explorer" })
+		vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Toggle file explorer" })
 
 		-- Disable treesitter folding in neo-tree buffers
 		vim.api.nvim_create_autocmd("FileType", {

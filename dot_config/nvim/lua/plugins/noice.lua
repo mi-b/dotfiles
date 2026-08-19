@@ -39,6 +39,17 @@ return {
 			inc_rename = false,
 			lsp_doc_border = true,
 		},
+		routes = {
+			-- Written messages → mini (subtle)
+			{
+				filter = {
+					event = "msg_show",
+					kind = "",
+					find = "written",
+				},
+				view = "mini",
+			},
+		},
 	},
 	config = function(_, opts)
 		require("noice").setup(opts)

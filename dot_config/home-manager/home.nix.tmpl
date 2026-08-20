@@ -13,6 +13,12 @@
   # Allow unfree packages (e.g. google-chrome if ever needed via Nix).
   nixpkgs.config.allowUnfree = true;
 
+  # Session-level environment variables, inherited by all applications.
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   # Ensure font cache is rebuilt when fonts change.
   fonts.fontconfig.enable = true;
 }

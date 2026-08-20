@@ -5,13 +5,9 @@
     # --- Core CLI tools ---
     # (bat, fzf, zoxide, direnv are installed by HM program modules in programs.nix)
     curl
+    comma
     fd
-    ffmpeg
     file
-    git
-    git-filter-repo
-    git-lfs
-    delta
     go
     ripgrep
     htop
@@ -19,7 +15,6 @@
     jq
     just
     texliveSmall # provides latexmk and basic LaTeX
-    lazygit
     neovim
     nodejs
     pandoc
@@ -37,13 +32,21 @@
     woff2
     yazi
     p7zip
-    comma
+
+    # --- versioning ---
+    delta
+    git
+    git-filter-repo
+    git-lfs
+    lazygit
 
     # --- X11 clipboard (needed for i3/X11 setups) ---
     xclip
 
     # --- media ---
+    ffmpeg
     eog
+
     # --- LSP servers ---
     lua-language-server
     typescript-language-server

@@ -21,4 +21,19 @@
 
   # Ensure font cache is rebuilt when fonts change.
   fonts.fontconfig.enable = true;
+
+  # Default applications for common file types.
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = "org.gnome.eog.desktop";
+      "image/jpeg" = "org.gnome.eog.desktop";
+      "image/gif" = "org.gnome.eog.desktop";
+      "image/bmp" = "org.gnome.eog.desktop";
+      "image/webp" = "org.gnome.eog.desktop";
+      "image/tiff" = "org.gnome.eog.desktop";
+      "image/svg+xml" = "org.gnome.eog.desktop";
+    };
+  };
+  xdg.configFile."mimeapps.list".force = true;
 }

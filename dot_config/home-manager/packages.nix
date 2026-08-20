@@ -42,6 +42,8 @@
     # --- X11 clipboard (needed for i3/X11 setups) ---
     xclip
 
+    # --- media ---
+    eog
     # --- LSP servers ---
     lua-language-server
     typescript-language-server

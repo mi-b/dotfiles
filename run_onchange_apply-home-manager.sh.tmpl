@@ -28,7 +28,4 @@ else
     nix run home-manager/master -- switch --flake ~/.config/home-manager
 fi
 
-# Ensure git-lfs hooks are registered (git-lfs comes from Nix).
-git lfs install
-
 echo "Home Manager applied successfully."

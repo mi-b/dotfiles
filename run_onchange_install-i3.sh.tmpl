@@ -1,25 +1,11 @@
 #!/usr/bin/env bash
-# Install i3-specific packages.
+# Install i3 system-level packages.
 # hash: {{ include "dot_config/i3/config.tmpl" | sha256sum }}
 
 set -eu
 
-if command -v i3 >/dev/null 2>&1 && command -v polybar >/dev/null 2>&1; then
-    echo "i3 packages already installed."
-    exit 0
-fi
-
-echo "Installing i3 and ecosystem..."
 sudo apt-get update
 sudo apt-get install -y \
     i3 \
-    polybar \
     i3lock \
-    i3status \
-    xdg-desktop-portal \
-    xautolock \
-    feh \
-    xclip \
-    maim
-
-echo "i3 installation complete."
+    xdg-desktop-portal

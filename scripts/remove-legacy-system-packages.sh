@@ -69,6 +69,20 @@ sudo apt-get remove -y \
     wofi \
     rofi \
     picom \
+    brightnessctl \
+    playerctl \
+    pavucontrol \
+    polybar \
+    i3status \
+    feh \
+    xautolock \
+    maim \
+    waybar \
+    swaybg \
+    grim \
+    slurp \
+    wl-clipboard \
+    hypridle \
     2>/dev/null || true
 
 # NOTE: kitty stays on apt — GPU-accelerated apps cannot run from Nix

@@ -4,5 +4,7 @@
     ./wofi.nix
     ./rofi.nix
     ./picom.nix
+    ./i3.nix
+    ./hyprland.nix
   ];
 }

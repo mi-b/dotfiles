@@ -7,7 +7,6 @@
     comma
     fd
     file
-    go
     ripgrep
     htop
     imagemagick
@@ -38,6 +37,11 @@
     # --- media ---
     ffmpeg
     eog
+
+    # --- desktop utilities ---
+    brightnessctl
+    playerctl
+    pavucontrol
 
     # --- LSP servers ---
     lua-language-server

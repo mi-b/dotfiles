@@ -24,6 +24,8 @@ set -eu
 # desktop/wofi hash:       {{ include "dot_config/home-manager/modules/desktop/wofi.nix" | sha256sum }}
 # desktop/rofi hash:       {{ include "dot_config/home-manager/modules/desktop/rofi.nix" | sha256sum }}
 # desktop/picom hash:      {{ include "dot_config/home-manager/modules/desktop/picom.nix" | sha256sum }}
+# desktop/i3 hash:         {{ include "dot_config/home-manager/modules/desktop/i3.nix" | sha256sum }}
+# desktop/hyprland hash:   {{ include "dot_config/home-manager/modules/desktop/hyprland.nix" | sha256sum }}
 # host hash:               {{ include (printf "dot_config/home-manager/hosts/%s.nix" .host) | sha256sum }}
 
 echo "Applying Home Manager configuration..."

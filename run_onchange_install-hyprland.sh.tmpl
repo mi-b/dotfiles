@@ -1,40 +1,16 @@
 #!/usr/bin/env bash
-# Install Hyprland-specific packages from the cppiber PPA.
+# Install Hyprland system-level packages from the cppiber PPA.
 # hash: {{ include "dot_config/hypr/hyprland.lua" | sha256sum }}
 
 set -eu
 
-if command -v hyprland >/dev/null 2>&1 && command -v swaybg >/dev/null 2>&1; then
-    echo "Hyprland packages already installed."
-    exit 0
-fi
-
-echo "Adding Hyprland PPA..."
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y ppa:cppiber/hyprland
 sudo apt-get update
-
-echo "Installing Hyprland and ecosystem..."
 sudo apt-get install -y \
     hyprland \
     xdg-desktop-portal-hyprland \
     xdg-desktop-portal \
     hyprlock \
-    hypridle \
-    swaybg \
-    waybar \
     qtwayland5 \
-    qt6-wayland \
-    wl-clipboard \
-    grim \
-    slurp
-
-# bluetuith — Bluetooth TUI (requires Go)
-if ! command -v bluetuith >/dev/null 2>&1; then
-    echo "Installing bluetuith..."
-    go install github.com/darkhz/bluetuith@latest
-else
-    echo "bluetuith already installed."
-fi
-
-echo "Hyprland installation complete."
+    qt6-wayland

@@ -1,19 +1,12 @@
-{ pkgs, ... }@args:
+{ ... }:
 
 {
-  home.username = args.username;
-  home.homeDirectory = args.homeDirectory;
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";
 
-  # Let Home Manager manage itself.
   programs.home-manager.enable = true;
 
-  # Allow unfree packages (e.g. google-chrome if ever needed via Nix).
   nixpkgs.config.allowUnfree = true;
 
-  # Directories prepended to $PATH via HM session vars.
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/bin"
@@ -21,17 +14,14 @@
     "$HOME/go/bin"
   ];
 
-  # Session-level environment variables, inherited by all applications.
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
     LANG = "en_GB.UTF-8";
   };
 
-  # Ensure font cache is rebuilt when fonts change.
   fonts.fontconfig.enable = true;
 
-  # Default applications for common file types.
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

@@ -20,19 +20,9 @@
     {
       homeConfigurations.{{ .chezmoi.username }} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          username = "{{ .chezmoi.username }}";
-          homeDirectory = "{{ .chezmoi.homeDir }}";
-          gitUserName = "{{ .git.userName }}";
-          gitUserEmail = "{{ .git.userEmail }}";
-          wm = "{{ .wm }}";
-        };
         modules = [
           nix-flatpak.homeManagerModules.nix-flatpak
-          ./home.nix
-          ./packages.nix
-          ./programs.nix
-          ./flatpak.nix
+          ./hosts/{{ .chezmoi.hostname }}.nix
         ];
       };
     };

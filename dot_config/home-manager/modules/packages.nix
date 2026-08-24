@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     # --- Core CLI tools ---
-    # (bat, fzf, zoxide, direnv are installed by HM program modules in programs.nix)
     curl
     comma
     fd
@@ -14,7 +13,7 @@
     imagemagick
     jq
     just
-    texliveSmall # provides latexmk and basic LaTeX
+    texliveSmall
     neovim
     nodejs
     pandoc
@@ -45,7 +44,7 @@
     typescript-language-server
     ruff
     ty
-    clang-tools # provides clangd + clang-format
+    clang-tools
     taplo
     tinymist
     yaml-language-server

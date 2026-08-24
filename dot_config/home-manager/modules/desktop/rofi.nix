@@ -1,100 +1,103 @@
 { config, lib, ... }:
 
+let
+  inherit (config.lib.formats.rasi) mkLiteral;
+in
 {
-  xdg.configFile."rofi/config.rasi" = lib.mkIf (config.host.wm == "i3") {
-    text = ''
-      /* Rofi Configuration — Catppuccin Mocha */
+  programs.rofi = lib.mkIf (config.host.wm == "i3") {
+    enable = true;
+    font = "FiraCode Nerd Font 11";
+    terminal = "kitty";
+    modes = [ "drun" "run" ];
 
-      configuration {
-          modi: "drun,run";
-          show-icons: true;
-          terminal: "kitty";
-          drun-display-format: "{name}";
-          case-sensitive: false;
-      }
+    extraConfig = {
+      show-icons = true;
+      drun-display-format = "{name}";
+      case-sensitive = false;
+    };
 
-      @theme "/dev/null"
+    theme = {
+      "@theme" = "/dev/null";
 
-      * {
-          base:     #1e1e2e;
-          mantle:   #181825;
-          surface0: #313244;
-          surface1: #45475a;
-          overlay0: #6c7086;
-          text:     #cdd6f4;
-          lavender: #b4befe;
-          red:      #f38ba8;
+      "*" = {
+        base = mkLiteral "#1e1e2e";
+        mantle = mkLiteral "#181825";
+        surface0 = mkLiteral "#313244";
+        surface1 = mkLiteral "#45475a";
+        overlay0 = mkLiteral "#6c7086";
+        text = mkLiteral "#cdd6f4";
+        lavender = mkLiteral "#b4befe";
+        red = mkLiteral "#f38ba8";
 
-          background-color: transparent;
-          text-color:       @text;
-          font:             "FiraCode Nerd Font 11";
-      }
+        background-color = mkLiteral "transparent";
+        text-color = mkLiteral "@text";
+      };
 
-      window {
-          width:            30%;
-          background-color: @base;
-          border:           2px;
-          border-color:     @lavender;
-          border-radius:    8px;
-          padding:          0;
-      }
+      window = {
+        width = mkLiteral "30%";
+        background-color = mkLiteral "@base";
+        border = mkLiteral "2px";
+        border-color = mkLiteral "@lavender";
+        border-radius = mkLiteral "8px";
+        padding = 0;
+      };
 
-      mainbox {
-          background-color: @base;
-          children:         [ inputbar, listview ];
-      }
+      mainbox = {
+        background-color = mkLiteral "@base";
+        children = map mkLiteral [ "inputbar" "listview" ];
+      };
 
-      inputbar {
-          background-color: @surface0;
-          padding:          12px;
-          children:         [ prompt, entry ];
-      }
+      inputbar = {
+        background-color = mkLiteral "@surface0";
+        padding = mkLiteral "12px";
+        children = map mkLiteral [ "prompt" "entry" ];
+      };
 
-      prompt {
-          background-color: inherit;
-          text-color:       @lavender;
-          padding:          0 8px 0 0;
-      }
+      prompt = {
+        background-color = mkLiteral "inherit";
+        text-color = mkLiteral "@lavender";
+        padding = mkLiteral "0 8px 0 0";
+      };
 
-      entry {
-          background-color: inherit;
-          placeholder:      "Search...";
-          placeholder-color: @overlay0;
-      }
+      entry = {
+        background-color = mkLiteral "inherit";
+        placeholder = "Search...";
+        placeholder-color = mkLiteral "@overlay0";
+      };
 
-      listview {
-          background-color: @base;
-          lines:            8;
-          padding:          8px;
-          spacing:          4px;
-      }
+      listview = {
+        background-color = mkLiteral "@base";
+        lines = 8;
+        padding = mkLiteral "8px";
+        spacing = mkLiteral "4px";
+      };
 
-      element {
-          padding:       8px;
-          border-radius: 4px;
-      }
+      "element" = {
+        padding = mkLiteral "8px";
+        border-radius = mkLiteral "4px";
+      };
 
-      element normal.normal {
-          background-color: @base;
-      }
+      "element normal.normal" = {
+        background-color = mkLiteral "@base";
+      };
 
-      element selected.normal {
-          background-color: @surface1;
-          text-color:       @lavender;
-      }
+      "element selected.normal" = {
+        background-color = mkLiteral "@surface1";
+        text-color = mkLiteral "@lavender";
+      };
 
-      element alternate.normal {
-          background-color: @base;
-      }
+      "element alternate.normal" = {
+        background-color = mkLiteral "@base";
+      };
 
-      element-icon {
-          size: 20px;
-          padding: 0 8px 0 0;
-      }
+      element-icon = {
+        size = mkLiteral "20px";
+        padding = mkLiteral "0 8px 0 0";
+      };
 
-      element-text {
-          highlight: bold;
-      }
-    '';
+      element-text = {
+        highlight = mkLiteral "bold";
+      };
+    };
   };
 }

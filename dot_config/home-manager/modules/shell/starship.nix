@@ -3,10 +3,8 @@
 {
   programs.starship = {
     enable = true;
-    enableBashIntegration = true;
     settings = {
       add_newline = false;
-      command_timeout = 1000;
       palette = "catppuccin_mocha";
 
       format = builtins.concatStringsSep "" [

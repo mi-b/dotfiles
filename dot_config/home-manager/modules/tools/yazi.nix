@@ -16,7 +16,6 @@ in
 {
   programs.yazi = {
     enable = true;
-    enableBashIntegration = true;
     shellWrapperName = "y";
 
     flavors.catppuccin-mocha = catppuccin-mocha-flavor;

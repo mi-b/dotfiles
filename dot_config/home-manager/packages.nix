@@ -23,7 +23,6 @@
     python3
     resvg
     shfmt
-    tmux
     tree-sitter
     typst
     unzip

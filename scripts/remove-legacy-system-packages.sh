@@ -63,6 +63,14 @@ sudo apt-get remove -y \
     texlive-xetex \
     2>/dev/null || true
 
+# Desktop components now managed by Home Manager
+sudo apt-get remove -y \
+    dunst \
+    wofi \
+    rofi \
+    picom \
+    2>/dev/null || true
+
 # NOTE: kitty stays on apt — GPU-accelerated apps cannot run from Nix
 # on non-NixOS (missing system OpenGL/Nvidia drivers).
 

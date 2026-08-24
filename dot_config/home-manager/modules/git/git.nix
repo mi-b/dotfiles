@@ -4,10 +4,12 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
+    userName = config.host.gitUserName;
+    userEmail = config.host.gitUserEmail;
+    aliases = {
+      pushf = "push --force-with-lease";
+    };
     settings = {
-      user.name = config.host.gitUserName;
-      user.email = config.host.gitUserEmail;
-      alias.pushf = "push --force-with-lease";
       core.autocrlf = "input";
       init.defaultBranch = "main";
       column.ui = "auto";
@@ -27,7 +29,6 @@
 
   programs.delta = {
     enable = true;
-    enableGitIntegration = true;
     options = {
       features = "catppuccin-mocha";
       "catppuccin-mocha" = {

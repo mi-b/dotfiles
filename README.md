@@ -71,6 +71,15 @@ script detects changes and re-applies.
 See [`docs/NIX.md`](docs/NIX.md) for details on using Nix flakes + direnv
 for pinned per-project dependencies.
 
+## Duplicated configs (Linux + Windows)
+
+The following chezmoi-managed configs are also declared in Home Manager for
+Linux. They remain in chezmoi solely for Windows. Once Windows is split into
+its own branch or repo, these can be deleted from chezmoi:
+
+- `dot_config/yazi/` — `programs.yazi` in Home Manager
+- `dot_config/lazygit/config.yml` — `programs.lazygit` in Home Manager
+
 ## Licence
 
 Unlicensed. Steal what you like.

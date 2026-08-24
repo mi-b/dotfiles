@@ -3,11 +3,28 @@
 set -eu
 
 # Trigger rebuild when any Home Manager config file changes.
-# flake.nix hash:    {{ include "dot_config/home-manager/flake.nix.tmpl" | sha256sum }}
-# home.nix hash:     {{ include "dot_config/home-manager/home.nix" | sha256sum }}
-# packages.nix hash: {{ include "dot_config/home-manager/packages.nix" | sha256sum }}
-# programs.nix hash: {{ include "dot_config/home-manager/programs.nix" | sha256sum }}
-# flatpak.nix hash:  {{ include "dot_config/home-manager/flatpak.nix" | sha256sum }}
+# flake.nix hash:          {{ include "dot_config/home-manager/flake.nix.tmpl" | sha256sum }}
+# modules/default hash:    {{ include "dot_config/home-manager/modules/default.nix" | sha256sum }}
+# modules/options hash:    {{ include "dot_config/home-manager/modules/options.nix" | sha256sum }}
+# modules/base hash:       {{ include "dot_config/home-manager/modules/base.nix" | sha256sum }}
+# modules/packages hash:   {{ include "dot_config/home-manager/modules/packages.nix" | sha256sum }}
+# modules/flatpak hash:    {{ include "dot_config/home-manager/modules/flatpak.nix" | sha256sum }}
+# shell/bash hash:         {{ include "dot_config/home-manager/modules/shell/bash.nix" | sha256sum }}
+# shell/readline hash:     {{ include "dot_config/home-manager/modules/shell/readline.nix" | sha256sum }}
+# shell/starship hash:     {{ include "dot_config/home-manager/modules/shell/starship.nix" | sha256sum }}
+# terminal/kitty hash:     {{ include "dot_config/home-manager/modules/terminal/kitty.nix" | sha256sum }}
+# terminal/tmux hash:      {{ include "dot_config/home-manager/modules/terminal/tmux.nix" | sha256sum }}
+# git/git hash:            {{ include "dot_config/home-manager/modules/git/git.nix" | sha256sum }}
+# git/lazygit hash:        {{ include "dot_config/home-manager/modules/git/lazygit.nix" | sha256sum }}
+# tools/bat hash:          {{ include "dot_config/home-manager/modules/tools/bat.nix" | sha256sum }}
+# tools/fzf hash:          {{ include "dot_config/home-manager/modules/tools/fzf.nix" | sha256sum }}
+# tools/yazi hash:         {{ include "dot_config/home-manager/modules/tools/yazi.nix" | sha256sum }}
+# tools/zoxide hash:       {{ include "dot_config/home-manager/modules/tools/zoxide.nix" | sha256sum }}
+# desktop/dunst hash:      {{ include "dot_config/home-manager/modules/desktop/dunst.nix" | sha256sum }}
+# desktop/wofi hash:       {{ include "dot_config/home-manager/modules/desktop/wofi.nix" | sha256sum }}
+# desktop/rofi hash:       {{ include "dot_config/home-manager/modules/desktop/rofi.nix" | sha256sum }}
+# desktop/picom hash:      {{ include "dot_config/home-manager/modules/desktop/picom.nix" | sha256sum }}
+# host hash:               {{ include (printf "dot_config/home-manager/hosts/%s.nix" .host) | sha256sum }}
 
 echo "Applying Home Manager configuration..."
 

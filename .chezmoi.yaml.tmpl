@@ -1,29 +1,13 @@
-{{- $choices := list "private" "work" -}}
-{{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
-{{- $wmChoices := list "hyprland" "i3" "none" -}}
-{{- $wm := promptChoiceOnce . "wm" "Window manager?" $wmChoices "none" -}}
+{{- $hostChoices := list "abakus" "chuebel" "abacus" -}}
+{{- $host := promptChoiceOnce . "host" "Host profile?" $hostChoices .chezmoi.hostname -}}
 
 data:
-  # Any of `private`, `work`
-  workspace: {{ $workspace }}
-
-  # Any of `hyprland`, `i3`, `none`
-  wm: {{ $wm }}
-
-  # Git Setup.
-  git:
-    {{- if contains $workspace "work" }}
-    userEmail: michael.baumann@helbling.ch
-    userName: mib
-    {{- else }}
-    userEmail: mikebaumann@bluewin.ch
-    userName: mi-b
-    {{- end }}
+  host: {{ $host }}
+  wm: {{ if eq $host "abakus" }}hyprland{{ else }}i3{{ end }}
+  workspace: {{ if eq $host "abakus" }}private{{ else }}work{{ end }}
 {{- if eq .chezmoi.os "windows" }}
 
 cd:
-  # `chezmoi cd` launches a new shell, so make it match the usual Git Bash
-  # interactive startup behaviour instead of relying on platform detection.
   command: bash
   args:
     - -i

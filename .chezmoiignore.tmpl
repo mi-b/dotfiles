@@ -14,8 +14,6 @@ scripts/**
 .config/hypr/**
 .config/waybar/
 .config/waybar/**
-.config/wofi/
-.config/wofi/**
 install-hyprland.sh
 {{ end }}
 
@@ -24,22 +22,7 @@ install-hyprland.sh
 .config/i3/**
 .config/polybar/
 .config/polybar/**
-.config/rofi/
-.config/rofi/**
-.config/picom/
-.config/picom/**
-.xsession
 install-i3.sh
-{{ end }}
-
-{{ if eq .wm "none" }}
-.config/dunst/
-.config/dunst/**
-.config/wallpaper/
-.config/wallpaper/**
-.config/autostart/
-.config/autostart/**
-install-desktop-runtime.sh
 {{ end }}
 
 # --- Linux (Home Manager owns .bashrc and starship config) ---

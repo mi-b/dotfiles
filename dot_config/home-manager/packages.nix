@@ -33,7 +33,6 @@
 
     # --- versioning ---
     git-filter-repo
-    lazygit
 
     # --- X11 clipboard (needed for i3/X11 setups) ---
     xclip

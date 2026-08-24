@@ -33,10 +33,7 @@
     p7zip
 
     # --- versioning ---
-    delta
-    git
     git-filter-repo
-    git-lfs
     lazygit
 
     # --- X11 clipboard (needed for i3/X11 setups) ---

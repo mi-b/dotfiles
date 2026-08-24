@@ -23,6 +23,8 @@
         extraSpecialArgs = {
           username = "{{ .chezmoi.username }}";
           homeDirectory = "{{ .chezmoi.homeDir }}";
+          gitUserName = "{{ .git.userName }}";
+          gitUserEmail = "{{ .git.userEmail }}";
         };
         modules = [
           nix-flatpak.homeManagerModules.nix-flatpak

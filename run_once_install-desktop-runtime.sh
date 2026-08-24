@@ -4,7 +4,7 @@
 set -eu
 
 missing=0
-for cmd in dunst kitty brightnessctl playerctl pavucontrol; do
+for cmd in kitty brightnessctl playerctl pavucontrol; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         missing=1
         break
@@ -21,7 +21,6 @@ sudo apt-get update
 
 echo "Installing shared desktop runtime packages..."
 sudo apt-get install -y \
-    dunst \
     pipewire \
     wireplumber \
     brightnessctl \

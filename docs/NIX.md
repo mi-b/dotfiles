@@ -207,16 +207,10 @@ devShells.${system}.default = pkgs.mkShell {
 When direnv activates, the project's versions shadow the global ones.
 Neovim picks up whichever is first on `$PATH` — which is the project's.
 
-### What about ty (Astral type checker)?
+### ty (Astral type checker)
 
-`ty` may not yet be in nixpkgs (it's early-stage). Options:
-
-1. Wait for it to land in nixpkgs
-2. Install it via `uv tool install ty` (managed outside Nix)
-3. Package it as a Nix flake overlay (advanced)
-
-For now, option 2 is pragmatic. The LSP config in Neovim still has `ty`
-enabled — it will work as soon as the binary is on PATH by any means.
+`ty` is available in nixpkgs (unstable channel) and included in
+`packages.nix` alongside `ruff`.
 
 ## Flatpak
 

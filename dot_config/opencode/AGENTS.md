@@ -40,8 +40,7 @@ overridden by a project-level `.opencode/AGENTS.md`.
 
 - **Package manager**: `uv` (always, no exceptions for new projects)
 - **Linter/formatter**: `ruff` (replaces flake8, isort, black)
-- **Type checker**: `ty` (from Astral). Note: still in early preview —
-  fall back to `mypy` or `pyright` for regulated projects
+- **Type checker**: `ty` (from Astral)
 - **Config**: everything in `pyproject.toml` — no `requirements.txt`,
   `setup.py`, or `setup.cfg` for new projects
 - **Virtual environments**: managed by `uv`, never install globally

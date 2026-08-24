@@ -51,7 +51,7 @@
     lua-language-server
     typescript-language-server
     ruff
-    # ty  # Astral's type checker — uncomment when available in nixpkgs
+    ty
     clang-tools # provides clangd + clang-format
     taplo
     tinymist

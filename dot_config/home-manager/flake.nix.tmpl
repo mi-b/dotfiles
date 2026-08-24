@@ -25,6 +25,7 @@
           homeDirectory = "{{ .chezmoi.homeDir }}";
           gitUserName = "{{ .git.userName }}";
           gitUserEmail = "{{ .git.userEmail }}";
+          wm = "{{ .wm }}";
         };
         modules = [
           nix-flatpak.homeManagerModules.nix-flatpak

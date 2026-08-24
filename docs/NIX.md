@@ -66,6 +66,14 @@ The i3 and hyprland modules only activate on their respective hosts.
 Delete it from the relevant module, then `chezmoi apply`.
 Run `nix-collect-garbage -d` afterwards to reclaim disk space.
 
+### Remove a module
+
+Delete the `.nix` file from the chezmoi source **and** from the deployed
+target (`~/.config/home-manager/`).
+The `run_onchange` hash trigger uses `glob` against the target directory,
+so a stale `.nix` file left in the target will cause `chezmoi apply` to
+fail with an `include` error.
+
 ### Update all pinned versions
 
 Always work in the **chezmoi source directory** (not `~/.config/home-manager/`

@@ -7,6 +7,7 @@
     comma
     fd
     file
+    opencode
     ripgrep
     htop
     imagemagick

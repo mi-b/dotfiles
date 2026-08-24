@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if ! command -v bat >/dev/null 2>&1; then
-    exit 0
-fi
-
-# bat theme hash: {{ include "dot_config/bat/themes/Catppuccin Mocha.tmTheme" | sha256sum }}
-bat cache --build

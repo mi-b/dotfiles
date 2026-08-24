@@ -13,10 +13,19 @@
   # Allow unfree packages (e.g. google-chrome if ever needed via Nix).
   nixpkgs.config.allowUnfree = true;
 
+  # Directories prepended to $PATH via HM session vars.
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/bin"
+    "$HOME/.opencode/bin"
+    "$HOME/go/bin"
+  ];
+
   # Session-level environment variables, inherited by all applications.
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    LANG = "en_GB.UTF-8";
   };
 
   # Ensure font cache is rebuilt when fonts change.

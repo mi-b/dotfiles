@@ -5,9 +5,6 @@ palette = "catppuccin_mocha"
 format = """
 $username\
 $hostname\
-{{ if eq .chezmoi.os "linux" -}}
-${custom.ip}\
-{{ end -}}
 $directory\
 $git_branch\
 $git_status\
@@ -18,14 +15,6 @@ $character
 ssh_only = true
 format = "[$hostname](bold yellow)"
 
-{{ if eq .chezmoi.os "linux" -}}
-[custom.ip]
-when = "test -n \"$SSH_CONNECTION\""
-command = "ip route get 1 | awk '{print \" (\" $7 \")\"; exit}'"
-format = "[$output](bold yellow) "
-shell = ["bash", "--noprofile", "--norc"]
-
-{{ end -}}
 [nodejs]
 disabled = true
 

@@ -23,7 +23,6 @@
     python3
     resvg
     shfmt
-    starship
     tmux
     tree-sitter
     typst

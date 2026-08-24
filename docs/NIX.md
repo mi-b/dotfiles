@@ -262,7 +262,8 @@ Source the daemon script:
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
-Or restart your shell. In this repo, `~/.bashrc` sources it per-user.
+Or restart your shell. Home Manager's `programs.bash` sources it in
+`bashrcExtra`.
 
 ### Home Manager switch fails with "collision"
 
@@ -375,26 +376,15 @@ that reference files no longer present. If you see errors like
 `/home/user/.local/bin/env: No such file or directory`, edit `~/.profile`
 and remove the offending line. Chezmoi does not manage `~/.profile`.
 
-## Future considerations
+## Shell configuration ownership
 
-### Let Home Manager own `.bashrc` on Linux
+On Linux, Home Manager owns `.bashrc` via `programs.bash`. All shell
+integrations (direnv, fzf, starship, zoxide) use
+`enableBashIntegration = true`, so their `eval` hooks are injected
+automatically. PATH entries are declared in `home.sessionPath`, and
+session variables in `home.sessionVariables`.
 
-Currently chezmoi manages `.bashrc` on both Linux and Windows. This means
-shell integration hooks (`eval "$(zoxide init bash)"`, `eval "$(direnv hook
-bash)"`, etc.) must be written manually in bashrc rather than being handled
-automatically by HM's program modules.
-
-Since Home Manager only runs on Linux, and the Linux bashrc section uses
-**no chezmoi template variables**, there's nothing stopping HM from owning
-it entirely. The migration would look like:
-
-1. Enable `programs.bash` in HM with `enable = true`
-2. Move PATH additions, aliases, functions, and shell hooks into
-   `programs.bash.initExtra` / `programs.bash.shellAliases`
-3. Set `enableBashIntegration = true` on direnv, fzf, zoxide modules
-4. Remove the Linux section from chezmoi's `dot_bashrc.tmpl`
-5. Keep chezmoi managing bashrc only for Windows
-
-**Why not now:** it works, it's simple, and gabyx uses the same pattern
-(chezmoi for shell config, HM for packages). Revisit if the manual evals
-become a maintenance burden.
+Chezmoi manages `.bashrc` only on Windows, where Home Manager is not
+available. The starship config is also split: HM owns it on Linux via
+`programs.starship.settings`; chezmoi provides a static
+`starship.toml` for Windows.

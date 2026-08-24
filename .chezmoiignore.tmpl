@@ -42,6 +42,13 @@ install-i3.sh
 install-desktop-runtime.sh
 {{ end }}
 
+# --- Linux (Home Manager owns .bashrc and starship config) ---
+
+{{ if eq .chezmoi.os "linux" }}
+.bashrc
+.config/starship.toml
+{{ end }}
+
 # --- Windows ---
 
 {{ if eq .chezmoi.os "windows" }}

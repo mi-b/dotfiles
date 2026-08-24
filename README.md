@@ -43,7 +43,7 @@ Some steps require `sudo`. That is deliberate, not a bug.
 | Machine | Gets |
 | ------- | ---- |
 | Linux (desktop) | Full Nix + Home Manager + Flatpak + WM |
-| Windows | Neovim config, bashrc, starship only |
+| Windows | Neovim config, bashrc, starship only (no Home Manager) |
 
 ## Initial prompts
 

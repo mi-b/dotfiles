@@ -1,49 +1,11 @@
-# ~/.bashrc: managed by chezmoi
-{{ if eq .chezmoi.os "linux" }}
-path_prepend() {
-    [ -d "$1" ] || return 0
-    case ":$PATH:" in
-        *":$1:"*) ;;
-        *) PATH="$1:$PATH" ;;
-    esac
-}
+# ~/.bashrc: managed by chezmoi (Windows only; Linux .bashrc owned by Home Manager)
+{{- if eq .chezmoi.os "windows" }}
 
-path_append() {
-    [ -d "$1" ] || return 0
-    case ":$PATH:" in
-        *":$1:"*) ;;
-        *) PATH="$PATH:$1" ;;
-    esac
-}
-
-export EDITOR="$(command -v nvim)"
-export LANG="en_GB.UTF-8"
-
-path_prepend "$HOME/.local/bin"
-path_prepend "$HOME/bin"
-path_prepend "$HOME/.opencode/bin"
-path_prepend "$HOME/go/bin"
-path_append "/usr/share/java"
-export PATH
-
-# Source the shared Nix profile in user space instead of relying on global
-# shell init changes.
-if [ -f "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]; then
-    . "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-fi
-
-# Source Home Manager session variables if present.
-if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-    . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-fi
-{{ end }}
 # If not running interactively, do nothing.
 case $- in
     *i*) ;;
     *) return ;;
 esac
-
-# --- Cross-platform ------------------------------------------------
 
 set -o vi
 HISTCONTROL=ignoreboth:erasedups
@@ -70,76 +32,7 @@ case ";${PROMPT_COMMAND:-};" in
         ;;
 esac
 export PROMPT_COMMAND
-{{ if eq .chezmoi.os "linux" }}
-# --- Linux only ----------------------------------------------------
 
-# Remap Caps Lock to Ctrl (X11 only; under Wayland this is handled by the compositor)
-if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-    setxkbmap -option ctrl:nocaps
-    xset -q 2>/dev/null | grep -q "Caps Lock:   on" && xdotool key Caps_Lock
-fi
-
-if [ -x /usr/bin/lesspipe ]; then
-    eval "$(SHELL=/bin/sh lesspipe)"
-fi
-
-alias nvs='cd ~/.config/nvim/ && nvim'
-
-# Load distro completions when present.
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
-
-# Shell integrations — all tools are on PATH via Nix.
-# zoxide must be last to avoid _ZO_DOCTOR warnings.
-eval "$(direnv hook bash)"
-eval "$(fzf --bash)"
-eval "$(starship init bash)"
-eval "$(zoxide init bash)"
-
-# Vi-mode cursor shape: beam (insert), block (normal).
-# Must be set AFTER starship init to avoid being overridden.
-if [[ $- == *i* ]]; then
-    bind 'set show-mode-in-prompt on'
-    bind "set vi-ins-mode-string \1"$'\e'"[5 q\2"
-    bind "set vi-cmd-mode-string \1"$'\e'"[1 q\2"
-fi
-
-y() {
-    local tmp cwd
-    tmp="$(mktemp -t "yazi-cwd.XXXXXX")" || return 1
-    yazi "$@" --cwd-file="$tmp"
-    cwd="$(tr -d '\0' < "$tmp")"
-    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd" || return
-    fi
-    rm -f -- "$tmp"
-}
-
-ff() {
-    find -type f | fzf -m --preview='bat --color=always {}'
-}
-
-fd() {
-    find -type d | fzf
-}
-
-fn() {
-    fzf -m --preview='bat --color=always {}' --bind 'enter:become(nvim {+})'
-}
-
-ffn() {
-    find -type f | fzf --bind 'enter:become(nvim {})'
-}
-
-fdn() {
-    find -type d | fzf --preview='bat --color=always {}' --bind 'enter:become(nvim {})'
-}
-{{ end }}
-{{- if eq .chezmoi.os "windows" }}
-# --- Windows only --------------------------------------------------
 {{ if eq .workspace "work" -}}
 alias nvn='cd "{{ .chezmoi.homeDir }}/OneDrive - Helbling Holding AG/documents/Notes" && nvim'
 {{ end -}}

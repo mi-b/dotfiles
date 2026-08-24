@@ -28,7 +28,6 @@
     unzip
     uv
     woff2
-    yazi
     p7zip
 
     # --- versioning ---

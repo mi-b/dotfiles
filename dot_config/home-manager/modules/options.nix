@@ -3,7 +3,7 @@
 {
   options.host = {
     wm = lib.mkOption {
-      type = lib.types.enum [ "hyprland" "i3" "none" ];
+      type = lib.types.enum [ "hyprland" "i3" ];
       description = "Window manager for this host.";
     };
     workspace = lib.mkOption {

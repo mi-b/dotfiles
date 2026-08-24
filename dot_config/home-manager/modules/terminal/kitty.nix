@@ -18,11 +18,6 @@ in
     shellIntegration.mode = if isHyprland then "no-cursor" else "no-rc";
 
     settings = {
-      bold_font = "auto";
-      italic_font = "auto";
-      bold_italic_font = "auto";
-      disable_ligatures = "never";
-
       hide_window_decorations = isHyprland;
       window_padding_width = 5;
       confirm_os_window_close = 0;
@@ -34,8 +29,6 @@ in
       visual_bell_color = "#333333";
 
       clipboard_control = "write-clipboard read-clipboard";
-      allow_remote_control = false;
-      allow_hyperlinks = true;
     };
 
     keybindings = {

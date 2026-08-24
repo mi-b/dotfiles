@@ -56,11 +56,8 @@
         xset -q 2>/dev/null | grep -q "Caps Lock:   on" && xdotool key Caps_Lock
       fi
 
-      ff() { find -type f | fzf -m --preview='bat --color=always {}'; }
-      fd() { find -type d | fzf; }
+      # Open selected files in nvim via fzf.
       fn() { fzf -m --preview='bat --color=always {}' --bind 'enter:become(nvim {+})'; }
-      ffn() { find -type f | fzf --bind 'enter:become(nvim {})'; }
-      fdn() { find -type d | fzf --preview='bat --color=always {}' --bind 'enter:become(nvim {})'; }
     '';
   };
 
@@ -69,6 +66,5 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    enableBashIntegration = true;
   };
 }

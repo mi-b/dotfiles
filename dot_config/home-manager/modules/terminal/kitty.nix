@@ -1,55 +1,49 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 let
   isHyprland = config.host.wm == "hyprland";
 in
 {
-  xdg.configFile."kitty/kitty.conf".text = ''
-    # Kitty configuration — only non-default settings.
+  programs.kitty = {
+    enable = true;
+    package = null;
 
-    # --- Font ---
-    font_family      FiraCode Nerd Font
-    bold_font        auto
-    italic_font      auto
-    bold_italic_font auto
-    font_size        12.0
-    disable_ligatures never
+    font = {
+      name = "FiraCode Nerd Font";
+      size = 12.0;
+    };
 
-    # --- Window ---
-    hide_window_decorations ${if isHyprland then "yes" else "no"}
-    window_padding_width    5
-    confirm_os_window_close 0
+    themeFile = "Catppuccin-Mocha";
 
-    # --- Scrollback ---
-    scrollback_lines 50000
+    shellIntegration.mode = if isHyprland then "no-cursor" else "no-rc";
 
-    # --- Bell ---
-    enable_audio_bell    no
-    visual_bell_duration 0.1
-    visual_bell_color #333333
+    settings = {
+      bold_font = "auto";
+      italic_font = "auto";
+      bold_italic_font = "auto";
+      disable_ligatures = "never";
 
-    # --- Clipboard & remote ---
-    clipboard_control    write-clipboard read-clipboard
-    allow_remote_control no
-    allow_hyperlinks     yes
+      hide_window_decorations = isHyprland;
+      window_padding_width = 5;
+      confirm_os_window_close = 0;
 
-    # --- Theme ---
-    include themes/mocha.conf
-    ${if isHyprland then ''
+      scrollback_lines = 50000;
 
-    # --- Shell integration ---
-    shell_integration no-cursor'' else ""}
+      enable_audio_bell = false;
+      visual_bell_duration = "0.1";
+      visual_bell_color = "#333333";
 
-    # --- Keybindings ---
-    map kitty_mod+right next_window
-    map kitty_mod+left  next_window
-    map kitty_mod+up    next_tab
-    map kitty_mod+down  previous_tab
-    map ctrl+shift+b launch --type=os-window --cwd=current
-  '';
+      clipboard_control = "write-clipboard read-clipboard";
+      allow_remote_control = false;
+      allow_hyperlinks = true;
+    };
 
-  xdg.configFile."kitty/themes/mocha.conf".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf";
-    hash = "sha256-cWrJfNVCuuT/NbU8qYCq5PAB4MS8WcT74AMBm+IO+c0=";
+    keybindings = {
+      "kitty_mod+right" = "next_window";
+      "kitty_mod+left" = "next_window";
+      "kitty_mod+up" = "next_tab";
+      "kitty_mod+down" = "previous_tab";
+      "ctrl+shift+b" = "launch --type=os-window --cwd=current";
+    };
   };
 }

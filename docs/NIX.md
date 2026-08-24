@@ -28,26 +28,42 @@ to systemd to move).
 
 ```
 ~/.config/home-manager/
-├── flake.nix       # Inputs: nixpkgs, home-manager, nix-flatpak
-├── flake.lock      # Pinned dependency versions (committed to chezmoi repo)
-├── home.nix        # Top-level: username, stateVersion, global settings
-├── packages.nix    # All packages: CLI tools, LSP servers, formatters, fonts
-├── programs.nix    # Home Manager modules: direnv, starship, bat, fzf, zoxide
-└── flatpak.nix     # Declarative Flatpak GUI apps
+├── flake.nix           # Inputs: nixpkgs, home-manager, nix-flatpak
+├── flake.lock          # Pinned dependency versions (committed to chezmoi repo)
+├── hosts/
+│   ├── abakus.nix      # Host-specific: username, WM, git identity
+│   └── chuebel.nix
+└── modules/
+    ├── default.nix     # Module entry point (imports all subdirectories)
+    ├── options.nix     # Custom options (host.wm, host.workspace, etc.)
+    ├── base.nix        # Global settings: stateVersion, sessionPath
+    ├── packages.nix    # CLI tools, LSP servers, formatters, fonts
+    ├── flatpak.nix     # Declarative Flatpak GUI apps
+    ├── shell/          # bash, readline, starship
+    ├── terminal/       # kitty (config only, pkg on apt), tmux
+    ├── git/            # git, lazygit
+    ├── tools/          # bat, fzf, yazi, zoxide
+    └── desktop/        # dunst, rofi, wofi, picom, i3, hyprland
 ```
+
+Desktop modules under `desktop/` use `lib.mkIf` to conditionally install
+packages based on `host.wm` (set per host).
+The i3 and hyprland modules only activate on their respective hosts.
 
 ## Common tasks
 
 ### Add a package
 
 1. Find it: `nix search nixpkgs <name>`
-2. Add it to `packages.nix` (in the chezmoi source:
-   `~/.local/share/chezmoi/dot_config/home-manager/packages.nix`)
+2. Add it to the appropriate module in the chezmoi source
+   (`~/.local/share/chezmoi/dot_config/home-manager/modules/`).
+   CLI tools go in `packages.nix`; WM-specific tools go in
+   `desktop/i3.nix` or `desktop/hyprland.nix`.
 3. Apply: `chezmoi apply` (triggers Home Manager rebuild)
 
 ### Remove a package
 
-Delete it from `packages.nix`, then `chezmoi apply`.
+Delete it from the relevant module, then `chezmoi apply`.
 Run `nix-collect-garbage -d` afterwards to reclaim disk space.
 
 ### Update all pinned versions
@@ -277,17 +293,33 @@ nix-env -q | sort
 ### GPU-accelerated apps fail (OpenGL/EGL errors)
 
 Apps that use the GPU (kitty, alacritty, any OpenGL/Vulkan program) **cannot
-be installed via Nix on non-NixOS**. The Nix binaries look for OpenGL/EGL
-libraries in the Nix store, but the actual GPU drivers (Nvidia, Mesa) are
-system-level and only accessible from system paths.
+be installed via Nix on non-NixOS**.
+The Nix binaries look for OpenGL/EGL libraries in the Nix store, but the
+actual GPU drivers (Nvidia, Mesa) are system-level and only accessible from
+system paths.
 
 Symptom:
+
 ```
 Failed to create GLFWwindow. This usually happens because of old/broken
 OpenGL drivers. kitty requires working OpenGL 3.1 drivers.
 ```
 
+**Approaches we tried and rejected:**
+
+- **nixGL** (`nix-community/nixGL`): the standard wrapper for this problem.
+  Broken with current nixpkgs-unstable — the Nvidia driver override uses a
+  `kernel` argument that the refactored `nvidia_x11` derivation no longer
+  accepts.
+  Also requires `--impure` for auto-detection, or per-host driver version
+  pinning (fragile across driver updates).
+- **Manual `LD_LIBRARY_PATH` wrapper**: pointing to `/usr/lib/x86_64-linux-gnu`
+  causes glibc version conflicts (system libc vs Nix libc).
+  Narrowing to `/usr/lib/x86_64-linux-gnu/nvidia` avoids glibc but still
+  fails to provide a working EGL context.
+
 **Rule:** keep GPU-accelerated GUI apps on apt. This includes:
+
 - Terminal emulators (kitty, alacritty, wezterm)
 - Games (Steam)
 - Anything using OpenGL, Vulkan, or EGL
@@ -336,7 +368,7 @@ Do NOT add these to `flatpak.nix` — they will fail every `chezmoi apply`.
 
 Normal. nix-direnv caches aggressively after the first evaluation.
 Subsequent loads should be instant. If it stays slow, check that
-`programs.direnv.nix-direnv.enable = true` is set in `programs.nix`.
+`programs.direnv.nix-direnv.enable = true` is set in the shell module.
 
 ### Package not found in nixpkgs
 

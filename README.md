@@ -12,7 +12,7 @@ GUI applications use [Flatpak](https://flatpak.org/).
 | ----- | ---------- | ----- |
 | CLI tools, LSPs, formatters, fonts | Nix / Home Manager | `~/.config/home-manager/` |
 | GUI applications | Flatpak (declared in Home Manager) | Chrome, Firefox, VS Code, VLC, GIMP, Inkscape |
-| Window manager & desktop services | apt | Hyprland or i3 + pipewire, dunst, etc. |
+| Window manager & system services | apt | Hyprland or i3, pipewire, kitty |
 | Dotfile templates & config | chezmoi | Shell, editor, terminal, WM configs |
 
 ## Bootstrap a new machine

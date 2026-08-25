@@ -5,7 +5,10 @@
     enable = true;
     backend = "xrender";
     shadow = true;
-    shadowOffsets = [ (-6) (-6) ];
+    shadowOffsets = [
+      (-6)
+      (-6)
+    ];
     shadowOpacity = 0.75;
     shadowExclude = [
       "name = 'Notification'"
@@ -21,11 +24,21 @@
       detect-client-leader = true;
       use-damage = true;
       wintypes = {
-        tooltip = { shadow = false; };
-        dock = { shadow = false; };
-        dnd = { shadow = false; };
-        popup_menu = { shadow = true; };
-        dropdown_menu = { shadow = true; };
+        tooltip = {
+          shadow = false;
+        };
+        dock = {
+          shadow = false;
+        };
+        dnd = {
+          shadow = false;
+        };
+        popup_menu = {
+          shadow = true;
+        };
+        dropdown_menu = {
+          shadow = true;
+        };
       };
     };
   };

@@ -4,10 +4,16 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    historyControl = [ "ignoreboth" "erasedups" ];
+    historyControl = [
+      "ignoreboth"
+      "erasedups"
+    ];
     historySize = 10000;
     historyFileSize = 20000;
-    shellOptions = [ "histappend" "checkwinsize" ];
+    shellOptions = [
+      "histappend"
+      "checkwinsize"
+    ];
     shellAliases = {
       lg = "lazygit";
       nvs = "cd ~/.config/nvim/ && nvim";

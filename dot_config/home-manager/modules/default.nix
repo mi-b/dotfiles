@@ -4,6 +4,7 @@
     ./base.nix
     ./packages.nix
     ./flatpak.nix
+    ./gaming.nix
     ./shell
     ./terminal
     ./git

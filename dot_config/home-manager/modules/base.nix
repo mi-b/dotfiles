@@ -1,6 +1,14 @@
 { ... }:
 
 {
+  catppuccin = {
+    enable = true;
+    autoEnable = true;
+    flavor = "mocha";
+    accent = "blue";
+    nvim.enable = false;
+  };
+
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;

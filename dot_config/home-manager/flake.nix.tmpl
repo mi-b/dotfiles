@@ -9,21 +9,42 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
   };
 
-  outputs = { nixpkgs, home-manager, nix-flatpak, ... }:
+  outputs = { nixpkgs, home-manager, catppuccin, nix-flatpak, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      pkgsFor = system: nixpkgs.legacyPackages.${system};
     in
     {
       homeConfigurations.{{ .chezmoi.username }} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = pkgsFor "x86_64-linux";
         modules = [
+          catppuccin.homeModules.catppuccin
           nix-flatpak.homeManagerModules.nix-flatpak
           ./hosts/{{ .host }}.nix
         ];
       };
+
+      formatter = forAllSystems (system: (pkgsFor system).nixfmt-rfc-style);
+
+      checks = forAllSystems (system:
+        let
+          pkgs = pkgsFor system;
+        in
+        {
+          formatting = pkgs.runCommandLocal "check-formatting" { } ''
+            cd ${./.}
+            ${pkgs.nixfmt-rfc-style}/bin/nixfmt --check . > $out 2>&1 || {
+              echo "Formatting check failed. Run 'nix fmt' to fix."
+              exit 1
+            }
+          '';
+        }
+      );
     };
 }

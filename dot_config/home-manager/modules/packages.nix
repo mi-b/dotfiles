@@ -14,8 +14,8 @@
     jq
     just
     texliveSmall
-    neovim
     nodejs
+    neovim
     pandoc
     podman
     poppler-utils

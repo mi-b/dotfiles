@@ -17,7 +17,6 @@
         progress_bar_max_width = 300;
         progress_bar_corner_radius = 6;
         text_icon_padding = 10;
-        frame_color = "#b4befe";
         gap_size = 4;
         separator_color = "frame";
         corner_radius = 8;
@@ -36,24 +35,13 @@
         mouse_right_click = "close_all";
       };
       urgency_low = {
-        background = "#1e1e2e";
-        foreground = "#cdd6f4";
-        frame_color = "#6c7086";
         timeout = 8;
       };
       urgency_normal = {
-        background = "#1e1e2e";
-        foreground = "#cdd6f4";
-        frame_color = "#b4befe";
-        highlight = "#89b4fa";
         timeout = 10;
         default_icon = "dialog-information";
       };
       urgency_critical = {
-        background = "#1e1e2e";
-        foreground = "#cdd6f4";
-        frame_color = "#f38ba8";
-        highlight = "#f38ba8";
         timeout = 0;
         default_icon = "dialog-warning";
       };

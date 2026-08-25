@@ -13,8 +13,6 @@ in
       size = 12.0;
     };
 
-    themeFile = "Catppuccin-Mocha";
-
     shellIntegration.mode = if isHyprland then "no-cursor" else "no-rc";
 
     settings = {

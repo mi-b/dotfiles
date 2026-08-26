@@ -9,4 +9,5 @@ sudo apt-get install -y \
     pipewire \
     wireplumber \
     network-manager-gnome \
-    policykit-1-gnome
+    policykit-1-gnome \
+    uidmap

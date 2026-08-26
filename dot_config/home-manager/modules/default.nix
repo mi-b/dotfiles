@@ -3,6 +3,7 @@
     ./options.nix
     ./base.nix
     ./packages.nix
+    ./containers.nix
     ./flatpak.nix
     ./gaming.nix
     ./shell

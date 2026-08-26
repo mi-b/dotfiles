@@ -11,8 +11,10 @@ GUI applications use [Flatpak](https://flatpak.org/).
 | Layer | Managed by | Scope |
 | ----- | ---------- | ----- |
 | CLI tools, LSPs, formatters, fonts | Nix / Home Manager | `~/.config/home-manager/` |
-| GUI applications | Flatpak (declared in Home Manager) | Chrome, Firefox, VS Code, VLC, GIMP, Inkscape |
-| Window manager & system services | apt | Hyprland or i3, pipewire, kitty |
+| GUI applications | Flatpak (declared in Home Manager) | Firefox, VLC, GIMP, Inkscape |
+| Electron apps (Signal) | Nix / Home Manager (wrapped) | Launched with `--no-sandbox` — see [caveats](#nix-caveats) |
+| Containers (Podman) | Nix + system `uidmap` | Rootless containers via `containers.conf` |
+| Window manager & system services | apt (temporary) | Hyprland or i3, pipewire, kitty — moving to Nix with nixGL |
 | Dotfile templates & config | chezmoi | Shell, editor, terminal, WM configs |
 
 ## Bootstrap a new machine
@@ -70,6 +72,55 @@ script detects changes and re-applies.
 
 See [`docs/NIX.md`](docs/NIX.md) for details on using Nix flakes + direnv
 for pinned per-project dependencies.
+
+## Nix caveats
+
+### SUID binaries
+
+The Nix store cannot hold SUID binaries (mode `4755`, owned by root).
+This affects two categories:
+
+- **Electron apps** (Signal, etc.) — Chromium's SUID sandbox helper
+  (`chrome-sandbox`) won't work from `/nix/store/`.
+  Signal is wrapped with `--no-sandbox` via `symlinkJoin`/`makeWrapper`,
+  which disables Chromium's OS-level process sandbox.
+  Signal's own encryption is unaffected.
+- **Rootless containers** (Podman) — `newuidmap`/`newgidmap` require SUID
+  to map subordinate UIDs.
+  These come from the system `uidmap` package (installed via apt in
+  `run_once_install-desktop-runtime.sh`).
+  A `containers.conf` managed by Home Manager points Podman's
+  `helper_binaries_dir` at both the Nix store (for `netavark`, `conmon`,
+  etc.) and `/usr/bin` (for the SUID helpers).
+
+### GPU acceleration
+
+GPU-accelerated Nix apps use [nixGL](https://github.com/nix-community/nixGL)
+to access the host system's GL/Vulkan drivers.
+nixGL wraps individual apps rather than replacing system-wide driver paths,
+so it is safe on **multi-user machines** — other users' GPU access is
+unaffected.
+
+To wrap a Nix package for GPU access in a Home Manager module:
+
+```nix
+config.lib.nixGL.wrap pkgs.kitty
+```
+
+Home Manager's `targets.genericLinux.nixGL` is configured with
+`defaultWrapper = "nvidia"` for the discrete GPU.
+
+> [!WARNING]
+> The alternative approach, `targets.genericLinux.gpu`, installs GPU
+> libraries system-wide via `/run/opengl-driver`.
+> This **breaks other users'** GPU access on shared machines and can crash
+> the lock screen due to glibc version mismatches.
+> The driver version and hash are kept commented out in `base.nix` for
+> reference.
+
+Nix CLI tools (e.g. `ffmpeg` with NVENC) can use the GPU for compute and
+encoding without nixGL wrapping.
+See [`docs/NIX.md`](docs/NIX.md) for the full write-up.
 
 ## Duplicated configs (Linux + Windows)
 

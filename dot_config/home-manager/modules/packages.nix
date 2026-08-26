@@ -3,8 +3,13 @@
 {
   home.packages = with pkgs; [
     # --- Core CLI tools ---
+    coreutils
+    findutils
+    binutils
+
     curl
     comma
+    copyq
     fd
     file
     opencode
@@ -28,6 +33,15 @@
     uv
     woff2
     p7zip
+    (symlinkJoin {
+      name = "signal-desktop-wrapped";
+      paths = [ signal-desktop ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/signal-desktop \
+          --add-flags "--no-sandbox"
+      '';
+    })
 
     # --- versioning ---
     git-filter-repo

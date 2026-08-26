@@ -25,11 +25,15 @@ if ! command -v nix >/dev/null 2>&1; then
     fi
 fi
 
-# Use home-manager if already installed (after first run), otherwise bootstrap.
+# --impure is required for nixGL Nvidia wrappers (they probe the system driver).
+# NIXPKGS_ALLOW_UNFREE is needed because nixGL uses its own nixpkgs pin
+# which does not inherit our allowUnfree config.
+export NIXPKGS_ALLOW_UNFREE=1
+
 if command -v home-manager >/dev/null 2>&1; then
-    home-manager switch --flake ~/.config/home-manager
+    home-manager switch --impure --flake ~/.config/home-manager
 else
-    nix run home-manager/master -- switch --flake ~/.config/home-manager
+    nix run home-manager/master -- switch --impure --flake ~/.config/home-manager
 fi
 
 echo "Home Manager applied successfully."

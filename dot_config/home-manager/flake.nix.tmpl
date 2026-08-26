@@ -12,9 +12,15 @@
     catppuccin.url = "github:catppuccin/nix";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      # Do not follow nixpkgs — nixGL's nvidia wrapper is incompatible with
+      # current nixpkgs-unstable (kernel argument removed from nvidia-x11).
+    };
   };
 
-  outputs = { nixpkgs, home-manager, catppuccin, nix-flatpak, ... }:
+  outputs = { nixpkgs, home-manager, catppuccin, nix-flatpak, nixgl, ... }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -23,6 +29,9 @@
     {
       homeConfigurations.{{ .chezmoi.username }} = home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor "x86_64-linux";
+        extraSpecialArgs = {
+          inherit nixgl;
+        };
         modules = [
           catppuccin.homeModules.catppuccin
           nix-flatpak.homeManagerModules.nix-flatpak

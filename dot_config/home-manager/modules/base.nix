@@ -1,6 +1,7 @@
-{ ... }:
+{ lib, nixgl, ... }:
 
 {
+
   catppuccin = {
     enable = true;
     autoEnable = true;
@@ -14,6 +15,27 @@
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
+
+  targets.genericLinux = {
+    enable = true;
+
+    nixGL.packages = nixgl.packages;
+    nixGL.defaultWrapper = "nvidia";
+    nixGL.offloadWrapper = "nvidiaPrime";
+    nixGL.installScripts = [ "nvidia" ];
+
+    # GPU driver integration via /run/opengl-driver (system-wide, affects all
+    # users). Replaced by nixGL which wraps individual apps instead.
+    # gpu = {
+    #   enable = true;
+    #   nvidia = {
+    #     enable = true;
+    #     version = "580.173.02";
+    #     sha256 = "sha256-jY65AB4FqaimY9PV0wT+tk7yhE7hhczf2VJ4aCD0bhs=";
+    #   };
+    # };
+  };
 
   home.sessionPath = [
     "$HOME/.local/bin"
@@ -47,4 +69,6 @@
     };
   };
   xdg.configFile."mimeapps.list".force = true;
+
+
 }

@@ -17,7 +17,7 @@ hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(programs.menu))
 -- Window Management
 -- =========================================================================
 
-hl.bind(mainMod .. " + Q", hl.dsp.window.kill())
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("~/.config/hypr/scripts/close-window.sh"))
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))

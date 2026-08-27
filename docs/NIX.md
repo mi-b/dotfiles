@@ -278,6 +278,92 @@ du -sh /nix/store
 
 ## Troubleshooting
 
+### Electron/Chromium apps crash (sandbox errors)
+
+On Ubuntu, AppArmor blocks unprivileged user namespaces from the Nix store.
+Electron apps (VS Code, 1Password, any Chromium-based app) will crash with
+namespace or sandbox permission errors.
+
+**One-time fix** — create a targeted AppArmor profile:
+
+```bash
+sudo tee /etc/apparmor.d/nix-packages << 'EOF'
+abi <abi/4.0>,
+include <tunables/global>
+
+profile nix-store-binaries /nix/store/** flags=(unconfined) {
+    userns,
+}
+EOF
+
+sudo service apparmor reload
+```
+
+This allows only Nix store binaries to create user namespaces — does not
+weaken security for anything else on the system.
+
+### Auto-starting GUI apps installed via Nix
+
+Unlike apt or Flatpak, Nix-installed GUI apps do not auto-start after login.
+Use a systemd user service in Home Manager:
+
+```nix
+systemd.user.services.<name> = {
+  Unit = {
+    Description = "<App Name>";
+    After = [ "graphical-session.target" ];
+  };
+  Service = {
+    ExecStart = "${pkgs.<package>}/bin/<binary>";
+    Restart = "always";
+  };
+  Install = {
+    WantedBy = [ "graphical-session.target" ];
+  };
+};
+```
+
+### 1Password via Nix (future)
+
+If migrating 1Password from Flatpak/apt to `pkgs._1password-gui`:
+
+1. **Polkit policy** — required for biometric prompts:
+
+   ```bash
+   sudo ln -sf ~/.nix-profile/share/polkit-1/actions/com.1password.1Password.policy \
+     /usr/share/polkit-1/actions/
+   ```
+
+   Must be re-run after Nix updates the 1Password package (store path changes).
+
+2. **PAM** — enable fingerprint authentication:
+
+   ```bash
+   sudo pam-auth-update
+   ```
+
+3. **SSH agent and Git signing** — these work purely in user space:
+
+   ```nix
+   programs.ssh.extraConfig = ''
+     Host *
+       IdentityAgent ~/.1password/agent.sock
+   '';
+
+   programs.git.settings = {
+     gpg.format = "ssh";
+     "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+     commit.gpgsign = true;
+   };
+   ```
+
+4. **Auto-start** — add a systemd user service (see above).
+
+> [!NOTE]
+> The `op` CLI communicating with the GUI socket for biometric prompts
+> may require additional configuration on non-NixOS. Check the 1Password
+> docs for the latest guidance on socket paths.
+
 ### `nix` command not found after install
 
 Source the daemon script:
@@ -300,39 +386,35 @@ nix-env -q | sort
 
 ### GPU-accelerated apps fail (OpenGL/EGL errors)
 
-Apps that use the GPU (kitty, alacritty, any OpenGL/Vulkan program) **cannot
-be installed via Nix on non-NixOS**.
-The Nix binaries look for OpenGL/EGL libraries in the Nix store, but the
-actual GPU drivers (Nvidia, Mesa) are system-level and only accessible from
-system paths.
-
-Symptom:
+Apps that use the GPU (kitty, alacritty, any OpenGL/Vulkan program) need
+the host GPU drivers to be bridged into the Nix store. Home Manager's
+`targets.genericLinux.enable = true` provides a `non-nixos-gpu-setup`
+script that creates the necessary symlink:
 
 ```
-Failed to create GLFWwindow. This usually happens because of old/broken
-OpenGL drivers. kitty requires working OpenGL 3.1 drivers.
+/run/opengl-driver → /nix/store/...-non-nixos-gpu
 ```
 
-**Approaches we tried and rejected:**
+**One-time setup** (run once, survives reboots via tmpfiles.d):
 
-- **nixGL** (`nix-community/nixGL`): the standard wrapper for this problem.
-  Broken with current nixpkgs-unstable — the Nvidia driver override uses a
-  `kernel` argument that the refactored `nvidia_x11` derivation no longer
-  accepts.
-  Also requires `--impure` for auto-detection, or per-host driver version
-  pinning (fragile across driver updates).
-- **Manual `LD_LIBRARY_PATH` wrapper**: pointing to `/usr/lib/x86_64-linux-gnu`
-  causes glibc version conflicts (system libc vs Nix libc).
-  Narrowing to `/usr/lib/x86_64-linux-gnu/nvidia` avoids glibc but still
-  fails to provide a working EGL context.
+```bash
+sudo /nix/store/<hash>-non-nixos-gpu/bin/non-nixos-gpu-setup
+```
 
-**Rule:** keep GPU-accelerated GUI apps on apt. This includes:
+The exact store path is printed during `home-manager switch` if the symlink
+is missing. After running the script, verify:
 
-- Terminal emulators (kitty, alacritty, wezterm)
-- Games (Steam)
-- Anything using OpenGL, Vulkan, or EGL
+```bash
+ls -la /run/opengl-driver
+```
 
-CLI tools, LSP servers, formatters, and non-GPU apps are fine via Nix.
+Alternative approaches (if `non-nixos-gpu-setup` is unavailable):
+
+- **nixGL** (`nix-community/nixGL`): wraps binaries with the correct
+  driver paths. Requires `--impure` for auto-detection, or per-host driver
+  version pinning.
+- **Manual `LD_LIBRARY_PATH`**: possible but requires care to avoid glibc
+  version conflicts between system and Nix libc.
 
 ### Flatpak apps look ugly (wrong theme)
 

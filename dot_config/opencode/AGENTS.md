@@ -30,6 +30,13 @@ overridden by a project-level `.opencode/AGENTS.md`.
   first, then merge with `--no-ff` to preserve branch context
 - Use `git push --force-with-lease`, never bare `--force`
 
+### Non-interactive Git
+
+When running `git rebase` or any git command that may open an editor, always
+set `GIT_SEQUENCE_EDITOR=true` and `GIT_EDITOR=true` as environment variables
+to prevent editors from launching in the non-interactive agent context. For
+example: `GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git rebase --onto ...`
+
 ### Hooks
 
 - Use `.githooks/` directory with `git config core.hooksPath .githooks`

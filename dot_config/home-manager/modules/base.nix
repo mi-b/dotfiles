@@ -1,15 +1,6 @@
 { lib, nixgl, ... }:
 
 {
-
-  catppuccin = {
-    enable = true;
-    autoEnable = true;
-    flavor = "mocha";
-    accent = "blue";
-    nvim.enable = false;
-  };
-
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
@@ -17,6 +8,12 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
 
+  # Also expose the config to standalone nix commands (nix run, nix shell, etc.)
+  xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }\n";
+
+  # Enable generic Linux desktop integration: appends ~/.nix-profile/share to
+  # XDG_DATA_DIRS so the desktop environment discovers .desktop files, icons,
+  # and MIME types from Nix-installed GUI applications.
   targets.genericLinux = {
     enable = true;
 
@@ -41,7 +38,6 @@
     "$HOME/.local/bin"
     "$HOME/bin"
     "$HOME/.opencode/bin"
-    "$HOME/go/bin"
   ];
 
   home.sessionVariables = {
@@ -51,6 +47,19 @@
   };
 
   fonts.fontconfig.enable = true;
+
+  catppuccin = {
+    enable = true;
+    autoEnable = true;
+    flavor = "mocha";
+    accent = "blue";
+    nvim.enable = false;
+  };
+
+  # Explicitly export XDG base directory variables (XDG_CONFIG_HOME,
+  # XDG_DATA_HOME, XDG_STATE_HOME, XDG_CACHE_HOME) in the session environment,
+  # ensuring Home Manager and all XDG-aware tools agree on paths.
+  xdg.enable = true;
 
   xdg.mimeApps = {
     enable = true;
@@ -68,7 +77,8 @@
       "application/xhtml+xml" = "org.mozilla.firefox.desktop";
     };
   };
+
+  # Force-overwrite mimeapps.list — GNOME rewrites this file when you change
+  # default applications via the GUI, which conflicts with HM's symlink.
   xdg.configFile."mimeapps.list".force = true;
-
-
 }

@@ -20,14 +20,14 @@
     };
   };
 
+
   outputs = { nixpkgs, home-manager, catppuccin, nix-flatpak, nixgl, ... }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgsFor = system: nixpkgs.legacyPackages.${system};
-    in
-    {
-      homeConfigurations.{{ .chezmoi.username }} = home-manager.lib.homeManagerConfiguration {
+
+      mkHomeConfiguration = host: home-manager.lib.homeManagerConfiguration {
         pkgs = pkgsFor "x86_64-linux";
         extraSpecialArgs = {
           inherit nixgl;
@@ -35,9 +35,13 @@
         modules = [
           catppuccin.homeModules.catppuccin
           nix-flatpak.homeManagerModules.nix-flatpak
-          ./hosts/{{ .host }}.nix
+          ./hosts/${host}.nix
         ];
-      };
+        };
+    in
+    {
+      homeConfigurations.mib = mkHomeConfiguration "chuebel";
+      homeConfigurations.herbert = mkHomeConfiguration "abakus";
 
       formatter = forAllSystems (system: (pkgsFor system).nixfmt-rfc-style);
 

@@ -3,7 +3,7 @@
 set -eu
 
 # Trigger rebuild when any Home Manager config file changes.
-# flake.nix hash: {{ include "dot_config/home-manager/flake.nix.tmpl" | sha256sum }}
+# flake.nix hash: {{ include "dot_config/home-manager/flake.nix" | sha256sum }}
 {{ range glob ".config/home-manager/modules/**/*.nix" -}}
 {{ $src := replace ".config/" "dot_config/" . -}}
 # {{ $src }}: {{ include $src | sha256sum }}

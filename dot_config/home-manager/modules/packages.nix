@@ -33,15 +33,6 @@
     uv
     woff2
     p7zip
-    (symlinkJoin {
-      name = "signal-desktop-wrapped";
-      paths = [ signal-desktop ];
-      nativeBuildInputs = [ makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/signal-desktop \
-          --add-flags "--no-sandbox"
-      '';
-    })
 
     # --- versioning ---
     git-filter-repo

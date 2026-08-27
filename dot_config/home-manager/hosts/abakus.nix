@@ -9,4 +9,5 @@
   host.gitUserEmail = "mikebaumann@bluewin.ch";
 
   gaming.steam.enable = true;
+  host.signalDesktop.enable = true;
 }

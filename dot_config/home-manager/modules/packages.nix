@@ -61,11 +61,18 @@
     tinymist
     yaml-language-server
     bash-language-server
+    nixd
 
     # --- Formatters ---
     nixfmt-rfc-style
     stylua
     prettier
+
+    # --- Linters ---
+    shellcheck
+    hadolint
+    markdownlint-cli2
+    yamllint
 
     # --- Fonts ---
     nerd-fonts.fira-code

@@ -10,18 +10,18 @@
     curl
     comma
     copyq
-    fd
+    fd # programs.fd
     file
+    htop # programs.htop
+    jq # programs.jq
     opencode
-    ripgrep
-    htop
     imagemagick
-    jq
     just
+    neovim # programs.neovim
+    pandoc # programs.pandoc
+    ripgrep # programs.ripgrep
     texliveSmall
     nodejs
-    neovim
-    pandoc
     podman
     poppler-utils
     python3
@@ -61,6 +61,7 @@
     bash-language-server
 
     # --- Formatters ---
+    nixfmt-rfc-style
     stylua
     prettier
 

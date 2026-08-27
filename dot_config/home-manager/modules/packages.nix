@@ -43,6 +43,8 @@
     # --- media ---
     ffmpeg
     eog
+    gimp
+    inkscape
 
     # --- desktop utilities ---
     brightnessctl

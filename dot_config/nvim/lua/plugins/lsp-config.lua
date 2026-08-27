@@ -157,6 +157,33 @@ return {
 			vim.lsp.enable("bashls")
 
 			--------------------------------------------------------------------
+			-- Nix: nixd
+			-- Feature-rich Nix LSP with full evaluation support. Provides
+			-- completion, diagnostics, go-to-definition, and hover docs.
+			-- Configured with Home Manager option completion so typing e.g.
+			-- "programs." completes with all available HM options.
+			-- Formatting is handled by nixfmt via none-ls, not nixd.
+			--------------------------------------------------------------------
+			vim.lsp.config("nixd", {
+				capabilities = capabilities,
+				settings = {
+					nixd = {
+						nixpkgs = { expr = "import <nixpkgs> {}" },
+						options = {
+							home_manager = {
+								expr = '(builtins.getFlake "'
+									.. os.getenv("HOME")
+									.. '/.config/home-manager").homeConfigurations.'
+									.. os.getenv("USER")
+									.. ".options",
+							},
+						},
+					},
+				},
+			})
+			vim.lsp.enable("nixd")
+
+			--------------------------------------------------------------------
 			-- Shared keymaps: applied to every buffer when an LSP server attaches.
 			-- These supplement the built-in keymaps listed in the header.
 			--------------------------------------------------------------------

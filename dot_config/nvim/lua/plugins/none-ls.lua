@@ -27,6 +27,8 @@ return {
 			-- Markdown, YAML, and more. Respects .prettierrc config.
 			table.insert(sources, null_ls.builtins.formatting.prettier)
 
+			table.insert(sources, null_ls.builtins.formatting.nixfmt)
+
 			-- Shell script formatter. Indent set to 4 spaces.
 			-- Skipped for .tmpl files (chezmoi templates) to avoid mangling
 			-- Go template syntax embedded in shell scripts.
@@ -42,6 +44,12 @@ return {
 
 			-- C/C++ formatter (uses .clang-format config if present)
 			table.insert(sources, null_ls.builtins.formatting.clang_format)
+
+			-- Linters (diagnostics only, no formatting)
+			table.insert(sources, null_ls.builtins.diagnostics.shellcheck)
+			table.insert(sources, null_ls.builtins.diagnostics.markdownlint_cli2)
+			table.insert(sources, null_ls.builtins.diagnostics.hadolint)
+			table.insert(sources, null_ls.builtins.diagnostics.yamllint)
 		else
 			table.insert(sources, null_ls.builtins.formatting.stylua)
 		end

@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Install i3 system-level packages (i3 and i3lock are in Nix).
+# Install i3 system-level packages.
+# i3lock must remain a system package — it needs the system PAM stack for
+# password authentication, which Nix's sandboxed libpam cannot provide.
 # hash: {{ include "dot_config/i3/config.tmpl" | sha256sum }}
 
 set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
+    i3lock \
     xdg-desktop-portal

@@ -243,8 +243,9 @@ exec --no-startup-id dunst
 # Wallpaper
 exec --no-startup-id feh --bg-fill {{ .chezmoi.homeDir }}/.config/wallpaper/background.png
 
-# Idle timer and screen lock
-exec --no-startup-id xautolock -time 10 -locker "i3lock -c 1e1e2e"
+# Idle timer and screen lock (disabled for xrdp sessions — keyboard mapping
+# issues prevent unlock, and the Windows lock screen provides security)
+exec --no-startup-id sh -c 'pgrep -a Xorg | grep -q xrdp || xautolock -time 10 -locker "i3lock -c 1e1e2e"'
 
 # Network manager applet
 exec --no-startup-id nm-applet

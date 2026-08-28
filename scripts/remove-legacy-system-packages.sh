@@ -67,7 +67,6 @@ sudo apt-get remove -y \
 sudo apt-get remove -y \
     kitty \
     i3 \
-    i3lock \
     dunst \
     wofi \
     rofi \

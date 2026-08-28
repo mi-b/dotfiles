@@ -375,8 +375,8 @@ Source the daemon script:
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 ```
 
-Or restart your shell. Home Manager's `programs.bash` sources it in
-`bashrcExtra`.
+Or start a new login shell. Home Manager's `programs.bash` sources it in
+`profileExtra`.
 
 ### Home Manager switch fails with "collision"
 
@@ -492,7 +492,7 @@ If you see "ERROR: Nix not found", either:
 chezmoi apply
 ```
 
-Or simply `exec bash` and try again.
+Or open a new login shell and try again.
 
 ### Stale references in `~/.profile`
 

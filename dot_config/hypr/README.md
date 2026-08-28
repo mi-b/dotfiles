@@ -158,9 +158,9 @@ chezmoi apply
 - No wallpaper is configured by default. Edit `hyprpaper.conf` to add one.
 - Kitty's `allow_remote_control` causes double Enter/Backspace input.
   Keep it set to `no` (or `socket-only` if you need remote control).
-- The `setxkbmap` call in `.bashrc` is guarded to only run under X11.
-  Under Wayland, Caps Lock remapping is handled by Hyprland's
+- Caps Lock remapping is handled by Hyprland via
   `kb_options = ctrl:nocaps`.
+  The i3/X11 setup applies its own remap in the i3 config.
 - `hyprpolkitagent` may need to be started differently depending on how
   it was built. If the polkit agent fails, GUI privilege prompts will not
   appear.

@@ -37,7 +37,6 @@
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/bin"
-    "$HOME/.opencode/bin"
   ];
 
   home.sessionVariables = {

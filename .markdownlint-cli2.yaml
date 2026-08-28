@@ -1,0 +1,14 @@
+globs:
+  - "**/*.md"
+
+ignores:
+  - "dot_config/nvim/todo.md"
+  - "dot_config/opencode/**/*.md"
+
+config:
+  default: true
+  MD013: false
+  MD014: false
+  MD033: false
+  MD040: false
+  MD060: false

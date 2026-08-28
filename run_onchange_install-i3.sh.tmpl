@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
-# Install i3 system-level packages.
+# Install i3 system-level packages (i3 and i3lock are in Nix).
 # hash: {{ include "dot_config/i3/config.tmpl" | sha256sum }}
 
 set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
-    i3 \
-    i3lock \
     xdg-desktop-portal

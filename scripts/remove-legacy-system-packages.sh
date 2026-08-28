@@ -66,6 +66,8 @@ sudo apt-get remove -y \
 # Desktop components now managed by Home Manager
 sudo apt-get remove -y \
     kitty \
+    i3 \
+    i3lock \
     dunst \
     wofi \
     rofi \

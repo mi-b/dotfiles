@@ -76,6 +76,19 @@ The `run_onchange` hash trigger uses `glob` against the target directory,
 so a stale `.nix` file left in the target will cause `chezmoi apply` to
 fail with an `include` error.
 
+### Format Home Manager Nix files
+
+Work in the Home Manager flake directory:
+
+```bash
+cd ~/.local/share/chezmoi/dot_config/home-manager
+nix fmt
+```
+
+`nix fmt` only works there because that directory contains the flake.
+The chezmoi repo root is not itself a flake, so running it from the top level
+will fail.
+
 ### Update all pinned versions
 
 Always work in the **chezmoi source directory** (not `~/.config/home-manager/`

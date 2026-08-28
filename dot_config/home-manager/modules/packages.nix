@@ -65,7 +65,7 @@
     nixd
 
     # --- Formatters ---
-    nixfmt-rfc-style
+    nixfmt
     stylua
     prettier
 

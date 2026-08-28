@@ -20,39 +20,52 @@
     };
   };
 
-
-  outputs = { nixpkgs, home-manager, catppuccin, nix-flatpak, nixgl, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      catppuccin,
+      nix-flatpak,
+      nixgl,
+      ...
+    }:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgsFor = system: nixpkgs.legacyPackages.${system};
 
-      mkHomeConfiguration = host: home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor "x86_64-linux";
-        extraSpecialArgs = {
-          inherit nixgl;
-        };
-        modules = [
-          catppuccin.homeModules.catppuccin
-          nix-flatpak.homeManagerModules.nix-flatpak
-          ./hosts/${host}.nix
-        ];
+      mkHomeConfiguration =
+        host:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor "x86_64-linux";
+          extraSpecialArgs = {
+            inherit nixgl;
+          };
+          modules = [
+            catppuccin.homeModules.catppuccin
+            nix-flatpak.homeManagerModules.nix-flatpak
+            ./hosts/${host}.nix
+          ];
         };
     in
     {
       homeConfigurations.mib = mkHomeConfiguration "chuebel";
       homeConfigurations.herbert = mkHomeConfiguration "abakus";
 
-      formatter = forAllSystems (system: (pkgsFor system).nixfmt-rfc-style);
+      formatter = forAllSystems (system: (pkgsFor system).nixfmt-tree);
 
-      checks = forAllSystems (system:
+      checks = forAllSystems (
+        system:
         let
           pkgs = pkgsFor system;
         in
         {
           formatting = pkgs.runCommandLocal "check-formatting" { } ''
             cd ${./.}
-            ${pkgs.nixfmt-rfc-style}/bin/nixfmt --check . > $out 2>&1 || {
+            ${pkgs.nixfmt-tree}/bin/treefmt --no-cache --fail-on-change --tree-root . . > $out 2>&1 || {
               echo "Formatting check failed. Run 'nix fmt' to fix."
               exit 1
             }

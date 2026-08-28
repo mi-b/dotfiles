@@ -4,14 +4,14 @@ Personal dotfiles for Linux and Windows machines, managed with
 [chezmoi](https://chezmoi.io).
 Packages are declared via [Nix](https://nixos.org/) and
 [Home Manager](https://nix-community.github.io/home-manager/) (Linux only).
-GUI applications use [Flatpak](https://flatpak.org/).
+GUI applications use [Nix](https://nixos.org/) or [Flatpak](https://flatpak.org/).
 
 ## What it does
 
 | Layer | Managed by | Scope |
 | ----- | ---------- | ----- |
 | CLI tools, LSPs, formatters, fonts | Nix / Home Manager | `~/.config/home-manager/` |
-| GUI applications | Flatpak (declared in Home Manager) | Firefox, VLC, GIMP, Inkscape |
+| GUI applications | Nix / Home Manager + Flatpak | Firefox, VLC (Nix) |
 | Electron apps (Signal) | Nix / Home Manager (wrapped) | Launched with `--no-sandbox` — see [caveats](#nix-caveats) |
 | Containers (Podman) | Nix + system `uidmap` | Rootless containers via `containers.conf` |
 | Window manager & system services | apt (temporary) | Hyprland or i3, pipewire, kitty — moving to Nix with nixGL |
@@ -35,7 +35,7 @@ chezmoi apply
 
 1. Install Nix and Flatpak (if missing)
 2. Apply Home Manager configuration (all CLI tools, LSPs, fonts)
-3. Install Flatpak GUI apps
+3. Install Nix-managed GUI apps and any declared Flatpaks
 4. Deploy dotfiles and configs
 
 Some steps require `sudo`. That is deliberate, not a bug.

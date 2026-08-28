@@ -45,6 +45,7 @@
     eog
     gimp
     inkscape
+    vlc
 
     # --- desktop utilities ---
     brightnessctl

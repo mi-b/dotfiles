@@ -26,15 +26,14 @@ flowchart RL
         hypr["Window Manager — Hyprland\nhyprland · hyprlock · waybar\nwofi · dunst"]
         i3["Window Manager — i3\ni3 · i3lock · polybar\nrofi · picom"]
         docs["Document & Media\npandoc · typst · texlive\nffmpeg · imagemagick"]
-        apps["Desktop Apps\nfirefox · vlc\ngimp · inkscape"]
+        guiapps["GUI Apps (Nix)\nfirefox · vlc · gimp · inkscape"]
         lsp["LSP & Formatters\nlua-ls · ts-ls · ruff · ty\nstylua · prettier"]
         fonts["Fonts\nfira code · noto"]
     end
 
     %% Software groups to package managers
-    shell & dev & cli & docs & lsp & fonts --> hm
+    shell & dev & cli & docs & lsp & fonts & guiapps --> hm
     hypr & i3 --> apt
-    apps --> flatpak
     shell -. "dotfiles only\n.bashrc · starship · zoxide" .-> chezmoi
 
     %% Package managers to Chezmoi
@@ -68,7 +67,7 @@ flowchart RL
     style hypr fill:#a8d4f0,stroke:#4a90b8,color:#000
     style i3 fill:#a8d4f0,stroke:#4a90b8,color:#000
     style docs fill:#a8d4f0,stroke:#4a90b8,color:#000
-    style apps fill:#a8d4f0,stroke:#4a90b8,color:#000
+    style guiapps fill:#a8d4f0,stroke:#4a90b8,color:#000
     style lsp fill:#a8d4f0,stroke:#4a90b8,color:#000
     style fonts fill:#a8d4f0,stroke:#4a90b8,color:#000
 ```

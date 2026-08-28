@@ -6,6 +6,7 @@
     ./picom.nix
     ./i3.nix
     ./hyprland.nix
+    ./firefox.nix
     ./signal.nix
   ];
 }

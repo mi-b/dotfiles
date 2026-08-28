@@ -71,10 +71,10 @@
       "image/webp" = "org.gnome.eog.desktop";
       "image/tiff" = "org.gnome.eog.desktop";
       "image/svg+xml" = "org.gnome.eog.desktop";
-      "x-scheme-handler/http" = "org.mozilla.firefox.desktop";
-      "x-scheme-handler/https" = "org.mozilla.firefox.desktop";
-      "text/html" = "org.mozilla.firefox.desktop";
-      "application/xhtml+xml" = "org.mozilla.firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "text/html" = "firefox.desktop";
+      "application/xhtml+xml" = "firefox.desktop";
     };
   };
 

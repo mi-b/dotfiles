@@ -15,12 +15,14 @@ graph TD
     BS --> FP[Install Flatpak + Flathub]
     HM --> Switch[home-manager switch]
     Switch --> Pkgs[CLI tools, LSPs, fonts on PATH]
-    Switch --> Flatpaks[GUI apps via Flatpak]
+    Switch --> GuiNix[GUI apps via Home Manager]
+    Switch --> Flatpaks[Optional GUI apps via Flatpak]
 ```
 
 **chezmoi** manages file templates and triggers scripts.
 **Home Manager** (via Nix) manages packages declaratively.
-**Flatpak** handles GUI applications.
+**Home Manager** handles most packages, including some GUI applications.
+**Flatpak** remains available for GUI apps that are easier to keep outside nixpkgs.
 The window manager and system services remain on apt (too tightly coupled
 to systemd to move).
 
@@ -38,12 +40,12 @@ to systemd to move).
     ├── options.nix     # Custom options (host.wm, host.workspace, etc.)
     ├── base.nix        # Global settings: stateVersion, sessionPath
     ├── packages.nix    # CLI tools, LSP servers, formatters, fonts
-    ├── flatpak.nix     # Declarative Flatpak GUI apps
+    ├── flatpak.nix     # Optional declarative Flatpak GUI apps
     ├── shell/          # bash, readline, starship
     ├── terminal/       # kitty (config only, pkg on apt), tmux
     ├── git/            # git, lazygit
     ├── tools/          # bat, fzf, yazi, zoxide
-    └── desktop/        # dunst, rofi, wofi, picom, i3, hyprland
+    └── desktop/        # firefox, dunst, rofi, wofi, picom, i3, hyprland
 ```
 
 Desktop modules under `desktop/` use `lib.mkIf` to conditionally install
@@ -238,8 +240,9 @@ Neovim picks up whichever is first on `$PATH` — which is the project's.
 
 ## Flatpak
 
-GUI apps are declared in `flatpak.nix`. Home Manager applies them via
-`nix-flatpak`.
+Flatpak support remains enabled via `flatpak.nix`, even though no apps are
+currently declared there. Home Manager applies it via `nix-flatpak`.
+Firefox and VLC are now installed from nixpkgs.
 
 ### Add a GUI app
 

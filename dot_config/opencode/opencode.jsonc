@@ -15,164 +15,57 @@
     "glob": "allow",
     "grep": "allow",
 
-    // Bash: allow git read-only and common dev tools, ask for the rest
+    // Bash: ask by default, then allow explicit read-only commands.
     "bash": {
-      "git *": "allow",
-      "git commit *": "ask",
-      "git push": "deny",
-      "uv *": "allow",
-      "uvx *": "allow",
-      "docker *": "allow",
-      "docker compose *": "allow",
-      "ruff *": "allow",
-      "prettier *": "allow",
-      "markdownlint-cli2 *": "allow",
-      "shfmt *": "allow",
-      "bash scripts/*": "allow",
-      "pytest *": "allow",
-      "ls *": "allow",
+      "*": "ask",
+
+      "git diff *": "allow",
+      "git status": "allow",
+      "git status *": "allow",
+      "git log *": "allow",
+      "git show *": "allow",
+      "git branch": "allow",
+      "git branch *": "allow",
+      "git tag": "allow",
+      "git tag *": "allow",
+
       "ls": "allow",
+      "ls *": "allow",
       "pwd": "allow",
-      "cat *": "allow",
-      "head *": "allow",
-      "tail *": "allow",
-      "find *": "allow",
-      "tree *": "allow",
-      "tree": "allow",
-      "wc *": "allow",
+      "which": "allow",
       "which *": "allow",
-      "env": "allow",
-      "env *": "allow",
-      "echo *": "allow",
-      "printf *": "allow",
+      "rg": "allow",
+      "rg *": "allow",
+      "jq *": "allow",
+      "yq *": "allow",
       "realpath *": "allow",
       "dirname *": "allow",
       "basename *": "allow",
       "stat *": "allow",
       "file *": "allow",
-      "diff *": "allow",
-      "sort *": "allow",
-      "uniq *": "allow",
-      "cut *": "allow",
-      "tr *": "allow",
-      "sed *": "allow",
-      "awk *": "allow",
-      "jq *": "allow",
-      "yq *": "allow",
-      "mkdir *": "allow",
-      "grep *": "allow",
-      "rg *": "allow",
-      "nix *": "allow",
-      "nixos-option *": "allow",
-      "home-manager *": "allow",
-      "chezmoi cat *": "allow",
-      "chezmoi data *": "allow",
-      "chezmoi diff *": "allow",
-      "chezmoi doctor *": "allow",
-      "chezmoi dump *": "allow",
-      "chezmoi execute-template *": "allow",
-      "chezmoi git *": "allow",
-      "chezmoi ignored *": "allow",
-      "chezmoi list *": "allow",
-      "chezmoi managed *": "allow",
-      "chezmoi source-path *": "allow",
-      "chezmoi state *": "allow",
-      "chezmoi status *": "allow",
-      "chezmoi target-path *": "allow",
-      "chezmoi unmanaged *": "allow",
-      "chezmoi verify *": "allow",
-      "chezmoi apply *": "ask",
-      "chezmoi add *": "ask",
-      "man *": "allow",
-      "type *": "allow",
-      "command *": "allow",
-      "id": "allow",
-      "id *": "allow",
-      "uname *": "allow",
-      "hostname": "allow",
       "date": "allow",
       "date *": "allow",
       "whoami": "allow",
+      "id": "allow",
+      "id *": "allow",
+      "hostname": "allow",
+      "uname *": "allow",
 
-      // Compound: ls piped/chained into safe filters
-      "ls * | grep *": "allow",
-      "ls * | head *": "allow",
-      "ls * | tail *": "allow",
-      "ls * | wc *": "allow",
-      "ls * | sort *": "allow",
-
-      // Compound: cat piped into safe filters
-      "cat * | head *": "allow",
-      "cat * | tail *": "allow",
-      "cat * | grep *": "allow",
-      "cat * | wc *": "allow",
-      "cat * | sort *": "allow",
-      "cat * | jq *": "allow",
-      "cat * | yq *": "allow",
-
-      // Compound: find piped into safe filters
-      "find * | head *": "allow",
-      "find * | tail *": "allow",
-      "find * | grep *": "allow",
-      "find * | sort *": "allow",
-      "find * | wc *": "allow",
-      "find * | xargs grep *": "allow",
-
-      // Compound: grep piped into safe filters
-      "grep * | head *": "allow",
-      "grep * | tail *": "allow",
-      "grep * | wc *": "allow",
-      "grep * | sort *": "allow",
-      "grep * | cut *": "allow",
-      "grep * | awk *": "allow",
-
-      // Compound: safe git read subcommands piped into filters
-      "git log * | head *": "allow",
-      "git log * | tail *": "allow",
-      "git log * | grep *": "allow",
-      "git log * | wc *": "allow",
-      "git diff * | head *": "allow",
-      "git diff * | tail *": "allow",
-      "git diff * | grep *": "allow",
-      "git show * | head *": "allow",
-      "git show * | tail *": "allow",
-      "git show * | grep *": "allow",
-      "git branch * | grep *": "allow",
-      "git branch * | head *": "allow",
-      "git status * | grep *": "allow",
-      "git tag * | grep *": "allow",
-      "git tag * | sort *": "allow",
-      "git stash list * | head *": "allow",
-
-      // Compound: sort/uniq/cut chains
-      "sort * | uniq *": "allow",
-      "sort * | head *": "allow",
-      "sort * | tail *": "allow",
-      "cat * | sort * | uniq *": "allow",
-      "cat * | sort * | head *": "allow",
-
-      // Compound: diff/wc
-      "diff * | head *": "allow",
-      "wc * | sort *": "allow",
-
-      // Compound: safe chaining with ; and &&
-      "ls *; echo *": "allow",
-      "ls *; cat *": "allow",
-      "ls *; head *": "allow",
-      "ls *; echo *; cat *": "allow",
-      "ls *; echo *; cat * | head *": "allow",
-      "cat *; echo *": "allow",
-      "cat *; cat *": "allow",
-      "ls * && cat *": "allow",
-      "ls * && head *": "allow",
-      "cat * && head *": "allow",
-      "cat * && cat *": "allow",
-
-      // Dangerous commands — must remain last to override any match above
-      "rm *": "ask",
-      "git commit *": "ask",
-      "git push *": "ask",
-      "*": "ask"
+      "chezmoi diff *": "allow",
+      "chezmoi managed *": "allow",
+      "chezmoi status *": "allow",
+      "chezmoi unmanaged *": "allow",
+      "chezmoi verify *": "allow",
+      "chezmoi cat *": "allow",
+      "chezmoi data *": "allow",
+      "chezmoi doctor *": "allow",
+      "chezmoi dump *": "allow",
+      "chezmoi execute-template *": "allow",
+      "chezmoi ignored *": "allow",
+      "chezmoi list *": "allow",
+      "chezmoi source-path *": "allow",
+      "chezmoi state *": "allow",
+      "chezmoi target-path *": "allow"
     },
 
     // Never touch secrets directories
@@ -181,18 +74,7 @@
       "~/.gnupg/**": "deny",
       "~/.config/opencode/**": "ask",
       "/tmp/opencode/**": "allow",
-      "*": "ask"
-    }
+      "*": "ask",
+    },
   },
-
-  // Per-agent overrides
-  "agent": {
-    "build": {
-      "permission": {
-        "bash": {
-          "git commit *": "ask"
-        }
-      }
-    }
-  }
 }

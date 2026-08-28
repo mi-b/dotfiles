@@ -49,7 +49,11 @@ in
       mainbox = {
         background-color = mkLiteral "transparent";
         spacing = mkLiteral "12px";
-        children = map mkLiteral [ "inputbar" "message" "listview" ];
+        children = map mkLiteral [
+          "inputbar"
+          "message"
+          "listview"
+        ];
       };
 
       inputbar = {
@@ -58,7 +62,10 @@ in
         border-radius = mkLiteral "10px";
         padding = mkLiteral "10px 14px";
         spacing = mkLiteral "10px";
-        children = map mkLiteral [ "prompt" "entry" ];
+        children = map mkLiteral [
+          "prompt"
+          "entry"
+        ];
       };
 
       prompt = {

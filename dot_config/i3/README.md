@@ -5,16 +5,16 @@ Designed for use over xrdp on a shared Ubuntu machine.
 
 ## What's Included
 
-| Component      | Tool     | Purpose                        |
-| -------------- | -------- | ------------------------------ |
-| Window manager | i3       | Tiling WM for X11              |
-| Status bar     | polybar  | System info, workspaces, tray  |
-| Launcher       | rofi     | Application launcher           |
-| Compositor     | picom    | Shadows, transparency          |
-| Notifications  | dunst    | Desktop notifications          |
-| Lock screen    | i3lock   | Screen lock (solid background) |
-| Wallpaper      | feh      | Static wallpaper               |
-| Idle timer     | xautolock| Auto-lock after 5 minutes      |
+| Component      | Tool      | Purpose                        |
+| -------------- | --------- | ------------------------------ |
+| Window manager | i3        | Tiling WM for X11              |
+| Status bar     | polybar   | System info, workspaces, tray  |
+| Launcher       | rofi      | Application launcher           |
+| Compositor     | picom     | Shadows, transparency          |
+| Notifications  | dunst     | Desktop notifications          |
+| Lock screen    | i3lock    | Screen lock (solid background) |
+| Wallpaper      | feh       | Static wallpaper               |
+| Idle timer     | xautolock | Auto-lock after 5 minutes      |
 
 > [!NOTE]
 > Consider upgrading to `i3lock-color` for a Catppuccin-themed lock screen
@@ -66,33 +66,33 @@ Or switch to a free TTY (`Ctrl+Alt+F3`) and run `startx` from there.
 
 ### Applications
 
-| Binding           | Action                  |
-| ----------------- | ----------------------- |
-| `$mod+Return`     | Open terminal (kitty)   |
-| `$mod+Space`      | Open launcher (rofi)    |
+| Binding       | Action                |
+| ------------- | --------------------- |
+| `$mod+Return` | Open terminal (kitty) |
+| `$mod+Space`  | Open launcher (rofi)  |
 
 ### Window Management
 
-| Binding           | Action                  |
-| ----------------- | ----------------------- |
-| `$mod+q`          | Kill focused window     |
-| `$mod+f`          | Toggle fullscreen       |
-| `$mod+Shift+f`    | Toggle floating         |
-| `$mod+b`          | Split horizontal        |
-| `$mod+v`          | Split vertical          |
-| `$mod+d`          | Toggle tiling/float focus |
-| `$mod+r`          | Enter resize mode       |
-| `$mod+Escape`     | Lock screen             |
-| `$mod+Shift+r`    | Reload i3 config        |
-| `$mod+Shift+e`    | Exit i3 (with prompt)   |
+| Binding        | Action                    |
+| -------------- | ------------------------- |
+| `$mod+q`       | Kill focused window       |
+| `$mod+f`       | Toggle fullscreen         |
+| `$mod+Shift+f` | Toggle floating           |
+| `$mod+b`       | Split horizontal          |
+| `$mod+v`       | Split vertical            |
+| `$mod+d`       | Toggle tiling/float focus |
+| `$mod+r`       | Enter resize mode         |
+| `$mod+Escape`  | Lock screen               |
+| `$mod+Shift+r` | Reload i3 config          |
+| `$mod+Shift+e` | Exit i3 (with prompt)     |
 
 ### Focus and Move (Vim Keys)
 
-| Binding           | Action                  |
-| ----------------- | ----------------------- |
-| `$mod+h/j/k/l`   | Focus left/down/up/right |
-| `$mod+Shift+h/j/k/l` | Move window left/down/up/right |
-| Arrow key variants also work |                |
+| Binding                      | Action                         |
+| ---------------------------- | ------------------------------ |
+| `$mod+h/j/k/l`               | Focus left/down/up/right       |
+| `$mod+Shift+h/j/k/l`         | Move window left/down/up/right |
+| Arrow key variants also work |                                |
 
 > [!NOTE]
 > `$mod+l` and `$mod+Shift+l` do not work over RDP — Windows intercepts
@@ -104,34 +104,34 @@ Or switch to a free TTY (`Ctrl+Alt+F3`) and run `startx` from there.
 
 Enter with `$mod+r`, exit with `Escape` or `Return`.
 
-| Key               | Action                  |
-| ----------------- | ----------------------- |
-| `h` / `Left`      | Shrink width            |
-| `l` / `Right`     | Grow width              |
-| `k` / `Up`        | Shrink height           |
-| `j` / `Down`      | Grow height             |
+| Key           | Action        |
+| ------------- | ------------- |
+| `h` / `Left`  | Shrink width  |
+| `l` / `Right` | Grow width    |
+| `k` / `Up`    | Shrink height |
+| `j` / `Down`  | Grow height   |
 
 ### Workspaces
 
-| Binding           | Action                  |
-| ----------------- | ----------------------- |
-| `$mod+1-0`        | Switch to workspace 1–10 |
-| `$mod+Shift+1-0`  | Move window to workspace 1–10 |
-| `$mod+§`          | Show scratchpad         |
-| `$mod+Shift+§`    | Move to scratchpad      |
+| Binding          | Action                        |
+| ---------------- | ----------------------------- |
+| `$mod+1-0`       | Switch to workspace 1–10      |
+| `$mod+Shift+1-0` | Move window to workspace 1–10 |
+| `$mod+§`         | Show scratchpad               |
+| `$mod+Shift+§`   | Move to scratchpad            |
 
 ### Media Keys
 
-| Key                      | Action                         |
-| ------------------------ | ------------------------------ |
-| `XF86AudioRaiseVolume`   | Volume up 5%                   |
-| `XF86AudioLowerVolume`   | Volume down 5%                 |
-| `XF86AudioMute`          | Toggle mute                    |
-| `XF86AudioMicMute`       | Toggle mic mute                |
-| `XF86MonBrightnessUp`    | Brightness up 5%               |
-| `XF86MonBrightnessDown`  | Brightness down 5%             |
-| `XF86AudioPlay/Pause`    | Play/pause                     |
-| `XF86AudioNext/Prev`     | Next/previous track            |
+| Key                     | Action              |
+| ----------------------- | ------------------- |
+| `XF86AudioRaiseVolume`  | Volume up 5%        |
+| `XF86AudioLowerVolume`  | Volume down 5%      |
+| `XF86AudioMute`         | Toggle mute         |
+| `XF86AudioMicMute`      | Toggle mic mute     |
+| `XF86MonBrightnessUp`   | Brightness up 5%    |
+| `XF86MonBrightnessDown` | Brightness down 5%  |
+| `XF86AudioPlay/Pause`   | Play/pause          |
+| `XF86AudioNext/Prev`    | Next/previous track |
 
 ## Theme
 
@@ -145,21 +145,21 @@ Catppuccin Mocha throughout:
 
 ## Differences from Hyprland Setup
 
-| Feature              | Hyprland              | i3                    |
-| -------------------- | --------------------- | --------------------- |
-| Display protocol     | Wayland               | X11                   |
-| Animations           | Yes (bezier curves)   | No                    |
-| Blur                 | Yes                   | No                    |
-| Window rounding      | 8px                   | No (picom limited)    |
-| Gestures             | 3-finger swipe        | Not included          |
-| Bar                  | waybar                | polybar               |
-| Launcher             | wofi                  | rofi                  |
-| Lock screen          | hyprlock (themed)     | i3lock (solid colour) |
-| Idle daemon          | hypridle              | xautolock             |
-| Wallpaper            | swaybg                | feh                   |
-| Clipboard            | wl-clipboard          | xclip                 |
-| Screenshots          | grim + slurp          | maim                  |
-| Remote (xrdp)        | Not supported         | Works natively        |
+| Feature          | Hyprland            | i3                    |
+| ---------------- | ------------------- | --------------------- |
+| Display protocol | Wayland             | X11                   |
+| Animations       | Yes (bezier curves) | No                    |
+| Blur             | Yes                 | No                    |
+| Window rounding  | 8px                 | No (picom limited)    |
+| Gestures         | 3-finger swipe      | Not included          |
+| Bar              | waybar              | polybar               |
+| Launcher         | wofi                | rofi                  |
+| Lock screen      | hyprlock (themed)   | i3lock (solid colour) |
+| Idle daemon      | hypridle            | xautolock             |
+| Wallpaper        | swaybg              | feh                   |
+| Clipboard        | wl-clipboard        | xclip                 |
+| Screenshots      | grim + slurp        | maim                  |
+| Remote (xrdp)    | Not supported       | Works natively        |
 
 ## File Layout
 

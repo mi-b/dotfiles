@@ -1,8 +1,8 @@
 {
-    "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "󰈀  {ipaddr}",
-        "format-disconnected": "󰖪  disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
-    }
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀  {ipaddr}",
+    "format-disconnected": "󰖪  disconnected",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+  },
 }

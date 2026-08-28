@@ -102,22 +102,22 @@ chezmoi apply
 
 ### 6. Quick test checklist
 
-| Action | Bind |
-|--------|------|
-| Open terminal | `Super+Enter` |
-| Open launcher | `Super+Space` |
-| Close window | `Super+Q` |
-| Focus left/down/up/right | `Super+H/J/K/L` |
-| Move window | `Super+Shift+H/J/K/L` |
-| Switch workspace | `Super+1..0` |
-| Move window to workspace | `Super+Shift+1..0` |
-| Toggle floating | `Super+V` |
-| Fullscreen | `Super+F` |
-| Pseudo-tile | `Super+P` |
-| Toggle split | `Super+S` |
-| Scratchpad toggle | `Super+backtick` |
-| Lock screen | `Super+Escape` |
-| Exit Hyprland | `Super+Shift+E` |
+| Action                   | Bind                  |
+| ------------------------ | --------------------- |
+| Open terminal            | `Super+Enter`         |
+| Open launcher            | `Super+Space`         |
+| Close window             | `Super+Q`             |
+| Focus left/down/up/right | `Super+H/J/K/L`       |
+| Move window              | `Super+Shift+H/J/K/L` |
+| Switch workspace         | `Super+1..0`          |
+| Move window to workspace | `Super+Shift+1..0`    |
+| Toggle floating          | `Super+V`             |
+| Fullscreen               | `Super+F`             |
+| Pseudo-tile              | `Super+P`             |
+| Toggle split             | `Super+S`             |
+| Scratchpad toggle        | `Super+backtick`      |
+| Lock screen              | `Super+Escape`        |
+| Exit Hyprland            | `Super+Shift+E`       |
 
 Arrow keys also work for focus and move.
 
@@ -167,15 +167,15 @@ chezmoi apply
 
 ## Differences from the minimal branch
 
-| Feature | Minimal | Full |
-|---------|---------|------|
-| Config format | hyprlang | Lua (modular) |
-| Lock screen | No | Yes (hyprlock) |
-| Idle daemon | No | Yes (hypridle) |
-| Wallpaper | No | Placeholder (hyprpaper) |
-| Media keys | No | Yes |
-| Scratchpad | No | Yes |
-| Window rules | No | Yes |
-| Animations | Defaults | Custom beziers |
-| Waybar modules | 5 | 7 |
-| Gestures | No | 3-finger swipe |
+| Feature        | Minimal  | Full                    |
+| -------------- | -------- | ----------------------- |
+| Config format  | hyprlang | Lua (modular)           |
+| Lock screen    | No       | Yes (hyprlock)          |
+| Idle daemon    | No       | Yes (hypridle)          |
+| Wallpaper      | No       | Placeholder (hyprpaper) |
+| Media keys     | No       | Yes                     |
+| Scratchpad     | No       | Yes                     |
+| Window rules   | No       | Yes                     |
+| Animations     | Defaults | Custom beziers          |
+| Waybar modules | 5        | 7                       |
+| Gestures       | No       | 3-finger swipe          |

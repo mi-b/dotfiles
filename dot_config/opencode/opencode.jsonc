@@ -65,7 +65,7 @@
       "chezmoi list *": "allow",
       "chezmoi source-path *": "allow",
       "chezmoi state *": "allow",
-      "chezmoi target-path *": "allow"
+      "chezmoi target-path *": "allow",
     },
 
     // Never touch secrets directories

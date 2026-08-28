@@ -39,10 +39,10 @@ map("n", "J", "mzJ`z", { desc = "Join lines (cursor stays)" })
 
 -- Search and replace word under cursor
 map(
-	"n",
-	"<leader>R",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "Search and replace word under cursor" }
+    "n",
+    "<leader>R",
+    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+    { desc = "Search and replace word under cursor" }
 )
 
 -- Select everything in buffer
@@ -50,11 +50,11 @@ map("n", "<leader>A", "ggVG", { desc = "Select everything in buffer" })
 
 -- Treesitter structure navigation
 map("n", "<leader>la", function()
-	require("tsht").nodes()
+    require("tsht").nodes()
 end, { desc = "Select AST node" })
 map("n", "<leader>lA", function()
-	local ok, err = pcall(require("tsht").move)
-	if not ok then
-		vim.notify("AST move requires an attached LSP with selectionRange support", vim.log.levels.WARN)
-	end
+    local ok, err = pcall(require("tsht").move)
+    if not ok then
+        vim.notify("AST move requires an attached LSP with selectionRange support", vim.log.levels.WARN)
+    end
 end, { desc = "Move to AST node" })

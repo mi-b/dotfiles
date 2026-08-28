@@ -8,14 +8,14 @@ GUI applications use [Nix](https://nixos.org/) or [Flatpak](https://flatpak.org/
 
 ## What it does
 
-| Layer | Managed by | Scope |
-| ----- | ---------- | ----- |
-| CLI tools, LSPs, formatters, fonts | Nix / Home Manager | `~/.config/home-manager/` |
-| GUI applications | Nix / Home Manager + Flatpak | Firefox, VLC (Nix) |
-| Electron apps (Signal) | Nix / Home Manager (wrapped) | Launched with `--no-sandbox` — see [caveats](#nix-caveats) |
-| Containers (Podman) | Nix + system `uidmap` | Rootless containers via `containers.conf` |
-| Window manager & system services | apt (temporary) | Hyprland or i3, pipewire, kitty — moving to Nix with nixGL |
-| Dotfile templates & config | chezmoi | Shell, editor, terminal, WM configs |
+| Layer                              | Managed by                   | Scope                                                      |
+| ---------------------------------- | ---------------------------- | ---------------------------------------------------------- |
+| CLI tools, LSPs, formatters, fonts | Nix / Home Manager           | `~/.config/home-manager/`                                  |
+| GUI applications                   | Nix / Home Manager + Flatpak | Firefox, VLC (Nix)                                         |
+| Electron apps (Signal)             | Nix / Home Manager (wrapped) | Launched with `--no-sandbox` — see [caveats](#nix-caveats) |
+| Containers (Podman)                | Nix + system `uidmap`        | Rootless containers via `containers.conf`                  |
+| Window manager & system services   | apt (temporary)              | Hyprland or i3, pipewire, kitty — moving to Nix with nixGL |
+| Dotfile templates & config         | chezmoi                      | Shell, editor, terminal, WM configs                        |
 
 ## Bootstrap a new machine
 
@@ -42,10 +42,10 @@ Some steps require `sudo`. That is deliberate, not a bug.
 
 ## Machine types
 
-| Machine | Gets |
-| ------- | ---- |
-| Linux (desktop) | Full Nix + Home Manager + Flatpak + WM |
-| Windows | Neovim config, bashrc, starship only (no Home Manager) |
+| Machine         | Gets                                                   |
+| --------------- | ------------------------------------------------------ |
+| Linux (desktop) | Full Nix + Home Manager + Flatpak + WM                 |
+| Windows         | Neovim config, bashrc, starship only (no Home Manager) |
 
 ## Initial prompts
 

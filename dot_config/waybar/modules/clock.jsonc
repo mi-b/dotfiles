@@ -1,6 +1,6 @@
 {
-    "clock": {
-        "format": "{:%a %d %b  %H:%M}",
-        "tooltip-format": "{:%Y-%m-%d %H:%M:%S}"
-    }
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "{:%Y-%m-%d %H:%M:%S}",
+  },
 }

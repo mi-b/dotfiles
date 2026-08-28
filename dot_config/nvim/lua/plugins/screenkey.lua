@@ -2,7 +2,7 @@
 -- https://github.com/NStefan002/screenkey.nvim
 -- Commands: :Screenkey to toggle
 return {
-  "NStefan002/screenkey.nvim",
-  lazy = false,
-  version = "*",
+    "NStefan002/screenkey.nvim",
+    lazy = false,
+    version = "*",
 }

@@ -16,14 +16,14 @@ hl.config({
         sensitivity = 0,
 
         touchpad = {
-            natural_scroll = true
-        }
-    }
+            natural_scroll = true,
+        },
+    },
 })
 
 -- Three-finger horizontal swipe to switch workspaces
 hl.gesture({
     fingers = 3,
     direction = "horizontal",
-    action = "workspace"
+    action = "workspace",
 })

@@ -108,6 +108,7 @@ Hyprlang (Hyprland's native config language) is simple key-value pairs.
 It works well for small configs but becomes unwieldy for larger setups.
 
 Lua brings:
+
 - **Variables** — define a programme path once, use it everywhere
 - **Loops** — bind 10 workspaces in 4 lines instead of 20
 - **Modules** — separate concerns into files
@@ -177,14 +178,14 @@ for reference.
 
 Programmes launched once when the session starts:
 
-| Programme | Purpose |
-|-----------|---------|
+| Programme         | Purpose                                       |
+| ----------------- | --------------------------------------------- |
 | `hyprpolkitagent` | Polkit authentication (GUI privilege prompts) |
-| `waybar` | Status bar |
-| `dunst` | Notification daemon |
-| `hyprpaper` | Wallpaper |
-| `hypridle` | Idle timer (dim, lock, dpms) |
-| `nm-applet` | Network manager tray applet |
+| `waybar`          | Status bar                                    |
+| `dunst`           | Notification daemon                           |
+| `hyprpaper`       | Wallpaper                                     |
+| `hypridle`        | Idle timer (dim, lock, dpms)                  |
+| `nm-applet`       | Network manager tray applet                   |
 
 These run in the background.
 If any of them are not installed, Hyprland will log a warning but
@@ -258,6 +259,7 @@ wants your attention).
 Styled with Catppuccin Mocha colours and FiraCode Nerd Font.
 
 Urgency levels have different frame colours:
+
 - **Low** — grey (`#6c7086`)
 - **Normal** — lavender (`#b4befe`)
 - **Critical** — red (`#f38ba8`)
@@ -293,10 +295,10 @@ Hypridle locks automatically after 5 minutes of inactivity.
 
 Watches for inactivity and triggers actions:
 
-| Timeout | Action |
-|---------|--------|
-| 3 minutes | Dim screen to 10% |
-| 5 minutes | Lock screen |
+| Timeout   | Action                  |
+| --------- | ----------------------- |
+| 3 minutes | Dim screen to 10%       |
+| 5 minutes | Lock screen             |
 | 6 minutes | Turn off display (DPMS) |
 
 No suspend is configured.
@@ -344,22 +346,22 @@ windows, input, and rendering.
 
 ### Keybindings
 
-| Action | Bind |
-|--------|------|
-| Open terminal | `Super+Enter` |
-| Open launcher | `Super+Space` |
-| Close window | `Super+Q` |
-| Focus left/down/up/right | `Super+H/J/K/L` |
-| Move window | `Super+Shift+H/J/K/L` |
-| Switch workspace | `Super+1..0` |
-| Move window to workspace | `Super+Shift+1..0` |
-| Toggle floating | `Super+V` |
-| Fullscreen | `Super+F` |
-| Pseudo-tile | `Super+P` |
-| Toggle split direction | `Super+S` |
-| Scratchpad toggle | `Super+backtick` |
-| Lock screen | `Super+Escape` |
-| Exit Hyprland | `Super+Shift+E` |
+| Action                   | Bind                  |
+| ------------------------ | --------------------- |
+| Open terminal            | `Super+Enter`         |
+| Open launcher            | `Super+Space`         |
+| Close window             | `Super+Q`             |
+| Focus left/down/up/right | `Super+H/J/K/L`       |
+| Move window              | `Super+Shift+H/J/K/L` |
+| Switch workspace         | `Super+1..0`          |
+| Move window to workspace | `Super+Shift+1..0`    |
+| Toggle floating          | `Super+V`             |
+| Fullscreen               | `Super+F`             |
+| Pseudo-tile              | `Super+P`             |
+| Toggle split direction   | `Super+S`             |
+| Scratchpad toggle        | `Super+backtick`      |
+| Lock screen              | `Super+Escape`        |
+| Exit Hyprland            | `Super+Shift+E`       |
 
 Arrow keys work as alternatives to `H/J/K/L`.
 
@@ -502,18 +504,18 @@ Log out (`Super+Shift+E`), choose your previous session from GDM.
 
 ## Differences from the Minimal Branch
 
-| Feature | Minimal | Full |
-|---------|---------|------|
-| Config format | hyprlang (single file) | Lua (modular) |
-| Lock screen | No | Yes (hyprlock) |
-| Idle daemon | No | Yes (hypridle) |
-| Wallpaper | No | Placeholder (hyprpaper) |
-| Media keys | No | Yes |
-| Scratchpad | No | Yes |
-| Window rules | No | Yes |
-| Animations | Defaults | Custom beziers |
-| Waybar modules | 5 | 7 (+ colour variables) |
-| Gestures | No | 3-finger swipe |
+| Feature        | Minimal                | Full                    |
+| -------------- | ---------------------- | ----------------------- |
+| Config format  | hyprlang (single file) | Lua (modular)           |
+| Lock screen    | No                     | Yes (hyprlock)          |
+| Idle daemon    | No                     | Yes (hypridle)          |
+| Wallpaper      | No                     | Placeholder (hyprpaper) |
+| Media keys     | No                     | Yes                     |
+| Scratchpad     | No                     | Yes                     |
+| Window rules   | No                     | Yes                     |
+| Animations     | Defaults               | Custom beziers          |
+| Waybar modules | 5                      | 7 (+ colour variables)  |
+| Gestures       | No                     | 3-finger swipe          |
 
 ## Further Reading
 

@@ -76,8 +76,8 @@ flowchart RL
 
 ## Legend
 
-| Notation | Meaning |
-|---|---|
-| solid arrow | Dependency / composition |
-| dotted arrow | Partial or platform-specific allocation |
+| Notation     | Meaning                                   |
+| ------------ | ----------------------------------------- |
+| solid arrow  | Dependency / composition                  |
+| dotted arrow | Partial or platform-specific allocation   |
 | "managed by" | Chezmoi orchestrates this package manager |

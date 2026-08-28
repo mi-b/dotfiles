@@ -7,17 +7,17 @@
 -- at startup before any buffer triggers auto-attach.
 
 return {
-	"OXY2DEV/markview.nvim",
-	lazy = false,
+    "OXY2DEV/markview.nvim",
+    lazy = false,
 
-	config = function()
-		local presets = require("markview.presets").headings
-		require("markview").setup({
-			preview = { enable = false },
-			markdown = { headings = presets.numbered },
-		})
+    config = function()
+        local presets = require("markview.presets").headings
+        require("markview").setup({
+            preview = { enable = false },
+            markdown = { headings = presets.numbered },
+        })
 
-		vim.keymap.set("n", "<leader>MM", "<CMD>Markview Toggle<CR>", { desc = "markview: Toggle preview" })
-		vim.keymap.set("n", "<leader>MS", "<CMD>Markview splitToggle<CR>", { desc = "markview: Toggle splitview" })
-	end,
+        vim.keymap.set("n", "<leader>MM", "<CMD>Markview Toggle<CR>", { desc = "markview: Toggle preview" })
+        vim.keymap.set("n", "<leader>MS", "<CMD>Markview splitToggle<CR>", { desc = "markview: Toggle splitview" })
+    end,
 }

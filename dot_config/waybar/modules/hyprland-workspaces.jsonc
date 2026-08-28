@@ -1,6 +1,6 @@
 {
-    "hyprland/workspaces": {
-        "format": "{id}",
-        "on-click": "activate"
-    }
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+  },
 }

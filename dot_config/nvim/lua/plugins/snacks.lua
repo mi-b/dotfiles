@@ -42,92 +42,92 @@
 --   to avoid duplicates.
 
 return {
-	"folke/snacks.nvim",
-	priority = 1000,
-	lazy = false,
-	---@type snacks.Config
-	opts = {
-		-- ── Module configuration ────────────────────────────────────────
-		bigfile = { enabled = true },
-		quickfile = { enabled = true },
-		notifier = { enabled = false },
-		indent = { enabled = true, only_scope = true, only_current = true },
-		words = { enabled = false },
-		input = { enabled = true },
-		scope = { enabled = false }, -- NOTE: could replace wildfire.nvim
-		statuscolumn = { enabled = true },
-	},
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+        -- ── Module configuration ────────────────────────────────────────
+        bigfile = { enabled = true },
+        quickfile = { enabled = true },
+        notifier = { enabled = false },
+        indent = { enabled = true, only_scope = true, only_current = true },
+        words = { enabled = false },
+        input = { enabled = true },
+        scope = { enabled = false }, -- NOTE: could replace wildfire.nvim
+        statuscolumn = { enabled = true },
+    },
 
-	-- ── Keymaps ──────────────────────────────────────────────────────
-	keys = {
-		-- Zen
+    -- ── Keymaps ──────────────────────────────────────────────────────
+    keys = {
+        -- Zen
 
-		-- Buffer delete (replaces <leader>bc and <leader>bo in which-key.lua)
-		{
-			"<leader>bc",
-			function()
-				Snacks.bufdelete()
-			end,
-			desc = "Delete current buffer (layout-safe)",
-		},
-		{
-			"<leader>bo",
-			function()
-				Snacks.bufdelete.other()
-			end,
-			desc = "Delete all other buffers",
-		},
+        -- Buffer delete (replaces <leader>bc and <leader>bo in which-key.lua)
+        {
+            "<leader>bc",
+            function()
+                Snacks.bufdelete()
+            end,
+            desc = "Delete current buffer (layout-safe)",
+        },
+        {
+            "<leader>bo",
+            function()
+                Snacks.bufdelete.other()
+            end,
+            desc = "Delete all other buffers",
+        },
 
-		-- Rename
-		{
-			"<leader>lr",
-			function()
-				Snacks.rename.rename_file()
-			end,
-			desc = "Rename file (LSP-aware)",
-		},
+        -- Rename
+        {
+            "<leader>lr",
+            function()
+                Snacks.rename.rename_file()
+            end,
+            desc = "Rename file (LSP-aware)",
+        },
 
-		-- Words (LSP references)
-		{
-			"]]",
-			function()
-				Snacks.words.jump(vim.v.count1)
-			end,
-			desc = "Jump to next LSP reference",
-			mode = { "n", "t" },
-		},
-		{
-			"[[",
-			function()
-				Snacks.words.jump(-vim.v.count1)
-			end,
-			desc = "Jump to previous LSP reference",
-			mode = { "n", "t" },
-		},
-	},
+        -- Words (LSP references)
+        {
+            "]]",
+            function()
+                Snacks.words.jump(vim.v.count1)
+            end,
+            desc = "Jump to next LSP reference",
+            mode = { "n", "t" },
+        },
+        {
+            "[[",
+            function()
+                Snacks.words.jump(-vim.v.count1)
+            end,
+            desc = "Jump to previous LSP reference",
+            mode = { "n", "t" },
+        },
+    },
 
-	-- ── Toggles (set up after plugins load) ──────────────────────────
-	init = function()
-		vim.api.nvim_create_autocmd("User", {
-			pattern = "VeryLazy",
-			callback = function()
-				-- Option toggles (<leader>o prefix)
-				Snacks.toggle.option("spell", { name = "Spell check" }):map("<leader>os")
-				Snacks.toggle.option("wrap", { name = "Word wrap" }):map("<leader>ow")
-				Snacks.toggle.line_number():map("<leader>ol")
-				Snacks.toggle.option("relativenumber", { name = "Relative line numbers" }):map("<leader>oL")
-				Snacks.toggle.diagnostics():map("<leader>od")
-				Snacks.toggle.inlay_hints():map("<leader>oi")
-				Snacks.toggle.indent():map("<leader>og")
-				Snacks.toggle.dim():map("<leader>oD")
-				Snacks.toggle
-					.option("conceallevel", {
-						off = 0,
-						on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-						name = "Conceal level",
-					})
-					:map("<leader>oc")
-			end,
-		})
-	end,
+    -- ── Toggles (set up after plugins load) ──────────────────────────
+    init = function()
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "VeryLazy",
+            callback = function()
+                -- Option toggles (<leader>o prefix)
+                Snacks.toggle.option("spell", { name = "Spell check" }):map("<leader>os")
+                Snacks.toggle.option("wrap", { name = "Word wrap" }):map("<leader>ow")
+                Snacks.toggle.line_number():map("<leader>ol")
+                Snacks.toggle.option("relativenumber", { name = "Relative line numbers" }):map("<leader>oL")
+                Snacks.toggle.diagnostics():map("<leader>od")
+                Snacks.toggle.inlay_hints():map("<leader>oi")
+                Snacks.toggle.indent():map("<leader>og")
+                Snacks.toggle.dim():map("<leader>oD")
+                Snacks.toggle
+                    .option("conceallevel", {
+                        off = 0,
+                        on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+                        name = "Conceal level",
+                    })
+                    :map("<leader>oc")
+            end,
+        })
+    end,
 }

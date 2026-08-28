@@ -9,7 +9,7 @@ PROFILE="/etc/apparmor.d/nix-packages"
 
 if [ ! -f "$PROFILE" ]; then
     echo "Creating AppArmor profile for Nix store binaries..."
-    sudo tee "$PROFILE" > /dev/null << 'EOF'
+    sudo tee "$PROFILE" >/dev/null <<'EOF'
 abi <abi/4.0>,
 include <tunables/global>
 

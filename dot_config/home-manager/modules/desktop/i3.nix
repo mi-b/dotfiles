@@ -10,7 +10,7 @@
     with pkgs;
     [
       i3
-      polybar
+      (polybar.override { i3Support = true; })
       i3status
       feh
       xautolock

@@ -65,6 +65,7 @@ sudo apt-get remove -y \
 
 # Desktop components now managed by Home Manager
 sudo apt-get remove -y \
+    kitty \
     dunst \
     wofi \
     rofi \
@@ -84,9 +85,6 @@ sudo apt-get remove -y \
     wl-clipboard \
     hypridle \
     2>/dev/null || true
-
-# NOTE: kitty stays on apt — GPU-accelerated apps cannot run from Nix
-# on non-NixOS (missing system OpenGL/Nvidia drivers).
 
 echo ""
 echo "=== Removing desktop apps now on Flatpak ==="

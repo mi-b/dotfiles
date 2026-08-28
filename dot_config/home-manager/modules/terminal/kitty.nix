@@ -6,7 +6,6 @@ in
 {
   programs.kitty = {
     enable = true;
-    package = null;
 
     font = {
       name = "FiraCode Nerd Font";

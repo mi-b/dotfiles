@@ -5,7 +5,6 @@ set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
-    kitty \
     pipewire \
     wireplumber \
     network-manager-gnome \

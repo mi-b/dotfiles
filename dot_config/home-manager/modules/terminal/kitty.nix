@@ -13,12 +13,12 @@ in
       size = 12.0;
     };
 
-    shellIntegration.mode = if isHyprland then "no-cursor" else "no-rc";
+    shellIntegration.mode = null;
 
     settings = {
       hide_window_decorations = isHyprland;
       window_padding_width = 5;
-      confirm_os_window_close = 0;
+      confirm_os_window_close = "-1 count-background";
 
       scrollback_lines = 50000;
 
@@ -28,6 +28,12 @@ in
 
       clipboard_control = "write-clipboard read-clipboard";
     };
+
+    extraConfig = ''
+      # Home Manager forces no-rc when using shellIntegration.mode.
+      # We need prompt-aware shell integration without cursor shape changes.
+      shell_integration no-cursor
+    '';
 
     keybindings = {
       "kitty_mod+right" = "next_window";

@@ -12,6 +12,7 @@
 
   programs.wofi = lib.mkIf (config.host.wm == "hyprland") {
     enable = true;
+    package = null; # System wofi from apt — avoids Nix GTK/env isolation issues
     style = ''
       * {
         font-family: "FiraCode Nerd Font", monospace;

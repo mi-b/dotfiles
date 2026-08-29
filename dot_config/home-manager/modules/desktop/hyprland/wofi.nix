@@ -1,6 +1,15 @@
 { config, lib, ... }:
 
 {
+  # Clear wofi's drun cache on every HM activation.  Home Manager rebuilds
+  # ~/.nix-profile on switch, which changes nix store paths.  Wofi caches
+  # .desktop file paths and silently drops entries whose paths went stale.
+  home.activation.clearWofiCache = lib.mkIf (config.host.wm == "hyprland") (
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      rm -f ~/.cache/wofi-drun
+    ''
+  );
+
   programs.wofi = lib.mkIf (config.host.wm == "hyprland") {
     enable = true;
     style = ''

@@ -2,7 +2,6 @@
 -- https://github.com/nvim-lualine/lualine.nvim
 return {
     "nvim-lualine/lualine.nvim",
-    commit = "221ce6b",
     config = function()
         require("lualine").setup({
             options = {

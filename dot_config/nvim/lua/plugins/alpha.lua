@@ -2,7 +2,6 @@
 -- https://github.com/goolord/alpha-nvim
 return {
     "goolord/alpha-nvim",
-    commit = "6c6a89d",
     dependencies = {
         { "rubiin/fortune.nvim", version = "^1.0.0" },
         "amansingh-afk/milli.nvim",

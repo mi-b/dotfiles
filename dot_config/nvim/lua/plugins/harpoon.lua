@@ -4,7 +4,6 @@
 --        [h         = prev file    | ]h         = next file
 return {
     "ThePrimeagen/harpoon",
-    commit = "87b1a35",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         local harpoon = require("harpoon")

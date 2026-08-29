@@ -5,7 +5,6 @@
 --        <leader>md = delete buffer marks
 return {
     "chentoast/marks.nvim",
-    commit = "f353e8c",
     event = "VeryLazy",
     config = function()
         require("marks").setup({

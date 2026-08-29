@@ -12,7 +12,6 @@
 -- Keys: <leader>lf = format current buffer
 return {
     "nvimtools/none-ls.nvim",
-    commit = "01f8e62",
     config = function()
         local null_ls = require("null-ls")
 

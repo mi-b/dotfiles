@@ -1,3 +1,4 @@
+# For Windows config only
 add_newline = false
 command_timeout = 1000
 palette = "catppuccin_mocha"

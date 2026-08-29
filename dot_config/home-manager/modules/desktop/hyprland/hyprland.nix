@@ -35,7 +35,7 @@ let
   };
 
   terminal = lib.getExe config.programs.kitty.package;
-  menuCmd = "pkill wofi || ${lib.getExe config.programs.wofi.package} --show drun";
+  menuCmd = "pkill wofi || wofi --show drun";
 
   # Safe close: refuse to kill kitty windows containing neovim.
   closeWindow = lib.getExe (
@@ -173,6 +173,16 @@ in
 
         # --- Environment variables ---
         env = [
+          # Prepend Nix profile paths so Nix-managed programs are available
+          # to all child processes (wofi, waybar, etc.).  Display managers
+          # like GDM do not source ~/.profile, so the Nix PATH is missing.
+          {
+            _args = [
+              "PATH"
+              (lib.generators.mkLuaInline ''
+                os.getenv("HOME") .. "/.nix-profile/bin:/nix/var/nix/profiles/default/bin:" .. (os.getenv("PATH") or "/usr/local/bin:/usr/bin:/bin")'')
+            ];
+          }
           { _args = [ "XDG_CURRENT_DESKTOP" "Hyprland" ]; }
           { _args = [ "XDG_SESSION_TYPE" "wayland" ]; }
           { _args = [ "XDG_SESSION_DESKTOP" "Hyprland" ]; }

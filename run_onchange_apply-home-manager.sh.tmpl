@@ -28,6 +28,9 @@ fi
 # --impure is required for nixGL Nvidia wrappers (they probe the system driver).
 # NIXPKGS_ALLOW_UNFREE is needed because nixGL uses its own nixpkgs pin
 # which does not inherit our allowUnfree config.
+# Suppress "Nix search path entry … does not exist" warning.
+# Determinate Nix deprecates channels; the symlink target doesn't exist.
+export NIX_PATH=""
 export NIXPKGS_ALLOW_UNFREE=1
 
 if command -v home-manager >/dev/null 2>&1; then

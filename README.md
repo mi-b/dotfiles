@@ -14,7 +14,7 @@ GUI applications use [Nix](https://nixos.org/) or [Flatpak](https://flatpak.org/
 | GUI applications                   | Nix / Home Manager + Flatpak | Firefox, VLC (Nix)                                         |
 | Electron apps (Signal)             | Nix / Home Manager (wrapped) | Launched with `--no-sandbox` — see [caveats](#nix-caveats) |
 | Containers (Podman)                | Nix + system `uidmap`        | Rootless containers via `containers.conf`                  |
-| Window manager & system services   | apt (temporary)              | Hyprland or i3, pipewire, kitty — moving to Nix with nixGL |
+| Window manager & system services   | apt + Nix / Home Manager     | Binaries from apt (PPA/repos), config from Home Manager    |
 | Dotfile templates & config         | chezmoi                      | Shell, editor, terminal, WM configs                        |
 
 ## Bootstrap a new machine
@@ -130,6 +130,25 @@ its own branch or repo, these can be deleted from chezmoi:
 
 - `dot_config/yazi/` — `programs.yazi` in Home Manager
 - `dot_config/lazygit/config.yml` — `programs.lazygit` in Home Manager
+
+## xrdp (i3 only)
+
+The `~/.xsession` file tells xrdp to start i3 instead of GNOME.
+It is deployed automatically by chezmoi via `dot_xsession`.
+
+After applying, disconnect your current RDP session and reconnect.
+xrdp picks up the new `.xsession` on the next login.
+
+To switch back to GNOME temporarily:
+
+```bash
+echo "exec gnome-session" > ~/.xsession
+```
+
+Then reconnect via RDP.
+
+> [!NOTE]
+> Hyprland does not work over xrdp — it requires native Wayland.
 
 ## Licence
 

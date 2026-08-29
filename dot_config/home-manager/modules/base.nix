@@ -1,6 +1,7 @@
 { nixgl, ... }:
 
 {
+
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
@@ -31,6 +32,7 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
     LANG = "en_GB.UTF-8";
+    NIX_PATH = "";
   };
 
   fonts.fontconfig.enable = true;
@@ -41,5 +43,9 @@
     flavor = "mocha";
     accent = "blue";
     nvim.enable = false;
+    # Catppuccin's Hyprland module injects a Lua theme require(); our config
+    # uses configType = "hyprlang", so the Lua output would be invalid.
+    # Mocha colours are applied manually in the Hyprland/waybar settings.
+    hyprland.enable = false;
   };
 }

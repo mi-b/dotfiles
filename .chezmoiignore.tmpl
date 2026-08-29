@@ -10,18 +10,10 @@ scripts/**
 # --- Window manager specific ---
 
 {{ if ne .wm "hyprland" }}
-.config/hypr/
-.config/hypr/**
-.config/waybar/
-.config/waybar/**
 install-hyprland.sh
 {{ end }}
 
 {{ if ne .wm "i3" }}
-.config/i3/
-.config/i3/**
-.config/polybar/
-.config/polybar/**
 install-i3.sh
 {{ end }}
 

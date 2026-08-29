@@ -63,6 +63,14 @@ The i3 and hyprland modules only activate on their respective hosts.
    `desktop/i3.nix` or `desktop/hyprland.nix`.
 3. Apply: `chezmoi apply` (triggers Home Manager rebuild)
 
+> [!NOTE]
+> Do not add low-level system packages (`coreutils`, `findutils`,
+> `binutils`) to Home Manager. The system (apt) versions are essential OS
+> dependencies that cannot be removed. Nix versions placed earlier on
+> `$PATH` would shadow them, risking subtle breakage in system scripts
+> and package manager operations. If a specific project needs a newer
+> version, add it to that project's `flake.nix` devShell instead.
+
 ### Remove a package
 
 Delete it from the relevant module, then `chezmoi apply`.
@@ -402,35 +410,63 @@ nix-env -q | sort
 
 ### GPU-accelerated apps fail (OpenGL/EGL errors)
 
-Apps that use the GPU (kitty, alacritty, any OpenGL/Vulkan program) need
-the host GPU drivers to be bridged into the Nix store. Home Manager's
-`targets.genericLinux.enable = true` provides a `non-nixos-gpu-setup`
-script that creates the necessary symlink:
+Apps that use the GPU (kitty, firefox, VLC, any OpenGL/Vulkan program) need
+the host GPU drivers to be visible to Nix binaries. On non-NixOS, Nix store
+binaries cannot find system GL/EGL libraries by default.
+
+**Current approach — nixGL wrapper:**
+
+The `targets.genericLinux.nixGL` module wraps individual packages so they
+can find host GPU drivers. Each GPU-accelerated package must opt in:
+
+```nix
+# In a programs.* module:
+programs.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
+
+# In home.packages:
+home.packages = [
+  (config.lib.nixGL.wrap pkgs.vlc)
+];
+```
+
+The wrapper is configured globally in `base.nix`:
+
+```nix
+nixpkgs.config.nvidia.acceptLicense = true;
+
+targets.genericLinux.nixGL = {
+  packages = nixgl.packages;
+  defaultWrapper = "nvidia";
+  offloadWrapper = "nvidiaPrime";
+  installScripts = [ "nvidia" ];
+};
+```
+
+**Legacy approach — `/run/opengl-driver` symlink (no longer used):**
+
+Home Manager's `targets.genericLinux` previously supported a `gpu` option
+that created a system-wide symlink bridging host drivers into the Nix store:
+
+```nix
+# This config is no longer used — replaced by nixGL wrapping above.
+targets.genericLinux.gpu = {
+  enable = true;
+  nvidia = {
+    enable = true;
+    version = "580.173.02";
+    sha256 = "sha256-jY65AB4FqaimY9PV0wT+tk7yhE7hhczf2VJ4aCD0bhs=";
+  };
+};
+```
+
+This required a one-time `sudo` step to create the symlink:
 
 ```
 /run/opengl-driver → /nix/store/...-non-nixos-gpu
 ```
 
-**One-time setup** (run once, survives reboots via tmpfiles.d):
-
-```bash
-sudo /nix/store/<hash>-non-nixos-gpu/bin/non-nixos-gpu-setup
-```
-
-The exact store path is printed during `home-manager switch` if the symlink
-is missing. After running the script, verify:
-
-```bash
-ls -la /run/opengl-driver
-```
-
-Alternative approaches (if `non-nixos-gpu-setup` is unavailable):
-
-- **nixGL** (`nix-community/nixGL`): wraps binaries with the correct
-  driver paths. Requires `--impure` for auto-detection, or per-host driver
-  version pinning.
-- **Manual `LD_LIBRARY_PATH`**: possible but requires care to avoid glibc
-  version conflicts between system and Nix libc.
+The nixGL wrapper approach is preferred because it does not require root
+and works per-package rather than system-wide.
 
 ### Flatpak apps look ugly (wrong theme)
 

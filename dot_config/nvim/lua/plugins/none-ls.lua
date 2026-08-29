@@ -46,7 +46,8 @@ return {
             table.insert(sources, null_ls.builtins.formatting.clang_format)
 
             -- Linters (diagnostics only, no formatting)
-            table.insert(sources, null_ls.builtins.diagnostics.shellcheck)
+            -- NOTE: shellcheck diagnostics come via bashls (bash-language-server
+            -- runs shellcheck internally), so no none-ls source needed.
             table.insert(sources, null_ls.builtins.diagnostics.markdownlint_cli2)
             table.insert(sources, null_ls.builtins.diagnostics.hadolint)
             table.insert(sources, null_ls.builtins.diagnostics.yamllint)

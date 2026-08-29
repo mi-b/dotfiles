@@ -42,9 +42,9 @@
     flavor = "mocha";
     accent = "blue";
     nvim.enable = false;
-    # Catppuccin's Hyprland module injects a Lua theme require(); our config
-    # uses configType = "hyprlang", so the Lua output would be invalid.
-    # Mocha colours are applied manually in the Hyprland/waybar settings.
+    # Catppuccin's Hyprland module injects its own colour variables via
+    # require('themes.catppuccin').  Mocha colours are applied manually
+    # throughout the Hyprland, waybar, and wofi settings instead.
     hyprland.enable = false;
   };
 }

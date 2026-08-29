@@ -115,9 +115,11 @@ in
           };
         };
 
-        gestures = {
-          workspace_swipe = true;
-        };
+        # NOTE: gestures:workspace_swipe was removed in Hyprland 0.55.
+        # Three-finger workspace swipe requires the Lua config format
+        # (hl.gesture()), which is not yet supported by HM's hyprlang output.
+        # TODO: migrate to configType = "lua" before Hyprland 0.57 drops
+        # .conf support entirely.
 
         # --- Appearance ---
         general = {

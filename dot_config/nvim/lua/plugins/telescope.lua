@@ -6,10 +6,11 @@
 return {
     {
         "nvim-telescope/telescope.nvim",
+        commit = "40aedd8",
         dependencies = {
             "nvim-lua/plenary.nvim",
             { "nvim-telescope/telescope-frecency.nvim", version = "^1.0.0" },
-            { "nvim-telescope/telescope-ui-select.nvim" },
+            { "nvim-telescope/telescope-ui-select.nvim", commit = "6e51d7d" },
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         },
         config = function()

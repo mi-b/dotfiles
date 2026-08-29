@@ -9,8 +9,8 @@ return {
     dependencies = {
         { "rcarriga/nvim-dap-ui" },
         { "nvim-neotest/nvim-nio", version = "^1.0.0" },
-        { "leoluz/nvim-dap-go" },
-        { "mfussenegger/nvim-dap-python" },
+        { "leoluz/nvim-dap-go", commit = "b442115" },
+        { "mfussenegger/nvim-dap-python", commit = "1808458" },
     },
     config = function()
         local dap, dapui = require("dap"), require("dapui")

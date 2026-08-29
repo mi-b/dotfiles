@@ -3,9 +3,6 @@
 {
   home.packages = with pkgs; [
     # --- Core CLI tools ---
-    coreutils
-    findutils
-    binutils
 
     curl
     comma

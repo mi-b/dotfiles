@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   isHyprland = config.host.wm == "hyprland";
@@ -6,6 +6,8 @@ in
 {
   programs.kitty = {
     enable = true;
+    # nixGL wrapper required on non-NixOS to expose host GL/EGL drivers.
+    package = config.lib.nixGL.wrap pkgs.kitty;
 
     font = {
       name = "FiraCode Nerd Font";

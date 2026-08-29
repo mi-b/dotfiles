@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -43,9 +43,11 @@
     # --- media ---
     ffmpeg
     eog
-    gimp
-    inkscape
-    vlc
+    # nixGL wrapper required for GPU-accelerated apps on non-NixOS — without
+    # it, Nix binaries cannot find the host system's GL/EGL drivers.
+    (config.lib.nixGL.wrap gimp)
+    (config.lib.nixGL.wrap inkscape)
+    (config.lib.nixGL.wrap vlc)
 
     # --- desktop utilities ---
     brightnessctl

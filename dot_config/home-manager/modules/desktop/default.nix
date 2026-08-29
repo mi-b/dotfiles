@@ -8,5 +8,6 @@
     ./hyprland.nix
     ./firefox.nix
     ./signal.nix
+    ./xdg.nix
   ];
 }

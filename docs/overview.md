@@ -33,7 +33,8 @@ flowchart RL
 
     %% Software groups to package managers
     shell & dev & cli & docs & lsp & fonts & guiapps --> hm
-    hypr & i3 --> apt
+    hypr & i3 -- "config" --> hm
+    hypr & i3 -- "binaries" --> apt
     shell -. "dotfiles only\n.bashrc · starship · zoxide" .-> chezmoi
 
     %% Package managers to Chezmoi

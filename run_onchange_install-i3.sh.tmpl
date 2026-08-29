@@ -2,7 +2,7 @@
 # Install i3 system-level packages.
 # i3lock must remain a system package — it needs the system PAM stack for
 # password authentication, which Nix's sandboxed libpam cannot provide.
-# hash: {{ include "dot_config/i3/config.tmpl" | sha256sum }}
+# hash: {{ include "dot_config/home-manager/modules/desktop/i3/i3.nix" | sha256sum }}
 
 set -eu
 

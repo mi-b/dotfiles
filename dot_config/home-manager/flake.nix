@@ -11,8 +11,6 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
-
     nixgl = {
       url = "github:nix-community/nixGL";
       # Do not follow nixpkgs — nixGL's nvidia wrapper is incompatible with
@@ -25,7 +23,6 @@
       nixpkgs,
       home-manager,
       catppuccin,
-      nix-flatpak,
       nixgl,
       ...
     }:
@@ -46,7 +43,6 @@
           };
           modules = [
             catppuccin.homeModules.catppuccin
-            nix-flatpak.homeManagerModules.nix-flatpak
             ./hosts/${host}.nix
           ];
         };

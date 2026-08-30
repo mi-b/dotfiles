@@ -48,7 +48,7 @@ let
 
       # Only guard kitty windows; everything else closes immediately.
       if [[ "$window_class" != "kitty" ]]; then
-          hyprctl dispatch 'hl.dsp.window.close()'
+          hyprctl dispatch killactive
           exit 0
       fi
 
@@ -59,7 +59,7 @@ let
       fi
 
       # No neovim — safe to close.
-      hyprctl dispatch 'hl.dsp.window.close()'
+      hyprctl dispatch killactive
     ''
   );
 

@@ -45,6 +45,7 @@
     (config.lib.nixGL.wrap gimp)
     (config.lib.nixGL.wrap inkscape)
     (config.lib.nixGL.wrap vlc)
+    (config.lib.nixGL.wrap spotify)
 
     # --- desktop utilities ---
     brightnessctl

@@ -17,7 +17,6 @@
       ];
 
       hostname = {
-        ssh_only = true;
         format = "[$hostname](bold yellow)";
       };
 

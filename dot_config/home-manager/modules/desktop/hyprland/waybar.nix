@@ -35,9 +35,18 @@ in
         position = "top";
         spacing = 4;
 
-        modules-left = [ "hyprland/workspaces" "cpu" "memory" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "cpu"
+          "memory"
+        ];
         modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "network" "battery" "tray" ];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "battery"
+          "tray"
+        ];
 
         "hyprland/workspaces" = {
           format = "{id}";
@@ -65,7 +74,11 @@ in
           format = "{icon}  {volume}%";
           format-muted = "󰖁  muted";
           format-icons = {
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           on-click = "${lib.getExe pkgs.pavucontrol}";
         };
@@ -80,7 +93,19 @@ in
         battery = {
           format = "{icon}  {capacity}%";
           format-charging = "󰂄  {capacity}%";
-          format-icons = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          format-icons = [
+            "󰂎"
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
           states = {
             warning = 20;
             critical = 10;

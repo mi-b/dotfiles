@@ -12,23 +12,23 @@ Both WMs share the same binding philosophy: vim-style navigation
 
 #### Applications
 
-| Binding        | Action                |
-| -------------- | --------------------- |
-| `$mod+Return`  | Open terminal (kitty) |
-| `$mod+Space`   | Open launcher (wofi)  |
-| `$mod+B`       | Bluetooth manager     |
+| Binding       | Action                |
+| ------------- | --------------------- |
+| `$mod+Return` | Open terminal (kitty) |
+| `$mod+Space`  | Open launcher (wofi)  |
+| `$mod+B`      | Bluetooth manager     |
 
 #### Window management
 
-| Binding        | Action               |
-| -------------- | -------------------- |
-| `$mod+Q`       | Close window (safe)  |
-| `$mod+F`       | Toggle fullscreen    |
-| `$mod+V`       | Toggle floating      |
-| `$mod+P`       | Pseudo-tile          |
-| `$mod+S`       | Toggle split         |
-| `$mod+Escape`  | Lock screen          |
-| `$mod+Shift+E` | Exit Hyprland        |
+| Binding        | Action              |
+| -------------- | ------------------- |
+| `$mod+Q`       | Close window (safe) |
+| `$mod+F`       | Toggle fullscreen   |
+| `$mod+V`       | Toggle floating     |
+| `$mod+P`       | Pseudo-tile         |
+| `$mod+S`       | Toggle split        |
+| `$mod+Escape`  | Lock screen         |
+| `$mod+Shift+E` | Exit Hyprland       |
 
 > [!NOTE]
 > `$mod+Q` refuses to kill kitty windows that contain a running neovim
@@ -39,9 +39,9 @@ Both WMs share the same binding philosophy: vim-style navigation
 
 | Binding              | Action                         |
 | -------------------- | ------------------------------ |
-| `$mod+H/J/K/L`      | Focus left/down/up/right       |
-| `$mod+Shift+H/J/K/L`| Move window left/down/up/right |
-| `$mod+Ctrl+H/L`     | Move workspace to monitor      |
+| `$mod+H/J/K/L`       | Focus left/down/up/right       |
+| `$mod+Shift+H/J/K/L` | Move window left/down/up/right |
+| `$mod+Ctrl+H/L`      | Move workspace to monitor      |
 | Arrow key variants   | Also work for all of the above |
 
 #### Workspaces
@@ -55,20 +55,20 @@ Both WMs share the same binding philosophy: vim-style navigation
 
 #### Mouse
 
-| Binding           | Action             |
-| ----------------- | ------------------ |
-| `$mod+Left-drag`  | Move window        |
-| `$mod+Right-drag` | Resize window      |
-| `$mod+Scroll`     | Switch workspaces  |
+| Binding           | Action            |
+| ----------------- | ----------------- |
+| `$mod+Left-drag`  | Move window       |
+| `$mod+Right-drag` | Resize window     |
+| `$mod+Scroll`     | Switch workspaces |
 
 ### i3 (X11)
 
 #### Applications
 
-| Binding        | Action                |
-| -------------- | --------------------- |
-| `$mod+Return`  | Open terminal (kitty) |
-| `$mod+Space`   | Open launcher (rofi)  |
+| Binding       | Action                |
+| ------------- | --------------------- |
+| `$mod+Return` | Open terminal (kitty) |
+| `$mod+Space`  | Open launcher (rofi)  |
 
 #### Window management
 
@@ -89,9 +89,9 @@ Both WMs share the same binding philosophy: vim-style navigation
 
 | Binding              | Action                         |
 | -------------------- | ------------------------------ |
-| `$mod+H/J/K/L`      | Focus left/down/up/right       |
-| `$mod+Shift+H/J/K/L`| Move window left/down/up/right |
-| `$mod+Ctrl+H/L`     | Move workspace to output       |
+| `$mod+H/J/K/L`       | Focus left/down/up/right       |
+| `$mod+Shift+H/J/K/L` | Move window left/down/up/right |
+| `$mod+Ctrl+H/L`      | Move workspace to output       |
 | Arrow key variants   | Also work for all of the above |
 
 > [!NOTE]

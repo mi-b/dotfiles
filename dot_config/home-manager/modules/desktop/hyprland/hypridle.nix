@@ -1,5 +1,10 @@
 # Hypridle — conservative idle timers
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.hypridle = lib.mkIf (config.host.wm == "hyprland") {

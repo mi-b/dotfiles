@@ -106,7 +106,8 @@ in
           keybindings = {
             # Applications
             "${mod}+Return" = "exec --no-startup-id ${lib.getExe pkgs.kitty}";
-            "--release ${mod}+space" = "exec --no-startup-id ${lib.getExe config.programs.rofi.package} -show drun";
+            "--release ${mod}+space" =
+              "exec --no-startup-id ${lib.getExe config.programs.rofi.package} -show drun";
 
             # Window management
             "${mod}+q" = "kill";
@@ -115,7 +116,8 @@ in
             "${mod}+b" = "split horizontal";
             "${mod}+v" = "split vertical";
             "${mod}+Shift+r" = "reload";
-            "${mod}+Shift+e" = ''exec --no-startup-id "echo -e 'Yes\nNo' | ${lib.getExe config.programs.rofi.package} -dmenu -p 'Exit i3?' -theme-str 'listview { lines: 2; }' | grep -qx Yes && i3-msg exit"'';
+            "${mod}+Shift+e" =
+              ''exec --no-startup-id "echo -e 'Yes\nNo' | ${lib.getExe config.programs.rofi.package} -dmenu -p 'Exit i3?' -theme-str 'listview { lines: 2; }' | grep -qx Yes && i3-msg exit"'';
 
             # Lock screen
             "${mod}+Escape" = "exec --no-startup-id ${pkgs.i3lock}/bin/i3lock -c 1e1e2e";
@@ -186,14 +188,20 @@ in
             "${mod}+Shift+section" = "move scratchpad";
 
             # Volume
-            "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+";
-            "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-            "XF86AudioMute" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86AudioMicMute" = "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            "XF86AudioRaiseVolume" =
+              "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+";
+            "XF86AudioLowerVolume" =
+              "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+            "XF86AudioMute" =
+              "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            "XF86AudioMicMute" =
+              "exec --no-startup-id ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
 
             # Brightness
-            "XF86MonBrightnessUp" = "exec --no-startup-id ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%+";
-            "XF86MonBrightnessDown" = "exec --no-startup-id ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%-";
+            "XF86MonBrightnessUp" =
+              "exec --no-startup-id ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%+";
+            "XF86MonBrightnessDown" =
+              "exec --no-startup-id ${pkgs.brightnessctl}/bin/brightnessctl -e4 -n2 set 5%-";
 
             # Playback
             "XF86AudioPlay" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
@@ -204,7 +212,8 @@ in
             # Screenshots — flameshot
             "Print" = "exec --no-startup-id ${pkgs.flameshot}/bin/flameshot gui";
             "${mod}+Print" = "exec --no-startup-id ${pkgs.flameshot}/bin/flameshot full --clipboard";
-            "${mod}+Shift+Print" = "exec --no-startup-id ${pkgs.flameshot}/bin/flameshot full --path ~/Pictures/Screenshots";
+            "${mod}+Shift+Print" =
+              "exec --no-startup-id ${pkgs.flameshot}/bin/flameshot full --path ~/Pictures/Screenshots";
           };
 
           modes = {
@@ -226,33 +235,94 @@ in
           };
 
           window.commands = [
-            { command = "floating enable"; criteria = { class = "^nm-applet$"; }; }
-            { command = "floating enable"; criteria = { class = "^nm-connection-editor$"; }; }
-            { command = "floating enable"; criteria = { class = "^Nm-connection-editor$"; }; }
-            { command = "floating enable"; criteria = { class = "^blueman-manager$"; }; }
-            { command = "floating enable"; criteria = { class = "^Blueman-manager$"; }; }
-            { command = "floating enable"; criteria = { class = "^pavucontrol$"; }; }
-            { command = "floating enable"; criteria = { class = "^Pavucontrol$"; }; }
-            { command = "floating enable, border none"; criteria = { class = "^flameshot$"; }; }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^nm-applet$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^nm-connection-editor$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^Nm-connection-editor$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^blueman-manager$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^Blueman-manager$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^pavucontrol$";
+              };
+            }
+            {
+              command = "floating enable";
+              criteria = {
+                class = "^Pavucontrol$";
+              };
+            }
+            {
+              command = "floating enable, border none";
+              criteria = {
+                class = "^flameshot$";
+              };
+            }
           ];
 
           bars = [ ]; # Using polybar, not i3bar
 
           startup = [
             # Compositor
-            { command = "${lib.getExe config.services.picom.package}"; notification = false; }
+            {
+              command = "${lib.getExe config.services.picom.package}";
+              notification = false;
+            }
             # Notification daemon
-            { command = "${lib.getExe pkgs.dunst}"; notification = false; }
+            {
+              command = "${lib.getExe pkgs.dunst}";
+              notification = false;
+            }
             # Wallpaper
-            { command = "${lib.getExe pkgs.feh} --bg-fill ${wallpaper}"; notification = false; }
+            {
+              command = "${lib.getExe pkgs.feh} --bg-fill ${wallpaper}";
+              notification = false;
+            }
             # Idle timer and screen lock (disabled for xrdp sessions)
-            { command = "sh -c 'pgrep -a Xorg | grep -q xrdp || ${lib.getExe pkgs.xautolock} -time 10 -locker \"${pkgs.i3lock}/bin/i3lock -c 1e1e2e\"'"; notification = false; }
+            {
+              command = "sh -c 'pgrep -a Xorg | grep -q xrdp || ${lib.getExe pkgs.xautolock} -time 10 -locker \"${pkgs.i3lock}/bin/i3lock -c 1e1e2e\"'";
+              notification = false;
+            }
             # Network manager applet
-            { command = "nm-applet"; notification = false; }
+            {
+              command = "nm-applet";
+              notification = false;
+            }
             # Polkit authentication agent
-            { command = "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"; notification = false; }
+            {
+              command = "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1";
+              notification = false;
+            }
             # Keyboard layout — Swiss German, Caps Lock as Ctrl
-            { command = "${pkgs.xorg.setxkbmap}/bin/setxkbmap ch de -option ctrl:nocaps"; notification = false; }
+            {
+              command = "${pkgs.xorg.setxkbmap}/bin/setxkbmap ch de -option ctrl:nocaps";
+              notification = false;
+            }
           ];
         };
 

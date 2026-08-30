@@ -37,32 +37,6 @@ let
   terminal = lib.getExe config.programs.kitty.package;
   menuCmd = "pkill wofi || wofi --show drun";
 
-  # Safe close: refuse to kill kitty windows containing neovim.
-  closeWindow = lib.getExe (
-    pkgs.writeShellScriptBin "hypr-close-window" ''
-      set -euo pipefail
-
-      active_window=$(hyprctl activewindow -j)
-      window_class=$(echo "$active_window" | ${lib.getExe pkgs.jq} -r '.class')
-      window_pid=$(echo "$active_window" | ${lib.getExe pkgs.jq} -r '.pid')
-
-      # Only guard kitty windows; everything else closes immediately.
-      if [[ "$window_class" != "kitty" ]]; then
-          hyprctl dispatch killactive
-          exit 0
-      fi
-
-      # Check if neovim is anywhere in the process subtree.
-      if ${pkgs.psmisc}/bin/pstree -p "$window_pid" 2>/dev/null | grep -qP 'nvim\(\d+\)'; then
-          ${lib.getExe pkgs.libnotify} -u critical "Neovim" "This window contains a neovim process. Close neovim first."
-          exit 1
-      fi
-
-      # No neovim — safe to close.
-      hyprctl dispatch killactive
-    ''
-  );
-
   # Workspace keybindings (1–10)
   workspaceBinds = builtins.concatLists (
     builtins.genList (
@@ -112,19 +86,14 @@ in
             "col.active_border" = "rgba(b4befeff)";
             "col.inactive_border" = "rgba(6c7086aa)";
             resize_on_border = true;
-            allow_tearing = false;
             layout = "dwindle";
           };
 
           input = {
             kb_layout = "ch";
             kb_variant = "de";
-            kb_model = "";
             kb_options = "ctrl:nocaps";
-            kb_rules = "";
             numlock_by_default = true;
-            follow_mouse = 1;
-            sensitivity = 0;
 
             touchpad = {
               natural_scroll = true;
@@ -133,35 +102,23 @@ in
 
           decoration = {
             rounding = 8;
-            rounding_power = 2;
-            active_opacity = 1.0;
             inactive_opacity = 0.85;
 
             shadow = {
-              enabled = true;
               range = 6;
               render_power = 3;
               color = "rgba(1e1e2eee)";
             };
 
             blur = {
-              enabled = true;
               size = 4;
               passes = 2;
               vibrancy = 0.17;
             };
           };
 
-          animations = {
-            enabled = true;
-          };
-
           dwindle = {
             preserve_split = true;
-          };
-
-          master = {
-            new_status = "master";
           };
 
           misc = {
@@ -310,7 +267,7 @@ in
             (mkBind ''"${mod} + Space"'' ''hl.dsp.exec_cmd("${menuCmd}")'')
 
             # Window management
-            (mkBind ''"${mod} + Q"'' ''hl.dsp.exec_cmd("${closeWindow}")'')
+            (mkBind ''"${mod} + Q"'' "hl.dsp.window.close()")
             (mkBind ''"${mod} + SHIFT + E"'' "hl.dsp.exit()")
             (mkBind ''"${mod} + F"'' "hl.dsp.window.fullscreen()")
             (mkBind ''"${mod} + V"'' ''hl.dsp.window.float({ action = "toggle" })'')

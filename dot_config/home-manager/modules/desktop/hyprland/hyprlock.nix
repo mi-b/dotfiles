@@ -6,31 +6,20 @@
     enable = true;
 
     settings = {
-      general = {
-        # grace = 5;
-      };
-
       background = [
         {
-          monitor = "";
           path = "screenshot";
           blur_passes = 3;
           blur_size = 6;
-          noise = 0.01;
-          contrast = 1.0;
           brightness = 0.7;
-          vibrancy = 0.2;
         }
       ];
 
       input-field = [
         {
-          monitor = "";
           size = "280, 50";
-          outline_thickness = 2;
           dots_size = 0.3;
           dots_spacing = 0.2;
-          dots_center = true;
           outer_color = "rgba(b4befeff)";
           inner_color = "rgba(313244ff)";
           font_color = "rgba(cdd6f4ff)";
@@ -39,35 +28,26 @@
           fade_on_empty = false;
           rounding = 10;
           placeholder_text = "";
-          hide_input = false;
           position = "0, -20";
-          halign = "center";
-          valign = "center";
         }
       ];
 
       label = [
         # Time
         {
-          monitor = "";
           text = "$TIME";
           font_size = 72;
           font_family = "FiraCode Nerd Font";
           color = "rgba(cdd6f4ff)";
           position = "0, 120";
-          halign = "center";
-          valign = "center";
         }
         # Date
         {
-          monitor = "";
           text = ''cmd[update:60000] date +"%A, %d %B %Y"'';
           font_size = 20;
           font_family = "FiraCode Nerd Font";
           color = "rgba(a6adc8ff)";
           position = "0, 50";
-          halign = "center";
-          valign = "center";
         }
       ];
     };

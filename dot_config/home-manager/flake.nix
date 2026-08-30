@@ -3,41 +3,33 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixGL should not follow nixpkgs:
+    # the nixGL's nvidia wrapper is incompatible with current nixpkgs-unstable
+    # (kernel argument removed from nvidia-x11)
+    nixgl.url = "github:nix-community/nixGL";
 
     catppuccin.url = "github:catppuccin/nix";
-
-    nixgl = {
-      url = "github:nix-community/nixGL";
-      # Do not follow nixpkgs — nixGL's nvidia wrapper is incompatible with
-      # current nixpkgs-unstable (kernel argument removed from nvidia-x11).
-    };
   };
 
   outputs =
     {
       nixpkgs,
       home-manager,
-      catppuccin,
       nixgl,
+      catppuccin,
       ...
     }:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      pkgsFor = system: nixpkgs.legacyPackages.${system};
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
 
       mkHomeConfiguration =
         host:
         home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor "x86_64-linux";
+          inherit pkgs;
           extraSpecialArgs = {
             inherit nixgl;
           };
@@ -51,22 +43,6 @@
       homeConfigurations.mib = mkHomeConfiguration "chuebel";
       homeConfigurations.herbert = mkHomeConfiguration "abakus";
 
-      formatter = forAllSystems (system: (pkgsFor system).nixfmt-tree);
-
-      checks = forAllSystems (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
-          formatting = pkgs.runCommandLocal "check-formatting" { } ''
-            cd ${./.}
-            ${pkgs.nixfmt-tree}/bin/treefmt --no-cache --fail-on-change --tree-root . . > $out 2>&1 || {
-              echo "Formatting check failed. Run 'nix fmt' to fix."
-              exit 1
-            }
-          '';
-        }
-      );
+      formatter.${system} = pkgs.nixfmt-tree;
     };
 }

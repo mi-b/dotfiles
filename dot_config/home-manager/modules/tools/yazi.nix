@@ -16,8 +16,6 @@
       };
       preview = {
         wrap = "yes";
-        max_width = 1920;
-        max_height = 1080;
       };
     };
   };

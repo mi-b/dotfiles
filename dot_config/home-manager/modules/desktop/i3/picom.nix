@@ -20,9 +20,6 @@
       shadow-radius = 6;
       shadow-color = "#1e1e2e";
       detect-client-opacity = true;
-      detect-transient = true;
-      detect-client-leader = true;
-      use-damage = true;
       wintypes = {
         tooltip = {
           shadow = false;

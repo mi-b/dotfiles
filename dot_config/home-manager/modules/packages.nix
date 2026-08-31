@@ -34,6 +34,9 @@
     # --- versioning ---
     git-filter-repo
 
+    # --- ide ---
+    vscode
+
     # --- X11 clipboard (needed for i3/X11 setups) ---
     xclip
 

@@ -26,7 +26,6 @@ in
 {
   config = lib.mkIf (config.host.wm == "i3") {
     home.packages = with pkgs; [
-      (polybar.override { i3Support = true; })
       i3status
       feh
       xautolock

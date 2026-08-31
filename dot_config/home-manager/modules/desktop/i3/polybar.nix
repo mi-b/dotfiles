@@ -4,7 +4,12 @@
 #   left:   workspaces | cpu | memory
 #   centre: clock
 #   right:  pulseaudio | network | battery | tray
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   # Catppuccin Mocha palette
@@ -40,10 +45,11 @@ in
 {
   services.polybar = lib.mkIf (config.host.wm == "i3") {
     enable = true;
+    package = pkgs.polybar.override { i3Support = true; };
 
     settings = {
       "bar/main" = {
-        monitor = "";
+        monitor = "\${env:MONITOR:}";
         width = "100%";
         height = "28pt";
         offset-x = 0;
@@ -203,5 +209,11 @@ in
         screenchange-reload = true;
       };
     };
+
+    script = ''
+      for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
+        MONITOR=$m polybar main &
+      done
+    '';
   };
 }

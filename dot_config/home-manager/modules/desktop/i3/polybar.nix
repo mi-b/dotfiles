@@ -43,13 +43,29 @@ let
   };
 in
 {
+  systemd.user.services.polybar = lib.mkIf (config.host.wm == "i3") {
+    Service = {
+      Type = lib.mkForce "oneshot";
+      RemainAfterExit = lib.mkForce true;
+    };
+  };
+
+  xdg.configFile."systemd/user/polybar.service.d/type-override.conf" = lib.mkIf (config.host.wm == "i3") {
+    text = ''
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      Restart=no
+    '';
+  };
+
   services.polybar = lib.mkIf (config.host.wm == "i3") {
     enable = true;
     package = pkgs.polybar.override { i3Support = true; };
 
     settings = {
       "bar/main" = {
-        monitor = "";
+        monitor = "\${env:MONITOR:}";
         width = "100%";
         height = "28pt";
         offset-x = 0;
@@ -210,6 +226,10 @@ in
       };
     };
 
-    script = "polybar main &";
+    script = ''
+      for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
+        MONITOR=$m polybar main &
+      done
+    '';
   };
 }

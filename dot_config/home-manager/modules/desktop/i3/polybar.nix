@@ -43,22 +43,6 @@ let
   };
 in
 {
-  systemd.user.services.polybar = lib.mkIf (config.host.wm == "i3") {
-    Service = {
-      Type = lib.mkForce "oneshot";
-      RemainAfterExit = lib.mkForce true;
-    };
-  };
-
-  xdg.configFile."systemd/user/polybar.service.d/type-override.conf" = lib.mkIf (config.host.wm == "i3") {
-    text = ''
-      [Service]
-      Type=oneshot
-      RemainAfterExit=yes
-      Restart=no
-    '';
-  };
-
   services.polybar = lib.mkIf (config.host.wm == "i3") {
     enable = true;
     package = pkgs.polybar.override { i3Support = true; };

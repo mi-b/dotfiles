@@ -4,7 +4,12 @@
 #   left:   workspaces | cpu | memory
 #   centre: clock
 #   right:  pulseaudio | network | battery | tray
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   # Catppuccin Mocha palette
@@ -40,6 +45,7 @@ in
 {
   services.polybar = lib.mkIf (config.host.wm == "i3") {
     enable = true;
+    package = pkgs.polybar.override { i3Support = true; };
 
     settings = {
       "bar/main" = {
@@ -203,5 +209,7 @@ in
         screenchange-reload = true;
       };
     };
+
+    script = "polybar main &";
   };
 }

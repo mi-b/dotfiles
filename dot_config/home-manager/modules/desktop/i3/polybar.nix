@@ -211,6 +211,8 @@ in
     };
 
     script = ''
+      pkill polybar || true
+      sleep 0.5
       for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
         MONITOR=$m polybar main &
       done

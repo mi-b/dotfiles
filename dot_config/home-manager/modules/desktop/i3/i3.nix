@@ -322,6 +322,12 @@ in
               command = "${pkgs.setxkbmap}/bin/setxkbmap ch de -option ctrl:nocaps";
               notification = false;
             }
+            # Polybar — restart on every i3 reload so monitor count is re-detected
+            {
+              command = "sh -c 'pkill polybar || true; sleep 0.5; for m in $(polybar --list-monitors | cut -d: -f1); do MONITOR=$m polybar main & done'";
+              notification = false;
+              always = true;
+            }
           ];
         };
 
@@ -329,6 +335,7 @@ in
           # RDP fallback — Win+L is intercepted by Windows (keycode 47 = ö)
           bindcode ${mod}+47 focus right
           bindcode ${mod}+Shift+47 move right
+
         '';
       };
     };

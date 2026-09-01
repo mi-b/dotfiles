@@ -19,6 +19,7 @@
     settings = {
       shadow-radius = 6;
       shadow-color = "#1e1e2e";
+      inactive-dim = 0.2;
       detect-client-opacity = true;
       wintypes = {
         tooltip = {

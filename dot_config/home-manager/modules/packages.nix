@@ -49,6 +49,7 @@
     (config.lib.nixGL.wrap inkscape)
     (config.lib.nixGL.wrap vlc)
     (config.lib.nixGL.wrap spotify)
+    (config.lib.nixGL.wrap zathura)
 
     # --- desktop utilities ---
     brightnessctl

@@ -329,7 +329,7 @@ in
             }
             # Keyboard layout — Swiss German, Caps Lock as Ctrl
             {
-              command = "${pkgs.setxkbmap}/bin/setxkbmap ch de -option ctrl:nocaps";
+              command = "${pkgs.setxkbmap}/bin/setxkbmap -option '' -layout ch -variant de -option ctrl:nocaps";
               notification = false;
             }
           ];

@@ -10,4 +10,21 @@ sudo apt-get update
 sudo apt-get install -y \
     i3lock \
     xdg-desktop-portal \
-    flameshot
+    flameshot \
+    x11-xkb-utils
+
+# xrdp reloads the client keymap while reconnecting to an existing session.
+# Apply the custom options after that reload has settled.
+if [ -d /etc/xrdp ]; then
+    sudo tee /etc/xrdp/reconnectwm.sh >/dev/null <<'EOF'
+#!/bin/sh
+
+(
+    sleep 1
+    /usr/bin/setxkbmap -option '' -layout ch -variant de -option ctrl:nocaps
+) >/dev/null 2>&1 &
+EOF
+    sudo chmod 0755 /etc/xrdp/reconnectwm.sh
+else
+    echo "Skipping xrdp reconnect hook: xrdp is not installed."
+fi

@@ -16,7 +16,6 @@ let
   base = "#1e1e2e";
   surface0 = "#313244";
   surface1 = "#45475a";
-  overlay0 = "#6c7086";
   text = "#cdd6f4";
   lavender = "#b4befe";
   red = "#f38ba8";
@@ -52,8 +51,8 @@ in
           };
 
           gaps = {
-            inner = 1;
-            outer = 1;
+            inner = 0;
+            outer = 0;
           };
 
           window = {
@@ -76,18 +75,18 @@ in
               childBorder = lavender;
             };
             focusedInactive = {
-              border = overlay0;
-              background = overlay0;
-              text = text;
-              indicator = overlay0;
-              childBorder = overlay0;
-            };
-            unfocused = {
-              border = overlay0;
+              border = base;
               background = base;
               text = text;
-              indicator = overlay0;
-              childBorder = overlay0;
+              indicator = base;
+              childBorder = base;
+            };
+            unfocused = {
+              border = base;
+              background = base;
+              text = text;
+              indicator = base;
+              childBorder = base;
             };
             urgent = {
               border = red;
@@ -239,6 +238,12 @@ in
 
           window.commands = [
             {
+              command = "border pixel 2";
+              criteria = {
+                class = ".*";
+              };
+            }
+            {
               command = "floating enable";
               criteria = {
                 class = "^nm-applet$";
@@ -293,7 +298,8 @@ in
           startup = [
             # Compositor
             {
-              command = "${lib.getExe config.services.picom.package}";
+              command = "${pkgs.systemd}/bin/systemctl --user restart picom.service";
+              always = true;
               notification = false;
             }
             # Notification daemon

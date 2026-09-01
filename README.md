@@ -133,19 +133,23 @@ its own branch or repo, these can be deleted from chezmoi:
 
 ## xrdp (i3 only)
 
-The `~/.xsession` file tells xrdp to start i3 instead of GNOME.
-It is deployed automatically by chezmoi via `dot_xsession`.
+xrdp and xorgxrdp must already be installed and configured on the host.
 
-After applying, disconnect your current RDP session and reconnect.
-xrdp picks up the new `.xsession` on the next login.
+Home Manager generates `~/.xsession`, which tells xrdp to start i3 instead of GNOME.
+Do not overwrite it directly: it is a symlink into the current Home Manager generation.
 
-To switch back to GNOME temporarily:
+New i3 sessions apply the Swiss German keyboard layout and remap Caps Lock to Control during startup.
+Reconnecting to an existing xrdp session does not restart i3, so `/etc/xrdp/reconnectwm.sh` reapplies the mapping after xrdp loads the client keymap.
 
-```bash
-echo "exec gnome-session" > ~/.xsession
+After applying, disconnect the RDP client without logging out and reconnect.
+Verify the active mapping with:
+
+```console
+$ setxkbmap -query
+layout:     ch
+variant:    de
+options:    ctrl:nocaps
 ```
-
-Then reconnect via RDP.
 
 > [!NOTE]
 > Hyprland does not work over xrdp — it requires native Wayland.

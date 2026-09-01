@@ -211,11 +211,16 @@ in
     };
 
     script = ''
-      pkill polybar || true
-      sleep 0.5
-      for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
-        MONITOR=$m polybar main &
+      ${pkgs.procps}/bin/pkill -x polybar || true
+      ${pkgs.coreutils}/bin/sleep 0.5
+      for m in $(${lib.getExe config.services.polybar.package} --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
+        MONITOR=$m ${lib.getExe config.services.polybar.package} main &
       done
     '';
+  };
+
+  systemd.user.services.polybar.Service = lib.mkIf (config.host.wm == "i3") {
+    Type = lib.mkForce "oneshot";
+    RemainAfterExit = true;
   };
 }

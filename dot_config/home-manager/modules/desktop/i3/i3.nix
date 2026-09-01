@@ -22,6 +22,10 @@ let
   red = "#f38ba8";
 
   wallpaper = "${config.home.homeDirectory}/.config/wallpaper/background.png";
+  refreshDesktop = pkgs.writeShellScript "refresh-desktop" ''
+    ${lib.getExe pkgs.feh} --bg-fill ${wallpaper}
+    ${pkgs.systemd}/bin/systemctl --user restart polybar.service
+  '';
 in
 {
   config = lib.mkIf (config.host.wm == "i3") {
@@ -114,7 +118,7 @@ in
             "${mod}+Shift+f" = "floating toggle";
             "${mod}+b" = "split horizontal";
             "${mod}+v" = "split vertical";
-            "${mod}+Shift+r" = "reload";
+            "${mod}+Shift+r" = "reload; exec --no-startup-id ${refreshDesktop}";
             "${mod}+Shift+e" =
               ''exec --no-startup-id "echo -e 'Yes\nNo' | ${lib.getExe config.programs.rofi.package} -dmenu -p 'Exit i3?' -theme-str 'listview { lines: 2; }' | grep -qx Yes && i3-msg exit"'';
 
@@ -297,9 +301,9 @@ in
               command = "${lib.getExe pkgs.dunst}";
               notification = false;
             }
-            # Wallpaper
+            # Wallpaper and monitor-aware status bars
             {
-              command = "${lib.getExe pkgs.feh} --bg-fill ${wallpaper}";
+              command = "${refreshDesktop}";
               notification = false;
             }
             # Idle timer and screen lock (disabled for xrdp sessions)
@@ -321,12 +325,6 @@ in
             {
               command = "${pkgs.setxkbmap}/bin/setxkbmap ch de -option ctrl:nocaps";
               notification = false;
-            }
-            # Polybar — restart on every i3 reload so monitor count is re-detected
-            {
-              command = "sh -c 'pkill polybar || true; sleep 0.5; for m in $(polybar --list-monitors | cut -d: -f1); do MONITOR=$m polybar main & done'";
-              notification = false;
-              always = true;
             }
           ];
         };

@@ -66,6 +66,14 @@ return {
             vim.lsp.config("ty", {
                 capabilities = capabilities,
                 root_markers = { "pyproject.toml", ".git" },
+                settings = {
+                    ty = {
+                        completions = {
+                            autoImport = true,
+                            completeFunctionParentheses = true,
+                        },
+                    },
+                },
                 on_attach = function(client, bufnr)
                     -- ty sends unused bindings as hint-severity (4) diagnostics.
                     -- These don't appear in `ty check` CLI output and are noise
@@ -86,6 +94,12 @@ return {
                             end
                         end,
                     })
+
+                    -- Give Python an explicit completion trigger so suggestions
+                    -- are still easy to request when auto-show is sparse.
+                    vim.keymap.set("i", "<C-Space>", function()
+                        require("blink.cmp").show()
+                    end, { buffer = bufnr, desc = "Show completion" })
                 end,
             })
             vim.lsp.enable("ty")

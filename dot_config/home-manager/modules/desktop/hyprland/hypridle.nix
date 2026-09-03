@@ -15,6 +15,11 @@
         lock_cmd = "pidof hyprlock || hyprlock";
         before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "sleep 1 && hyprctl dispatch dpms on";
+        # Keep inhibitor handling explicit so browser/video behaviour does not
+        # depend on upstream defaults.
+        ignore_dbus_inhibit = false;
+        ignore_systemd_inhibit = false;
+        ignore_wayland_inhibit = false;
       };
 
       listener = [

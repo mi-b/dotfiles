@@ -318,8 +318,8 @@ in
             (lib.generators.mkLuaInline ''
               function()
                             -- Propagate session environment to D-Bus and systemd
-                            hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE PATH XDG_DATA_DIRS")
-                            hl.exec_cmd("systemctl --user import-environment PATH XDG_DATA_DIRS")
+                            hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+                            hl.exec_cmd("systemctl --user import-environment PATH XDG_DATA_DIRS XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY HYPRLAND_INSTANCE_SIGNATURE MOZ_ENABLE_WAYLAND GTK_USE_PORTAL")
                             -- Polkit
                             hl.exec_cmd("systemctl --user start hyprpolkitagent")
                             -- Status bar

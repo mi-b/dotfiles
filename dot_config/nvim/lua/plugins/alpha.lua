@@ -59,11 +59,11 @@ return {
             fortune.setup({
                 display_format = "mixed",
                 content_types = "mixed",
+				custom_quotes = require("fortune_quotes"),
             })
             local footer = vim.list_extend(info, fortune.get_fortune())
             return footer
         end
-
         dashboard.section.footer.val = footer()
 
         -- Send config to alpha

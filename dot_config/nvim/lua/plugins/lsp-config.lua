@@ -178,24 +178,29 @@ return {
             -- "programs." completes with all available HM options.
             -- Formatting is handled by nixfmt via none-ls, not nixd.
             --------------------------------------------------------------------
-            vim.lsp.config("nixd", {
-                capabilities = capabilities,
-                settings = {
-                    nixd = {
-                        nixpkgs = { expr = "import <nixpkgs> {}" },
-                        options = {
-                            home_manager = {
-                                expr = '(builtins.getFlake "'
-                                    .. os.getenv("HOME")
-                                    .. '/.config/home-manager").homeConfigurations.'
-                                    .. os.getenv("USER")
-                                    .. ".options",
+            -- Skipped on Windows: there is no Nix there, and HOME/USER are unset.
+            local home = os.getenv("HOME")
+            local user = os.getenv("USER")
+            if not require("utils").is_windows() and home and user then
+                vim.lsp.config("nixd", {
+                    capabilities = capabilities,
+                    settings = {
+                        nixd = {
+                            nixpkgs = { expr = "import <nixpkgs> {}" },
+                            options = {
+                                home_manager = {
+                                    expr = '(builtins.getFlake "'
+                                        .. home
+                                        .. '/.config/home-manager").homeConfigurations.'
+                                        .. user
+                                        .. ".options",
+                                },
                             },
                         },
                     },
-                },
-            })
-            vim.lsp.enable("nixd")
+                })
+                vim.lsp.enable("nixd")
+            end
 
             --------------------------------------------------------------------
             -- Shared keymaps: applied to every buffer when an LSP server attaches.

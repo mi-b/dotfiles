@@ -31,6 +31,11 @@ return {
                     "typst",
                     "yaml",
                     "comment",
+                    "git_config",
+                    "gitattributes",
+                    "gitcommit",
+                    "gitignore",
+                    "git_rebase",
                 })
             end
 

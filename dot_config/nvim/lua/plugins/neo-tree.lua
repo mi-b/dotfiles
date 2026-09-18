@@ -41,6 +41,18 @@ return {
                 vim.opt_local.foldenable = false
                 vim.opt_local.foldmethod = "manual"
                 vim.opt_local.foldexpr = "0"
+
+                -- Wildfire restores its excluded <CR> mapping on FileType.
+                -- Reapply Neo-tree's open action after that callback runs.
+                vim.schedule(function()
+                    if vim.api.nvim_buf_is_valid(0) and vim.bo.filetype == "neo-tree" then
+                        vim.keymap.set("n", "<CR>", function()
+                            local manager = require("neo-tree.sources.manager")
+                            local commands = require("neo-tree.sources.filesystem.commands")
+                            commands.open(manager.get_state_for_window())
+                        end, { buffer = true, desc = "open" })
+                    end
+                end)
             end,
         })
     end,

@@ -9,6 +9,15 @@
 
 [alias]
     pushf = push --force-with-lease
+    s = status --short --branch
+    l = log --oneline --decorate --graph -20
+    ll = log --oneline --decorate --graph --all
+    last = log -1 HEAD --stat
+    unstage = restore --staged
+    discard = restore
+    amend = commit --amend --no-edit
+    branches = branch --sort=-committerdate
+    recent = for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short) %(committerdate:relative)'
 
 [core]
     autocrlf = input
@@ -30,6 +39,7 @@
 
 [rerere]
     enabled = true
+    autoUpdate = true
 
 [diff]
     algorithm = histogram
@@ -40,6 +50,8 @@
 
 [push]
     recurseSubmodules = check
+    autoSetupRemote = true
+    useForceIfIncludes = true
 
 [submodule]
     recurse = true

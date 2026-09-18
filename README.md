@@ -130,6 +130,7 @@ its own branch or repo, these can be deleted from chezmoi:
 
 - `dot_config/yazi/` — `programs.yazi` in Home Manager
 - `dot_config/lazygit/config.yml` — `programs.lazygit` in Home Manager
+- `dot_config/git/config.tmpl` — `programs.git` in Home Manager
 
 ## xrdp (i3 only)
 

@@ -1,0 +1,51 @@
+[user]
+{{ if eq .workspace "private" -}}
+    name = mi-b
+    email = mikebaumann@bluewin.ch
+{{ else -}}
+    name = mib
+    email = michael.baumann@helbling.ch
+{{ end -}}
+
+[alias]
+    pushf = push --force-with-lease
+
+[core]
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[column]
+    ui = auto
+
+[branch]
+    sort = -committerdate
+
+[pull]
+    rebase = true
+
+[merge]
+    conflictStyle = zdiff3
+
+[rerere]
+    enabled = true
+
+[diff]
+    algorithm = histogram
+    colorMoved = default
+
+[fetch]
+    prune = true
+
+[push]
+    recurseSubmodules = check
+
+[submodule]
+    recurse = true
+
+[transfer]
+    fsckObjects = true
+
+[tag]
+    sort = version:refname

@@ -11,3 +11,35 @@ ratio = [1, 3, 4]
 wrap = "yes"
 max_width = 1920
 max_height = 1080
+
+# Open directories and editable text/configuration files in Neovim on Windows.
+# Enter/l still navigates directories inside Yazi; this affects the open action.
+[opener]
+nvim = [
+  { run = "nvim %s", block = true, for = "windows", desc = "Neovim" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "folder/*", use = "nvim" },
+  { mime = "text/*", use = "nvim" },
+  { mime = "application/json", use = "nvim" },
+  { mime = "application/xml", use = "nvim" },
+  { mime = "application/toml", use = "nvim" },
+  { mime = "application/x-yaml", use = "nvim" },
+  { url = "*.json", use = "nvim" },
+  { url = "*.jsonc", use = "nvim" },
+  { url = "*.yaml", use = "nvim" },
+  { url = "*.yml", use = "nvim" },
+  { url = "*.toml", use = "nvim" },
+  { url = "*.xml", use = "nvim" },
+  { url = "*.ini", use = "nvim" },
+  { url = "*.conf", use = "nvim" },
+  { url = "*.env", use = "nvim" },
+  { url = "*.vim", use = "nvim" },
+  { url = "*.lua", use = "nvim" },
+  { url = "*.nix", use = "nvim" },
+  { url = "*.ps1", use = "nvim" },
+  { url = "*.bat", use = "nvim" },
+  { url = "*.cmd", use = "nvim" },
+]

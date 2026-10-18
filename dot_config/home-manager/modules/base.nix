@@ -21,6 +21,7 @@
     nixGL.defaultWrapper = "nvidia";
     nixGL.offloadWrapper = "nvidiaPrime";
     nixGL.installScripts = [ "nvidia" ];
+    nixGL.vulkan.enable = true;
   };
 
   home.sessionPath = [

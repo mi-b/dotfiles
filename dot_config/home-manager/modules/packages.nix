@@ -46,6 +46,7 @@
     # --- media ---
     ffmpeg
     eog
+    (config.lib.nixGL.wrap darktable)
     # nixGL wrapper required for GPU-accelerated apps on non-NixOS — without
     # it, Nix binaries cannot find the host system's GL/EGL drivers.
     (config.lib.nixGL.wrap gimp)

@@ -365,6 +365,7 @@ in
         bind = [
           # Applications
           (mkBind ''"${mod} + Return"'' ''hl.dsp.exec_cmd("${terminal}")'')
+          (mkBind ''"${mod} + T"'' ''hl.dsp.exec_cmd("/usr/bin/env -u LD_LIBRARY_PATH /usr/bin/gnome-terminal")'')
           (mkBind ''"${mod} + Space"'' ''hl.dsp.exec_cmd("${menuCmd}")'')
 
           # Window management

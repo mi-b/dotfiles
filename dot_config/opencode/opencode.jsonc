@@ -9,8 +9,14 @@
 
   // Permissions
   "permission": {
-    // File operations: allow by default
-    "read": "allow",
+    // Direct file reads are allowed by default, but environment files require
+    // confirmation. Shell and search tools have their own permission rules.
+    "read": {
+      "*": "allow",
+      "*.env": "ask",
+      "*.env.*": "ask",
+      "*.env.example": "allow",
+    },
     "edit": "allow",
     "glob": "allow",
     "grep": "allow",
@@ -68,13 +74,12 @@
       "chezmoi target-path *": "allow",
     },
 
-    // Never touch secrets directories
+    // External paths use OpenCode's ask-by-default baseline. Put narrower
+    // rules last because the last matching permission wins.
     "external_directory": {
-      "~/.ssh/**": "deny",
-      "~/.gnupg/**": "deny",
       "~/.config/opencode/**": "ask",
-      "/tmp/opencode/**": "allow",
-      "*": "ask",
+      "~/.gnupg/**": "deny",
+      "~/.ssh/**": "deny",
     },
   },
 }

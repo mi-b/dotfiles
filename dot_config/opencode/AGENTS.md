@@ -72,24 +72,16 @@ example: `GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git rebase --onto ...`
 - **YAGNI**: don't write code for features you might need later
 - **Naming**: descriptive, pronounceable, consistent. Follow language conventions
   (Python: `snake_case` functions, `PascalCase` classes, `UPPER_CASE` constants)
-- **Format checking**: use a single `scripts/format_check.sh` that covers all
-  file types and runs both locally and in CI
+- **Format checking**: provide one documented format-check entry point suitable
+  for the project's platforms and toolchain
 - Integrate linters and formatters in the IDE and enforce them in CI
 
 ## Documentation
 
 - Every project needs a `README.md` at minimum
-- For larger projects, follow the **Diataxis** model: tutorials, how-to guides,
-  reference, explanation
 - Code should be self-documenting first. Use docstrings sparingly — not for
   obvious functions
-- Use Markdown with GitLab-flavoured extensions (alerts, mermaid diagrams,
-  collapsible sections)
-- Use `mkdocs` for web rendering when needed
-- **Equations in Markdown**: display equations (`$$`) are part of the
-  surrounding sentence. Do not use a colon before an equation. End the
-  equation with a period if it ends the sentence, or a comma if the sentence
-  continues (e.g. "where …")
+- Follow the repository's existing documentation format, renderer, and tooling
 
 ## Security
 

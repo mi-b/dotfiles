@@ -1,23 +1,36 @@
 ---
 name: handbook-style
 description: >
-  Use when writing or editing Markdown documentation, README files,
-  wiki pages, handbook content, or technical guides. Applies British
-  English, GitLab-flavoured Markdown conventions, and a structured
-  documentation style with dry humour.
+  Use when drafting, restructuring, or substantially editing Markdown
+  documentation, README files, Markdown-based wiki pages, handbook content,
+  architecture documentation, or technical guides. Applies British English,
+  renderer-aware Markdown, task-appropriate structure, and concise prose.
+  Do not use for isolated typo or link fixes, commit messages, code comments,
+  or tasks that merely mention a documentation file.
 ---
 
 # Handbook-Style Documentation
 
-Use this skill when creating or editing Markdown documentation. It covers
-writing style, formatting conventions, and structural guidelines.
+Produce documentation that helps a defined audience complete a task or understand a system.
+Preserve correct project-specific conventions rather than replacing them with personal taste.
+Repository instructions, the target renderer, and the existing documentation toolchain take precedence over this skill's defaults.
+
+## Workflow
+
+1. Inspect existing documentation, relevant code, repository conventions, and documentation build configuration.
+2. Check whether the target is generated, mirrored, translated, vendored, or derived from another authoritative source; edit that source instead.
+3. Identify the audience, document purpose, and information readers need first.
+4. Choose a structure suited to that purpose; do not force every document into the same template.
+5. Draft the smallest complete explanation, using examples where they remove ambiguity.
+6. Verify commands, paths, configuration keys, links, and behaviour against authoritative project sources.
+7. Run the existing documentation checks or renderer when available; report anything that could not be verified rather than guessing or installing tooling.
+8. Review the rendered structure and raw Markdown for clarity and maintainability.
 
 ## Writing Style
 
-- **British English** throughout (organise, behaviour, colour, centre, etc.)
-- Concise and direct. No waffle
-- Dry humour and wit are encouraged — dark and self-deprecating preferred.
-  But don't force it; a bad joke is worse than no joke
+- Apply the global language and tone rules consistently to headings, prose, examples, and callouts.
+- Remove filler, throat-clearing, and repeated conclusions.
+- Use humour only when it does not obscure instructions or trivialise risk.
 - Use active voice. Passive voice is acceptable when the actor is irrelevant
 - Write for someone who will read this at 11pm after a long day. Be clear
 
@@ -25,7 +38,7 @@ writing style, formatting conventions, and structural guidelines.
 
 ### Alerts / Admonitions
 
-Use GitHub/GitLab-style alerts for callouts:
+When the target renderer supports them, use GitHub/GitLab-style alerts for information that deserves emphasis outside the main flow:
 
 ```markdown
 > [!NOTE]
@@ -46,7 +59,7 @@ Use GitHub/GitLab-style alerts for callouts:
 
 ### Diagrams
 
-Use **Mermaid** for diagrams (flowcharts, sequence diagrams, git graphs):
+Use **Mermaid** when relationships, sequence, or state are clearer visually than in prose:
 
 ````markdown
 ```mermaid
@@ -57,7 +70,8 @@ graph TD
 ```
 ````
 
-Prefer `theme: 'dark'` or `theme: 'forest'` for mermaid init configs.
+Do not set a Mermaid theme unless the project already specifies one; documentation should remain readable in light and dark renderers.
+Summarise the diagram's important conclusion in prose so it is not the only source of information.
 
 ### Collapsible Sections
 
@@ -74,7 +88,7 @@ Content here. Markdown **works** inside.
 
 ### Code Blocks
 
-- Always specify the language for syntax highlighting
+- Specify a supported language for syntax highlighting; use `text` for plain output or unsupported syntax.
 - Use `console` for terminal output, `bash`/`sh` for shell commands
 - Add comments in code blocks to explain non-obvious steps
 - For config files, use the appropriate language (`toml`, `yaml`, `ini`,
@@ -82,29 +96,39 @@ Content here. Markdown **works** inside.
 
 ### Tables
 
-- Use tables for comparisons and structured data
+- Use tables for compact comparisons and structured data only when they remain readable on narrow screens.
 - Left-align text columns, centre status/boolean columns
-- Keep tables readable in raw Markdown (align pipes)
+- Let the repository formatter decide pipe alignment when one is configured.
 
 ### Line Length and Wrapping
 
-- Prefer one sentence per line in source Markdown (easier diffs)
-- Don't hard-wrap prose at 80 characters — let the renderer handle it
+- Prefer one sentence per line when the repository has no conflicting formatter or convention.
+- Do not hard-wrap prose at 80 characters unless the repository requires it.
 - Break long bullet points across lines with proper indentation
+
+### Equations
+
+Treat display equations (`$$`) as part of the surrounding sentence.
+Do not introduce them with a colon.
+End an equation with a full stop when it ends the sentence, or a comma when the sentence continues.
 
 ## Document Structure
 
 ### README Files
 
-Every README should include:
+Select relevant sections rather than generating an empty standard shell.
+A typical software README may include:
 
-1. **Summary** — what it is and who it's for
-2. **Installation** — how to set it up
-3. **Usage** — how to use it, with examples
+1. **Summary** — what it is, who it is for, and why it exists.
+2. **Requirements** — only prerequisites the reader must satisfy.
+3. **Installation** — when installation or setup is required.
+4. **Usage** — the shortest working example followed by common operations.
+5. **Development** — when contributors need distinct setup or verification steps.
+6. **Support and licence** — when the project needs those routes made explicit.
 
 ### Larger Documentation
 
-Follow the **Diataxis** model:
+Use the **Diataxis** model to separate different reader needs across a documentation set:
 
 - **Tutorials** — learning-oriented, step-by-step
 - **How-to guides** — task-oriented, practical
@@ -113,16 +137,32 @@ Follow the **Diataxis** model:
 
 ### Architecture Documentation
 
-For system architecture, consider:
+For system architecture, choose the lightest notation that answers the reader's question:
 
 - **C4 model** — context, containers, components, code
 - **arc42** — comprehensive structure for content and communication
 
+Explain important boundaries and decisions in prose even when a diagram is present.
+
 ## Linting and Formatting
 
-- Format Markdown with `prettier`
-- Lint with `markdownlint-cli2` (config in `.markdownlint.yaml`)
-- Run both via `scripts/format_check.sh` (locally and in CI)
+- Use the repository's existing Markdown formatter and linter.
+- Prefer `prettier` and `markdownlint-cli2` when establishing new project conventions.
+- Prefer MkDocs when a new documentation site is needed and the project has no existing renderer.
+- Integrate checks into the project's existing format-check command rather than inventing a second entry point.
+- Do not install tools or reformat unrelated documentation without approval.
+
+## Quality Check
+
+Before finishing, confirm that:
+
+- The opening explains the document's purpose and intended audience.
+- Headings form a useful outline and do not merely divide a wall of prose into smaller walls.
+- Commands and examples are complete enough to run and match current project behaviour.
+- Links, filenames, configuration keys, and terminology are consistent.
+- Warnings explain the consequence and the safer action.
+- Links use meaningful text, headings form a logical hierarchy, and visual content has an equivalent explanation.
+- The change does not duplicate or contradict another authoritative document.
 
 ## Things to Avoid
 

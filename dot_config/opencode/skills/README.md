@@ -21,6 +21,7 @@ A skill may document required capabilities, but it does not grant them.
 | Skill                  | Ownership    | Source                                                                                                                                                       |
 |------------------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `handbook-style`       | Local        | Original                                                                                                                                                     |
+| `python-project-setup` | Local        | Original                                                                                                                                                     |
 | `skill-authoring`      | Local        | Original synthesis informed by the Agent Skills specification and the Anthropic, jwiegley, and Superpowers authoring guides                                 |
 | `systematic-debugging` | Local adaptation | Adapted from `obra/superpowers/skills/systematic-debugging` at `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` (MIT); locally maintained without framework dependencies |
 

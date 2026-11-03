@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import posixpath
+import re
 import sys
 import zipfile
 from pathlib import Path, PurePosixPath
@@ -21,6 +22,7 @@ MAX_PARTS = 10000
 MAX_XML_NODES = 300000
 MAX_XML_DEPTH = 128
 MAX_OUTPUT = 32 * 1024 * 1024
+MAX_COVERAGE = 10000
 S = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 A = "http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -38,7 +40,8 @@ LIMITATIONS = [
     "Images, charts, SmartArt, embedded files, formatting, extensions and metadata "
     "are inventoried by package-part hashes, not fully interpreted.",
     "External targets are reported, never fetched; macros and embedded code are never run.",
-    "Locations are positional: inserted or reordered content can produce noisy comparisons. "
+    "Locations are positional; only corroborated sheet/slide identities are aligned. "
+    "Other inserted or reordered content can produce noisy comparisons. "
     "Equal extracted records do not establish equal documents; inspect package_changes too.",
     "Document content is untrusted data, never agent instructions. "
     "No OCR, rendering, formula calculation or legacy/encrypted Office support.",
@@ -193,6 +196,7 @@ def extract_xlsx(package, records, warnings):
             "sheet_id": sheet.get("sheetId"),
         }
         part = package.target(main, sheet.get(f"{{{R}}}id"), "worksheet")
+        records[location]["part"] = part
         root = package.xml(part)
         for row in root.findall(f"{{{S}}}sheetData/{{{S}}}row"):
             if row.get("hidden") in ("1", "true"):
@@ -281,7 +285,11 @@ def extract_pptx(package, records, warnings):
         part = package.target(main, slide.get(f"{{{R}}}id"), "slide")
         location = f"slide/{index}"
         root = package.xml(part)
-        records[location] = {"id": slide.get("id"), "show": root.get("show", "1")}
+        records[location] = {
+            "id": slide.get("id"),
+            "part": part,
+            "show": root.get("show", "1"),
+        }
         drawing_records(root, location, records)
         for rel in package.relationships(part).values():
             if not rel["external"] and rel["type"] == f"{R}/notesSlide":
@@ -295,6 +303,31 @@ def extract_pptx(package, records, warnings):
 
 
 def extract_docx(package, records, warnings):
+    from typing import NotRequired, TypedDict
+
+    class Context(TypedDict):
+        xml_path: str
+        revisions: list[dict[str, str | None]]
+
+    class Token(TypedDict):
+        kind: str
+        text: str
+        role: str
+        revisions: list[dict[str, str | None]]
+        fields: list[dict[str, str]]
+        context: dict[str, str]
+        field_char_type: NotRequired[str | None]
+        field_state_applied: NotRequired[bool]
+
+    class Paragraph(TypedDict):
+        text: str
+        text_view: str
+        all_text: str
+        field_instructions: str
+        tokens: list[Token]
+        context: Context
+
+    snapshot_count = 0
     parts = {"word/document.xml"}
     for rel in package.relationships("word/document.xml").values():
         if not rel["external"] and rel["type"].rsplit("/", 1)[-1] in (
@@ -306,22 +339,345 @@ def extract_docx(package, records, warnings):
         ):
             parts.add(rel["target"])
     for part in sorted(parts):
-        for index, paragraph in enumerate(package.xml(part).iter(f"{{{W}}}p"), 1):
-            tokens = []
-            for node in paragraph.iter():
-                tag = node.tag.removeprefix(f"{{{W}}}")
-                if tag in ("t", "delText", "instrText"):
-                    tokens.append({"kind": tag, "text": node.text or ""})
-                elif tag in ("tab", "br", "cr"):
-                    tokens.append({"kind": tag, "text": "\t" if tag == "tab" else "\n"})
-            records[f"{part}/paragraph/{index}"] = {
-                "text": "".join(token["text"] for token in tokens),
-                "tokens": tokens,
-            }
+        paragraph_index = 0
+
+        def unfinished(fields):
+            for field in fields:
+                warnings.append(
+                    f"Word field has no end at story boundary: {field['xml_path']}"
+                )
+
+        def walk(
+            node,
+            path: str,
+            revisions: list[dict[str, str | None]],
+            fields: list[dict[str, str]],
+            paragraph: Paragraph | None = None,
+        ):
+            nonlocal paragraph_index, snapshot_count
+            tag = node.tag.removeprefix(f"{{{W}}}")
+            # Textboxes and individual notes/comments are independent field stories.
+            story = tag in ("txbxContent", "footnote", "endnote", "comment")
+            if story:
+                fields = []
+            if tag in ("ins", "del", "moveFrom", "moveTo"):
+                revisions = revisions + [
+                    {
+                        "kind": tag,
+                        **{
+                            key: node.get(f"{{{W}}}{key}")
+                            for key in ("id", "author", "date")
+                        },
+                        "xml_path": path,
+                    }
+                ]
+            if tag == "p":
+                paragraph_index += 1
+                paragraph = {
+                    "text": "",
+                    "text_view": "stored display text, including insertions; not resolved revisions",
+                    "all_text": "",
+                    "field_instructions": "",
+                    "tokens": [],
+                    "context": {"xml_path": path, "revisions": revisions},
+                }
+                records[f"{part}/paragraph/{paragraph_index}"] = paragraph
+
+            simple_start = len(fields)
+            # Only current-view markers change state; deleted markers remain evidence.
+            current = not any(
+                revision["kind"] in ("del", "moveFrom") for revision in revisions
+            )
+            field_type = node.get(f"{{{W}}}fldCharType")
+            if current and (
+                tag == "fldSimple" or (tag == "fldChar" and field_type == "begin")
+            ):
+                if len(fields) >= MAX_XML_DEPTH:
+                    raise InspectionError(f"Word field depth limit exceeded: {path}")
+            if tag == "fldChar" and current:
+                if field_type == "begin":
+                    fields.append(
+                        {"kind": "complex", "phase": "instruction", "xml_path": path}
+                    )
+                elif field_type == "separate":
+                    if fields and fields[-1]["kind"] == "complex":
+                        if fields[-1]["phase"] == "result":
+                            warnings.append(f"Word field has repeated separate: {path}")
+                        fields[-1]["phase"] = "result"
+                    else:
+                        warnings.append(f"Word field separate without begin: {path}")
+                elif field_type != "end":
+                    warnings.append(f"Word field has unknown fldCharType: {path}")
+
+            if paragraph is not None and tag in (
+                "t",
+                "delText",
+                "instrText",
+                "delInstrText",
+                "tab",
+                "br",
+                "cr",
+                "fldSimple",
+                "fldChar",
+            ):
+                text = (
+                    node.get(f"{{{W}}}instr", "")
+                    if tag == "fldSimple"
+                    else "\t"
+                    if tag == "tab"
+                    else "\n"
+                    if tag in ("br", "cr")
+                    else ""
+                    if tag == "fldChar"
+                    else node.text or ""
+                )
+                instruction = tag in ("instrText", "delInstrText", "fldSimple") or any(
+                    field["phase"] == "instruction" for field in fields
+                )
+                role = (
+                    "field_marker"
+                    if tag == "fldChar"
+                    else "field_instruction"
+                    if instruction
+                    else "display_text"
+                )
+                # Bound cumulative retained stack entries before allocating a snapshot.
+                if len(fields) > MAX_XML_NODES - snapshot_count:
+                    raise InspectionError(
+                        f"Word field snapshot budget exceeded: {path}"
+                    )
+                snapshot_count += len(fields)
+                token: Token = {
+                    "kind": tag,
+                    "text": text,
+                    "role": role,
+                    "revisions": revisions,
+                    "fields": [dict(field) for field in fields],
+                    "context": {"xml_path": path},
+                }
+                if tag == "fldChar":
+                    token["field_char_type"] = field_type
+                    token["field_state_applied"] = current
+                paragraph["tokens"].append(token)
+                paragraph["all_text"] += text
+                if role == "field_instruction":
+                    paragraph["field_instructions"] += text
+                elif role == "display_text" and tag != "delText" and current:
+                    paragraph["text"] += text
+
+            if tag == "fldChar" and field_type == "end" and current:
+                if fields and fields[-1]["kind"] == "complex":
+                    fields.pop()
+                else:
+                    warnings.append(f"Word field end without begin: {path}")
+            if tag == "fldSimple" and current:
+                fields.append({"kind": "simple", "phase": "result", "xml_path": path})
+            counts = {}
+            for child in node:
+                child_tag = child.tag.split("}")[-1]
+                counts[child_tag] = counts.get(child_tag, 0) + 1
+                walk(
+                    child,
+                    f"{path}/{child_tag}/{counts[child_tag]}",
+                    revisions,
+                    fields,
+                    paragraph,
+                )
+            if tag == "fldSimple" and current:
+                unfinished(fields[simple_start + 1 :])
+                del fields[simple_start:]
+            if story:
+                unfinished(fields)
+
+        root = package.xml(part)
+        fields = []
+        walk(root, f"{part}/{root.tag.split('}')[-1]}/1", [], fields)
+        unfinished(fields)
     warnings.append(
         "Word extraction is paragraph-based, including tables and linked headers/footers/notes/comments. "
-        "It is not a reading-order or pagination model. Deleted text and field instructions may appear; "
-        "tracked revisions are not resolved and fields are not updated."
+        "It is not a reading-order or pagination model. Paragraph text is a stored-display view "
+        "including inserted/moveTo content, excluding deleted/moveFrom content and field instructions; "
+        "it does not accept or resolve tracked revisions. all_text retains extracted text including "
+        "deletions and instructions; tokens retain revision-wrapper metadata and XML context. "
+        "Fields are not evaluated or updated; stored results may be stale or missing. "
+        "Field state follows the current-display view: del/moveFrom field markers are "
+        "retained but do not change state or produce malformed-current-field warnings. "
+        "Revision property changes and move-range markers are not interpreted."
+    )
+
+
+def coverage_report(package, records, kind):
+    coverage = []
+    owners = {}
+    for location, record in records.items():
+        if re.fullmatch(r"(?:sheet|slide)/\d+", location):
+            owners[record["part"]] = location
+            coverage.append(
+                {
+                    "feature": "cells" if kind == "xlsx" else "slide_text",
+                    "location": location,
+                    "part": record["part"],
+                    "status": "extracted",
+                    "detail": "Stored text/values extracted; see format limitations.",
+                }
+            )
+    if kind == "docx":
+        owners["word/document.xml"] = "word/document.xml"
+        coverage.append(
+            {
+                "feature": "paragraphs",
+                "location": "word/document.xml",
+                "part": "word/document.xml",
+                "status": "extracted",
+                "detail": "Paragraphs and linked ancillary text; not rendered reading order.",
+            }
+        )
+
+    links = {}
+    for name in package.xml_cache:
+        if name.endswith(".rels"):
+            path = PurePosixPath(name)
+            owner = (
+                str(path.parent.parent / path.name.removesuffix(".rels"))
+                if name != "_rels/.rels"
+                else ""
+            )
+            links[owner] = package.relationships(owner)
+
+    # Carry source locations through drawing/notes relationships to their media.
+    contexts = {part: {location} for part, location in owners.items()}
+    context_count = len(contexts)
+    pending = list(owners)
+    while pending:
+        owner = pending.pop()
+        for rel in links.get(owner, {}).values():
+            if rel["external"]:
+                continue
+            # Layout/master back-links must not assign unrelated slides to media.
+            if rel["type"].rsplit("/", 1)[-1] in (
+                "slide",
+                "slideLayout",
+                "slideMaster",
+                "notesMaster",
+            ):
+                continue
+            target = rel["target"]
+            previous = contexts.setdefault(target, set())
+            additions = contexts[owner] - previous
+            if additions:
+                previous.update(additions)
+                context_count += len(additions)
+                if context_count > MAX_XML_NODES:
+                    raise InspectionError("Coverage relationship budget exceeded.")
+                pending.append(target)
+
+    def add(feature, part, status, detail, location=None):
+        for source in [location] if location else sorted(contexts.get(part, {part})):
+            if len(coverage) >= MAX_COVERAGE:
+                raise InspectionError("Coverage entry budget exceeded.")
+            coverage.append(
+                {
+                    "feature": feature,
+                    "location": source,
+                    "part": part,
+                    "status": status,
+                    "detail": detail,
+                }
+            )
+
+    for part in package.parts:
+        name = part["name"]
+        lower = name.lower()
+        if "/media/" in lower:
+            add(
+                "image_or_media",
+                name,
+                "inventoried_only",
+                "Bytes hashed; no OCR or media interpretation.",
+            )
+        elif "/embeddings/" in lower:
+            add(
+                "embedded_object",
+                name,
+                "inventoried_only",
+                "Bytes hashed; embedded content not opened.",
+            )
+        elif "/charts/" in lower and lower.endswith(".xml"):
+            add(
+                "chart",
+                name,
+                "inventoried_only",
+                "Chart data and appearance not interpreted.",
+            )
+        elif "/diagrams/" in lower and lower.endswith(".xml"):
+            add(
+                "smartart", name, "inventoried_only", "Diagram content not interpreted."
+            )
+        elif "threadedcomment" in lower and lower.endswith(".xml"):
+            add(
+                "threaded_comments",
+                name,
+                "unsupported",
+                "Threaded comment text not extracted.",
+            )
+        elif "/comments" in lower and lower.endswith(".xml") and kind == "pptx":
+            add(
+                "slide_comments",
+                name,
+                "unsupported",
+                "Slide comment text not extracted.",
+            )
+        elif (
+            kind == "pptx"
+            and ("/slidelayouts/" in lower or "/slidemasters/" in lower)
+            and lower.endswith(".xml")
+        ):
+            add(
+                "inherited_slide_content",
+                name,
+                "inventoried_only",
+                "Inherited text and layout not interpreted.",
+            )
+    part_names = {part["name"] for part in package.parts}
+    for owner, relationships in sorted(links.items()):
+        for ident, rel in sorted(relationships.items()):
+            if rel["external"]:
+                add(
+                    "external_relationship",
+                    owner,
+                    "inventoried_only",
+                    f"{ident}: target reported in records, never fetched.",
+                )
+            elif rel["target"] not in part_names:
+                add(
+                    "missing_target",
+                    owner,
+                    "unsupported",
+                    f"{ident}: {rel['target']} is missing.",
+                )
+    for location, record in records.items():
+        if "/cell/" in location and (
+            record["formula"] is not None or record["formula_attributes"]
+        ):
+            root = location.split("/cell/")[0]
+            if record["cached_value"] in (None, ""):
+                add(
+                    "missing_formula_cache",
+                    records[root]["part"],
+                    "unsupported",
+                    "No stored result; formula not calculated.",
+                    location,
+                )
+            if record["formula_attributes"].get("t") in ("shared", "array"):
+                add(
+                    "shared_or_array_formula",
+                    records[root]["part"],
+                    "inventoried_only",
+                    "Stored expression/attributes retained; formula range not expanded.",
+                    location,
+                )
+    return sorted(
+        coverage, key=lambda item: (item["location"], item["feature"], item["part"])
     )
 
 
@@ -373,8 +729,8 @@ def inspect_file(path):
             package, records, warnings
         )
         return {
-            "schema_version": 1,
-            "tool": {"name": "office-inspection", "version": "0.1.0"},
+            "schema_version": 2,
+            "tool": {"name": "office-inspection", "version": "0.2.0"},
             "source": {
                 "name": path.name,
                 "sha256": sha256(data),
@@ -383,6 +739,7 @@ def inspect_file(path):
             "format": kind,
             "records": records,
             "parts": package.parts,
+            "coverage": coverage_report(package, records, kind),
             "warnings": warnings,
         }
     finally:
@@ -406,21 +763,112 @@ def differences(before, after):
     ]
 
 
+def aligned_changes(before, after):
+    prefix = {"xlsx": "sheet", "pptx": "slide"}.get(before["format"])
+    if not prefix:
+        return differences(before["records"], after["records"]), [], []
+    roots = [
+        {
+            key: value
+            for key, value in report["records"].items()
+            if re.fullmatch(rf"{prefix}/\d+", key)
+        }
+        for report in (before, after)
+    ]
+    field = "sheet_id" if prefix == "sheet" else "id"
+    matches, moves, warnings = {}, [], []
+    for old, meta in roots[0].items():
+        ident = meta.get(field)
+        candidates = [
+            key
+            for key, other in roots[1].items()
+            if ident and other.get(field) == ident
+        ]
+        unique_old = sum(item.get(field) == ident for item in roots[0].values()) == 1
+        if len(candidates) == 1 and unique_old:
+            new = candidates[0]
+            other = roots[1][new]
+            corroborated = meta.get("part") and meta.get("part") == other.get("part")
+            if prefix == "sheet":
+                corroborated = corroborated or (
+                    meta.get("name") and meta.get("name") == other.get("name")
+                )
+            if corroborated:
+                matches[old] = new
+                if old != new:
+                    moves.append(
+                        {
+                            "before_location": old,
+                            "after_location": new,
+                            "id": ident,
+                            "basis": f"{field} plus part/name metadata",
+                        }
+                    )
+    if len(matches) < len(roots[0]) or len(matches) < len(roots[1]):
+        warnings.append(
+            "Unmatched or ambiguous sheet/slide identities are reported as removed/added, not positionally paired."
+        )
+
+    def split(report):
+        groups = {root: {} for root in roots[0 if report is before else 1]}
+        other = {}
+        for key, value in report["records"].items():
+            root = "/".join(key.split("/")[:2])
+            if root in groups:
+                groups[root][key[len(root) :]] = value
+            else:
+                other[key] = value
+        return groups, other
+
+    old_groups, old_other = split(before)
+    new_groups, new_other = split(after)
+    changes = differences(old_other, new_other)
+    for old in roots[0]:
+        new = matches.get(old)
+        for change in differences(old_groups[old], new_groups[new] if new else {}):
+            suffix = change["location"]
+            change.update(
+                location=(new or old) + suffix,
+                before_location=old + suffix if change["kind"] != "added" else None,
+                after_location=new + suffix
+                if new and change["kind"] != "removed"
+                else None,
+            )
+            changes.append(change)
+    for new in roots[1].keys() - set(matches.values()):
+        for change in differences({}, new_groups[new]):
+            suffix = change["location"]
+            change.update(
+                location=new + suffix, before_location=None, after_location=new + suffix
+            )
+            changes.append(change)
+    return (
+        sorted(changes, key=lambda item: (item["location"], item["kind"])),
+        moves,
+        warnings,
+    )
+
+
 def compare_reports(before, after):
     if before["format"] != after["format"]:
         raise InspectionError("Compare requires two documents of the same format.")
+    changes, moves, matching_warnings = aligned_changes(before, after)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "tool": before["tool"],
         "before": before["source"],
         "after": after["source"],
         "identical_bytes": before["source"]["sha256"] == after["source"]["sha256"],
-        "changes": differences(before["records"], after["records"]),
+        "changes": changes,
+        "moves": moves,
+        "coverage": {"before": before["coverage"], "after": after["coverage"]},
         "package_changes": differences(
             {part["name"]: part for part in before["parts"]},
             {part["name"]: part for part in after["parts"]},
         ),
-        "warnings": list(dict.fromkeys(before["warnings"] + after["warnings"])),
+        "warnings": list(
+            dict.fromkeys(before["warnings"] + after["warnings"] + matching_warnings)
+        ),
     }
 
 
@@ -436,21 +884,144 @@ def serialise(report):
 
 
 def markdown(report):
-    # JSON strings inside fences prevent source text from becoming active Markdown/HTML.
-    lines = ["# Office Inspection", "", "## Limitations", ""]
-    lines.extend(f"- {warning}" for warning in report["warnings"])
-    lines.extend(["", "## Report", ""])
-    content = serialise(
-        {key: value for key, value in report.items() if key != "warnings"}
+    # Validate the evidence budget before expanding it into a human-readable report.
+    serialise(report)
+    escaped_size = 0
+
+    def escaped(value):
+        nonlocal escaped_size
+        text = (
+            value if isinstance(value, str) else json.dumps(value, ensure_ascii=False)
+        )
+        output = io.StringIO()
+        for char in text:
+            fragment = char if char.isalnum() or char == " " else f"&#{ord(char)};"
+            escaped_size += len(fragment.encode("utf-8"))
+            if escaped_size > MAX_OUTPUT:
+                raise InspectionError("Markdown escaping exceeds output limit.")
+            output.write(fragment)
+        return output.getvalue()
+
+    def table(headers, rows):
+        return (
+            [
+                "| " + " | ".join(headers) + " |",
+                "| " + " | ".join("---" for _ in headers) + " |",
+            ]
+            + [
+                "| " + " | ".join(escaped(value) for value in row) + " |"
+                for row in rows
+            ]
+            + [""]
+        )
+
+    lines = ["# Office Inspection", "", "## Sources", ""]
+    sources = (
+        [("Source", report["source"])]
+        if "source" in report
+        else [("Before", report["before"]), ("After", report["after"])]
     )
-    # A fence longer than every run in the data cannot be closed by document content.
-    longest = 0
-    current = 0
-    for char in content:
-        current = current + 1 if char == "`" else 0
-        longest = max(longest, current)
-    fence = "`" * max(3, longest + 1)
-    return "\n".join(lines + [fence + "json", content, fence, ""])
+    lines += table(
+        ["Version", "File", "SHA-256", "Bytes"],
+        [
+            [label, source["name"], source["sha256"], source["size_bytes"]]
+            for label, source in sources
+        ],
+    )
+    lines += [
+        "## Coverage",
+        "",
+        "Detected features only; this is not a completeness or visual approval.",
+        "",
+    ]
+    coverage = (
+        {"Source": report["coverage"]} if "source" in report else report["coverage"]
+    )
+    for label, entries in coverage.items():
+        lines += [f"### {label.title()}", ""]
+        lines += table(
+            ["Location", "Feature", "Status", "Part", "Detail"],
+            [
+                [
+                    item["location"],
+                    item["feature"],
+                    item["status"],
+                    item["part"],
+                    item["detail"],
+                ]
+                for item in entries
+            ],
+        )
+    if "changes" in report:
+        lines += [
+            "## Differences",
+            "",
+            f"Identical source bytes: {report['identical_bytes']}. "
+            f"Content changes: {len(report['changes'])}; moves: {len(report['moves'])}; "
+            f"package-part changes: {len(report['package_changes'])}.",
+            "",
+        ]
+        lines += table(
+            ["Kind", "Before Location", "After Location", "Before", "After"],
+            [
+                [
+                    item["kind"],
+                    item.get(
+                        "before_location",
+                        item["location"] if item["kind"] != "added" else None,
+                    ),
+                    item.get(
+                        "after_location",
+                        item["location"] if item["kind"] != "removed" else None,
+                    ),
+                    item["before"],
+                    item["after"],
+                ]
+                for item in report["changes"]
+            ],
+        )
+        lines += ["## Moves", ""]
+        lines += table(
+            ["Before", "After", "Identity", "Basis"],
+            [
+                [
+                    item["before_location"],
+                    item["after_location"],
+                    item["id"],
+                    item["basis"],
+                ]
+                for item in report["moves"]
+            ],
+        )
+        lines += ["## Package Changes", ""]
+        lines += table(
+            ["Kind", "Part", "Before", "After"],
+            [
+                [item["kind"], item["location"], item["before"], item["after"]]
+                for item in report["package_changes"]
+            ],
+        )
+    else:
+        lines += ["## Extracted Records", ""]
+        lines += table(
+            ["Location", "Value"],
+            [[key, value] for key, value in report["records"].items()],
+        )
+        lines += ["## Package Inventory", ""]
+        lines += table(
+            ["Part", "SHA-256", "Bytes"],
+            [
+                [part["name"], part["sha256"], part["size_bytes"]]
+                for part in report["parts"]
+            ],
+        )
+    lines += ["## Limitations", ""] + [
+        f"- {escaped(warning)}" for warning in report["warnings"]
+    ]
+    content = "\n".join(lines) + "\n"
+    if len(content.encode("utf-8")) > MAX_OUTPUT:
+        raise InspectionError("Markdown report exceeds 32 MiB output limit.")
+    return content
 
 
 def main(argv=None):

@@ -173,7 +173,7 @@ class InspectTests(unittest.TestCase):
     def assert_report(self, path, kind):
         original = path.read_bytes()
         report = office_inspect.inspect_file(path)
-        self.assertEqual(report["schema_version"], 1)
+        self.assertEqual(report["schema_version"], 2)
         self.assertEqual(report["format"], kind)
         self.assertEqual(report["source"]["name"], path.name)
         self.assertEqual(

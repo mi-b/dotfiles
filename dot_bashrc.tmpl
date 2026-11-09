@@ -50,6 +50,7 @@ alias nvn='cd "{{ .chezmoi.homeDir }}/OneDrive - Helbling Holding AG/documents/N
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-eval "$('/c/excprog/starship/starship.exe' init bash)"
-eval "$('/c/excprog/zoxide/zoxide.exe' init bash)"
+eval "$(starship init bash)"
+eval "$(zoxide init bash)"
+eval "$(fzf --bash)"
 {{ end -}}
